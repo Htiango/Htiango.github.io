@@ -22,6 +22,8 @@
         
     
     
+        <meta property="og:image" content="http://yoursite.com/assets/images/source/assets/images/gravatar.jpg"/>
+    
     
     
     
@@ -40,8 +42,6 @@
             <!-- Define author's picture -->
 
 
-    
-
 <header id="header" data-behavior="2">
     <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
     <div class="header-title">
@@ -49,9 +49,11 @@
     </div>
     
         
-            <a  class="header-right-picture "
-                href="#about">
+            <a  class="header-right-icon open-algolia-search"
+                href="#search">
         
+        
+            <i class="fa fa-lg fa-search"></i>
         
         </a>
     
@@ -60,8 +62,23 @@
             <!-- Define author's picture -->
 
 
+
+        
+    
+
 <nav id="sidebar" data-behavior="2">
     <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/source/assets/images/gravatar.jpg" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Tianyu Hong</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>author.bio</p>
+</h5>
+                
+            </div>
         
         
             <ul class="sidebar-buttons">
@@ -304,11 +321,17 @@
         
 
 
+    
+        
+    
+
 <div id="about">
     <div id="about-card">
         <div id="about-btn-close">
             <i class="fa fa-remove"></i>
         </div>
+        
+            <img id="about-card-picture" src="/assets/images/source/assets/images/gravatar.jpg" alt="Author&#39;s picture"/>
         
             <h4 id="about-card-name">Tianyu Hong</h4>
         
