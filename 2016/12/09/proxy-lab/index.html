@@ -95,7 +95,7 @@
 <meta property="og:image" content="http://oh1ulkf4j.qnssl.com/Screen Shot 2016-12-09 at 9.15.37 PM.png">
 <meta property="og:image" content="http://oh1ulkf4j.qnssl.com/Screen Shot 2016-12-09 at 9.10.05 PM.png">
 <meta property="og:image" content="http://oh1ulkf4j.qnssl.com/Screen Shot 2016-12-09 at 9.31.06 PM.png">
-<meta property="og:updated_time" content="2016-12-10T10:33:10.000Z">
+<meta property="og:updated_time" content="2016-12-10T10:36:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="proxy-lab">
 <meta name="twitter:description" content="Proxy Lab 作为 cmu 18600 以及 15213 这两门课的最后一个lab，其综合性非常强。既需要掌握好 web programming 以及 concurrent programming 的相关知识，还需要结合之前涉及的 shell 和 cache 的相关操作。本文将详细介绍 proxy lab 的解题思路。">
@@ -422,7 +422,7 @@
 </ol>
 <p>对网页端发送请求进行修改之后，发送给服务器，再将response返回给网页端，如此循环往复直到网页内容加载完毕</p>
 <h2 id="处理多线程操作"><a href="#处理多线程操作" class="headerlink" title="处理多线程操作"></a>处理多线程操作</h2><p>在完成上述内容之后，我们就实现了一个逐条处理网页端请求的proxy。但是在现实中这样的效率极其低下。所以对于我们的proxy还需要使其支持多线程操作。<br><br>其所涉及的函数如下所示<br></p>
-<figure class="highlight"><table><tr><td class="code"><pre><div class="line">int pthread_create(pthread_t *thread, const pthread_attr_t *attr,</div><div class="line">                      void *(*start_routine) (void *), void *arg);</div><div class="line"></div><div class="line"></div><div class="line">int pthread_detach(pthread_t thread);</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">int pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine) (void *), void *arg);</div><div class="line"></div><div class="line"></div><div class="line">int pthread_detach(pthread_t thread);</div></pre></td></tr></table></figure>
 <p>其中pthread_create函数用于打开一个新的线程，通过调用start_routine这个函数，而其中的arg是start_routine函数的参数。<br><br>特别要注意的是，arg一定要事先进行malloc，为每个线程ID分配一个独立的块，并将指向这个块的指针传给start_routine。不然线程会出现竞争问题导致错误。同时在结束线程时一定要释放这些块来避免memory leak<em>（我就是在这里跪了很久的。。。）</em></p>
 <p>而第二个函数是用于在线程中防止线程被其他线程回收或杀死。</p>
 <p>在第一步中加入上述函数，基本上就能够实现proxy的多线程操作的部分。</p>
