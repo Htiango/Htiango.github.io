@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="CSAPP," />
+  <meta name="keywords" content="CSAPP,Lab," />
 
 
 
@@ -95,7 +95,7 @@
 <meta property="og:image" content="http://oh1ulkf4j.qnssl.com/Screen Shot 2016-12-09 at 9.15.37 PM.png">
 <meta property="og:image" content="http://oh1ulkf4j.qnssl.com/Screen Shot 2016-12-09 at 9.10.05 PM.png">
 <meta property="og:image" content="http://oh1ulkf4j.qnssl.com/Screen Shot 2016-12-09 at 9.31.06 PM.png">
-<meta property="og:updated_time" content="2016-12-09T14:38:02.000Z">
+<meta property="og:updated_time" content="2016-12-10T06:03:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="proxy-lab">
 <meta name="twitter:description" content="Proxy Lab 作为 cmu 18600 以及 15213 这两门课的最后一个lab，其综合性非常强。既需要掌握好 web programming 以及 concurrent programming 的相关知识，还需要结合之前涉及的 shell 和 cache 的相关操作。本文将详细介绍 proxy lab 的解题思路。">
@@ -423,8 +423,8 @@
 <p>对网页端发送请求进行修改之后，发送给服务器，再将response返回给网页端，如此循环往复直到网页内容加载完毕</p>
 <h2 id="处理多线程操作"><a href="#处理多线程操作" class="headerlink" title="处理多线程操作"></a>处理多线程操作</h2><p>在完成上述内容之后，我们就实现了一个逐条处理网页端请求的proxy。但是在现实中这样的效率极其低下。所以对于我们的proxy还需要使其支持多线程操作。<br><br>其所涉及的函数如下所示<br></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">int pthread_create(pthread_t *thread, const pthread_attr_t *attr,</div><div class="line">                         void *(*start_routine) (void *), void *arg);</div><div class="line"></div><div class="line"></div><div class="line">int pthread_detach(pthread_t thread);</div></pre></td></tr></table></figure>
-<p>其中pthread_create函数用于打开一个新的线程，通过调用start_routine这个函数，而其中的arg是start_routine函数的参数。<br><br>特别要注意的是，arg一定要事先进行malloc，不然线程会出现错误。<em>（我就是在这里跪了很久的。。。）</em></p>
-<p>而第二个函数是用于在线程中防止thread彼此混淆。</p>
+<p>其中pthread_create函数用于打开一个新的线程，通过调用start_routine这个函数，而其中的arg是start_routine函数的参数。<br><br>特别要注意的是，arg一定要事先进行malloc，为每个线程ID分配一个独立的块，并将指向这个块的指针传给start_routine。不然线程会出现竞争问题导致错误。同时在结束线程时一定要释放这些块来避免memory leak<em>（我就是在这里跪了很久的。。。）</em></p>
+<p>而第二个函数是用于在线程中防止线程被其他线程回收或杀死。</p>
 <p>在第一步中加入上述函数，基本上就能够实现proxy的多线程操作的部分。</p>
 <h2 id="存储网页内容"><a href="#存储网页内容" class="headerlink" title="存储网页内容"></a>存储网页内容</h2><p>以上的proxy已经基本完成了代理的要求。不过当我们重复请求某一个网址的时候，它还是要重新加载一遍，这就有点低效了。如果我们能够把之前网页端获取的响应存下来呢？这样当我们重复加载的时候就无需连接到服务器了。<br><br>所以，我们还要让我们的proxy能够存储网页的内容。<br>在本次实验中，我用一个类似于队列的双向链表来表示存储的cache。proxy在每次处理完网页端发来的请求后，先遍历整个链表，看是否有相同的request存在cache中，如果有就直接获取对应的response。没有的话就现将请求发动到server，将server返回的response写入到cache中。<br><br>在具体的操作中，我采用的是FIFO，每次都将新的request/response加在链表的头。一旦cache存储已满，就从尾部pop。<br><br>需要注意的是，一旦找到匹配的request之后，我们还需要将对应的node移到链表的头指针处。这样才符合FIFO。<br></p>
 <p>上述就是我对与proxy lab的总结，希望大家都能做出一个完美的proxy！！</p>
@@ -452,6 +452,8 @@
         <div class="post-tags">
           
             <a href="/tags/CSAPP/" rel="tag"># CSAPP</a>
+          
+            <a href="/tags/Lab/" rel="tag"># Lab</a>
           
         </div>
       
@@ -580,7 +582,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
