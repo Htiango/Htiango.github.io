@@ -91,7 +91,7 @@
 <meta property="og:site_name" content="塞外麾下炙">
 <meta property="og:description" content="并发在应用程序中起着很重要的作用，本文将详细介绍应用级的并发">
 <meta property="og:image" content="https://oh1ulkf4j.qnssl.com/Screen%20Shot%202016-12-10%20at%203.50.33%20PM.png">
-<meta property="og:updated_time" content="2016-12-10T11:25:00.000Z">
+<meta property="og:updated_time" content="2016-12-10T11:27:01.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Concurrent Programming">
 <meta name="twitter:description" content="并发在应用程序中起着很重要的作用，本文将详细介绍应用级的并发">
@@ -417,7 +417,7 @@
 <li>V(s)：解锁操作。若有线程被P操作挂起则将s加1，重启该线程。</li>
 </ul>
 <p>因此，我们可以通过 P 和 V 操作实现线程中的变量同步。<br><br>以下代码展示了读者优先的线程，只要有一个读者在读，其他的读者就能忽略锁而毫无障碍的读取变量。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><div class="line"><span class="comment">// Global variables</span><span class="keyword">int</span> readcnt;                   <span class="comment">// Initially = 0</span><span class="keyword">sem_t</span> mutex, w;                <span class="comment">// Both initially = 1</span><span class="function"><span class="keyword">void</span> <span class="title">reader</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;    <span class="keyword">while</span> (<span class="number">1</span>)&#123;        P(&amp;mutex);        readcnt++;        <span class="keyword">if</span> (readcnt == <span class="number">1</span>)      <span class="comment">// First in </span>            P(&amp;w);        V(&amp;mutex);        </div><div class="line">       <span class="comment">// Reading happens  </span>        P(&amp;mutex);        readcnt--;        <span class="keyword">if</span> (readcnt == <span class="number">0</span>)      <span class="comment">// Last out */</span>            V(&amp;w);        V(&amp;mutex);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><div class="line"><span class="comment">// Global variables</span><span class="keyword">int</span> readcnt;                   <span class="comment">// Initially = 0</span><span class="keyword">sem_t</span> mutex, w;                <span class="comment">// Both initially = 1</span><span class="function"><span class="keyword">void</span> <span class="title">reader</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;<span class="keyword">while</span> (<span class="number">1</span>)&#123;P(&amp;mutex);readcnt++;<span class="keyword">if</span> (readcnt == <span class="number">1</span>)      <span class="comment">// First in </span>P(&amp;w);V(&amp;mutex);        </div><div class="line"><span class="comment">// Reading happens  </span>P(&amp;mutex);readcnt--;<span class="keyword">if</span> (readcnt == <span class="number">0</span>)      <span class="comment">// Last out */</span>V(&amp;w);V(&amp;mutex);</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line"></div></pre></td></tr></table></figure>
 <h3 id="线程中的竞争问题"><a href="#线程中的竞争问题" class="headerlink" title="线程中的竞争问题"></a>线程中的竞争问题</h3><p>如果我们在构建线程时，每次创建一个新的对等线程都是通过传递一个指向唯一整数ID的指针的话，很有可能会导致程序的错误，因为在这种情况下各个线程会产生竞争。<br><br>而解决这种问题的方法也很简单，只需要用一个malloc函数为每个线程动态分配一个整数ID的指针，并将这个这个指针传递给构建线程的函数中。同时最后别忘了对指针进行free来避免memory leak。</p>
 
       
