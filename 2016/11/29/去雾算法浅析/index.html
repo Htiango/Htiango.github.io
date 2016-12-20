@@ -90,19 +90,19 @@
 <meta property="og:url" content="http://tianyuh.com/2016/11/29/去雾算法浅析/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
 <meta property="og:description" content="何凯明博士在09年以 “Single Image Haze Removal Using Dark Channel Prior” 一文技惊四座。此文甚至成为09年的CVPR最佳论文。本篇博文将对这种去雾算法进行简要的分析，并通过自己的实现来更好的进行介绍。">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/fomula%201.pdf">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/fomula%202.pdf">
+<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/fomula%201.jpg">
+<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/fomula%202.jpg">
 <meta property="og:image" content="https://oh1ulkf4j.qnssl.com/image%201.JPG">
 <meta property="og:image" content="https://oh1ulkf4j.qnssl.com/Min%28R,G,B%29%201.JPG">
 <meta property="og:image" content="https://oh1ulkf4j.qnssl.com/After%20filter%201.JPG">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/fomula%203.pdf">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/fomula%204.pdf">
+<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/fomula%203.jpg">
+<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/fomula%204.jpg">
 <meta property="og:image" content="https://oh1ulkf4j.qnssl.com/image%202.JPG">
 <meta property="og:image" content="https://oh1ulkf4j.qnssl.com/J%202.JPG">
 <meta property="og:image" content="https://oh1ulkf4j.qnssl.com/image%203.JPG">
 <meta property="og:image" content="https://oh1ulkf4j.qnssl.com/J%203.JPG">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/fomula%205.pdf">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/fomula%206.pdf">
+<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/fomula%205.jpg">
+<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/fomula%206.jpg">
 <meta property="og:image" content="https://oh1ulkf4j.qnssl.com/J_guild_filter%202.JPG">
 <meta property="og:image" content="https://oh1ulkf4j.qnssl.com/J_guild_filter%203.JPG">
 <meta property="og:image" content="https://oh1ulkf4j.qnssl.com/image%204.JPG">
@@ -113,11 +113,11 @@
 <meta property="og:image" content="https://oh1ulkf4j.qnssl.com/J_guild_filter%206.JPG">
 <meta property="og:image" content="https://oh1ulkf4j.qnssl.com/image%207.JPG">
 <meta property="og:image" content="https://oh1ulkf4j.qnssl.com/J_guild_filter%207.JPG">
-<meta property="og:updated_time" content="2016-12-20T07:27:07.000Z">
+<meta property="og:updated_time" content="2016-12-20T07:42:39.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="去雾算法浅析">
 <meta name="twitter:description" content="何凯明博士在09年以 “Single Image Haze Removal Using Dark Channel Prior” 一文技惊四座。此文甚至成为09年的CVPR最佳论文。本篇博文将对这种去雾算法进行简要的分析，并通过自己的实现来更好的进行介绍。">
-<meta name="twitter:image" content="https://oh1ulkf4j.qnssl.com/fomula%201.pdf">
+<meta name="twitter:image" content="https://oh1ulkf4j.qnssl.com/fomula%201.jpg">
 
 
 
@@ -425,11 +425,11 @@
         <p>何凯明博士在09年以 <a href="http://www.jiansun.org/papers/Dehaze_CVPR2009.pdf" target="_blank" rel="external">“Single Image Haze Removal Using Dark Channel Prior”</a> 一文技惊四座。此文甚至成为09年的CVPR最佳论文。本篇博文将对这种去雾算法进行简要的分析，并通过自己的实现来更好的进行介绍。</p>
 <a id="more"></a>
 <h2 id="算法核心介绍"><a href="#算法核心介绍" class="headerlink" title="算法核心介绍"></a>算法核心介绍</h2><h3 id="Foggy-Image-model"><a href="#Foggy-Image-model" class="headerlink" title="Foggy Image model"></a>Foggy Image model</h3><p>首先，我们需要构建一个雾天图像的模型。公式如下所示，其中I表示雾天图像，J表示没有雾的图像，t表示空气穿透率，A表示纯雾。式子中的x均表示为图像中的像素点。</p>
-<p><img src="https://oh1ulkf4j.qnssl.com/fomula%201.pdf" alt="formula 1"></p>
+<p><img src="https://oh1ulkf4j.qnssl.com/fomula%201.jpg" alt="formula 1"></p>
 <p>上式非常容易理解：我们最终看到的雾天图像是由透过空气传递过来的原始景观图像和一定浓度的雾叠加而成。</p>
 <p>而作为去雾，我们是要依据已有的雾天图像I来得到原始的景观图像J，这就需要利用暗通道原理来求得模型中的空气穿透率t。</p>
 <h3 id="暗通道"><a href="#暗通道" class="headerlink" title="暗通道"></a>暗通道</h3><p>基于观察，何凯明博士提出了这样的假设：自然界中的大部分非天空物体，其rgb三个颜色通道中至少有一个值非常低，其表达式如下所示：</p>
-<p><img src="https://oh1ulkf4j.qnssl.com/fomula%202.pdf" alt="formula 2"></p>
+<p><img src="https://oh1ulkf4j.qnssl.com/fomula%202.jpg" alt="formula 2"></p>
 <p>其中Ω为x*x的像素方块。</p>
 <p>下图是先取图像中三个通道的最小值构成一张灰度图，然后在做一个一定窗口大小的最小值滤波，最终得到暗通道处理图。</p>
 <p><img src="https://oh1ulkf4j.qnssl.com/image%201.JPG" alt="image 1"></p>
@@ -437,9 +437,9 @@
 <p><img src="https://oh1ulkf4j.qnssl.com/After%20filter%201.JPG" alt="image dark channel 1"></p>
 <p>通过处理图片我们可以清晰看出，除了白色的部分（三通道的值都比较大），其余部分的暗通道值很小，近似符合暗通道趋向0的假设。</p>
 <h2 id="去雾模型推导"><a href="#去雾模型推导" class="headerlink" title="去雾模型推导"></a>去雾模型推导</h2><p>对于雾天模型的公式，我们现在做如下处理：</p>
-<p><img src="https://oh1ulkf4j.qnssl.com/fomula%203.pdf" alt="formula 3"></p>
+<p><img src="https://oh1ulkf4j.qnssl.com/fomula%203.jpg" alt="formula 3"></p>
 <p>为了得到最终的去雾图像，我们需要求得t和A。推导过程如下所示：</p>
-<p><img src="https://oh1ulkf4j.qnssl.com/fomula%204.pdf" alt="formula 4"></p>
+<p><img src="https://oh1ulkf4j.qnssl.com/fomula%204.jpg" alt="formula 4"></p>
 <p>由于即便在正常的天气中，原始景观传过来的时候也是经过了一定浓度的大气（可以认为是雾）。<br><br>而对于参数A，我们是这样计算的：选取一定区域内亮度最大的值作为A（理论上认为纯雾接近纯白）<br><br>这样就将t和A的值分别求了出来，从而得到去雾后的图像J。</p>
 <p>采用这样的方法得到的图像如下所示：</p>
 <p><img src="https://oh1ulkf4j.qnssl.com/image%202.JPG" alt="image 2"><br><img src="https://oh1ulkf4j.qnssl.com/J%202.JPG" alt="image 2 j"></p>
@@ -447,8 +447,9 @@
 <p>由于在图像处理的过程中都不是基于一个像素而是一个像素集合的方块进行的，所以实际得到的图像中物体边缘会有比较明显的白边的存在，而对于这种现象，何凯明博士先后提出了两种理论予以解决。</p>
 <h2 id="去除伪影"><a href="#去除伪影" class="headerlink" title="去除伪影"></a>去除伪影</h2><h3 id="Soft-Matting-2009"><a href="#Soft-Matting-2009" class="headerlink" title="Soft Matting 2009"></a>Soft Matting 2009</h3><p>该方法较为复杂，且处理较慢，早已不用，本文不做赘述</p>
 <h3 id="Guided-Filter-导向滤波-2011"><a href="#Guided-Filter-导向滤波-2011" class="headerlink" title="Guided Filter 导向滤波 2011"></a>Guided Filter 导向滤波 2011</h3><p>导向滤波先做了一个如下的先验假设：所有邻近的点之间都是线性的，同时任何方程在局部的小段都可以认为是线性的。</p>
-<p><img src="https://oh1ulkf4j.qnssl.com/fomula%205.pdf" alt="formula 5"></p>
-<p>经过推导可得：<br><img src="https://oh1ulkf4j.qnssl.com/fomula%206.pdf" alt="formula 6"></p>
+<p><img src="https://oh1ulkf4j.qnssl.com/fomula%205.jpg" alt="formula 5"></p>
+<p>经过推导可得：</p>
+<p><img src="https://oh1ulkf4j.qnssl.com/fomula%206.jpg" alt="formula 6"></p>
 <p>其中q为输出图像，I为输入图像，p为滤波图像。i和k都是像素index，a和b是线性参数。在导向滤波中，I可以为任何导向图像</p>
 <p>上述式子的一大优点就是其可以保护边界值。</p>
 <p>通过上述式子我们可知，当像素强度变化不大时，a趋向于0而b等同于窗口的均值强度。等同于做一个均值滤波。</p>
