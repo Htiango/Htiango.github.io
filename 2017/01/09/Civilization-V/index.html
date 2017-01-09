@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="去雾算法," />
+  <meta name="keywords" content="Games,Civilization," />
 
 
 
@@ -84,40 +84,19 @@
 
 
 
-<meta name="description" content="何凯明博士在09年以 “Single Image Haze Removal Using Dark Channel Prior” 一文技惊四座。此文甚至成为09年的CVPR最佳论文。本篇博文将对这种去雾算法进行简要的分析，并通过自己的实现来更好的进行介绍。">
+<meta name="description" content="开篇让我们将地球的时钟拨到远古世纪，蜿蜒的河流边正孕育着文明的曙光，一队队移民正取下行装，准备在历史的长河中书写壮丽的篇章。一座座简陋的城市如雨后春笋般拔地而起，勾勒着美好的希望。手持木棒的勇士正开疆拓土，怀揣着一统天下的梦想。
+上述这些画面描述的就是文明系列游戏的开场。一把文明游戏就仿佛是人类文明盛衰兴亡的缩影，带给我的感触绝非是一般游戏可比拟的。一句话，文明系列，不仅仅是游戏。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="去雾算法浅析">
-<meta property="og:url" content="http://tianyuh.com/2016/11/29/去雾算法浅析/index.html">
+<meta property="og:title" content="Head First Civilization V">
+<meta property="og:url" content="http://tianyuh.com/2017/01/09/Civilization-V/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
-<meta property="og:description" content="何凯明博士在09年以 “Single Image Haze Removal Using Dark Channel Prior” 一文技惊四座。此文甚至成为09年的CVPR最佳论文。本篇博文将对这种去雾算法进行简要的分析，并通过自己的实现来更好的进行介绍。">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/fomula%201.jpg">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/fomula%202.jpg">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/image%201.JPG">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/Min%28R,G,B%29%201.JPG">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/After%20filter%201.JPG">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/fomula%203.jpg">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/fomula%204.jpg">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/image%202.JPG">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/J%202.JPG">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/image%203.JPG">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/J%203.JPG">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/fomula%205.jpg">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/fomula%206.jpg">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/J_guild_filter%202.JPG">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/J_guild_filter%203.JPG">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/image%204.JPG">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/J_guild_filter%204.JPG">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/image%205.JPG">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/J_guild_filter%205.JPG">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/image%206.JPG">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/J_guild_filter%206.JPG">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/image%207.JPG">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/J_guild_filter%207.JPG">
-<meta property="og:updated_time" content="2016-12-20T07:42:39.000Z">
+<meta property="og:description" content="开篇让我们将地球的时钟拨到远古世纪，蜿蜒的河流边正孕育着文明的曙光，一队队移民正取下行装，准备在历史的长河中书写壮丽的篇章。一座座简陋的城市如雨后春笋般拔地而起，勾勒着美好的希望。手持木棒的勇士正开疆拓土，怀揣着一统天下的梦想。
+上述这些画面描述的就是文明系列游戏的开场。一把文明游戏就仿佛是人类文明盛衰兴亡的缩影，带给我的感触绝非是一般游戏可比拟的。一句话，文明系列，不仅仅是游戏。">
+<meta property="og:updated_time" content="2017-01-09T13:44:27.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="去雾算法浅析">
-<meta name="twitter:description" content="何凯明博士在09年以 “Single Image Haze Removal Using Dark Channel Prior” 一文技惊四座。此文甚至成为09年的CVPR最佳论文。本篇博文将对这种去雾算法进行简要的分析，并通过自己的实现来更好的进行介绍。">
-<meta name="twitter:image" content="https://oh1ulkf4j.qnssl.com/fomula%201.jpg">
+<meta name="twitter:title" content="Head First Civilization V">
+<meta name="twitter:description" content="开篇让我们将地球的时钟拨到远古世纪，蜿蜒的河流边正孕育着文明的曙光，一队队移民正取下行装，准备在历史的长河中书写壮丽的篇章。一座座简陋的城市如雨后春笋般拔地而起，勾勒着美好的希望。手持木棒的勇士正开疆拓土，怀揣着一统天下的梦想。
+上述这些画面描述的就是文明系列游戏的开场。一把文明游戏就仿佛是人类文明盛衰兴亡的缩影，带给我的感触绝非是一般游戏可比拟的。一句话，文明系列，不仅仅是游戏。">
 
 
 
@@ -145,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://tianyuh.com/2016/11/29/去雾算法浅析/"/>
+  <link rel="canonical" href="http://tianyuh.com/2017/01/09/Civilization-V/"/>
 
 
 
 
 
-  <title> 去雾算法浅析 | 塞外麾下炙 </title>
+  <title> Head First Civilization V | 塞外麾下炙 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -324,7 +303,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2016/11/29/去雾算法浅析/">
+  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/01/09/Civilization-V/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Tianyu Hong">
@@ -348,7 +327,7 @@
             
             
               
-                去雾算法浅析
+                Head First Civilization V
               
             
           </h1>
@@ -361,8 +340,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-29T22:07:46+08:00">
-                2016-11-29
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-09T16:01:38+08:00">
+                2017-01-09
               </time>
             
 
@@ -380,8 +359,8 @@
               <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/图像处理/" itemprop="url" rel="index">
-                    <span itemprop="name">图像处理</span>
+                  <a href="/categories/随笔/" itemprop="url" rel="index">
+                    <span itemprop="name">随笔</span>
                   </a>
                 </span>
 
@@ -395,8 +374,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2016/11/29/去雾算法浅析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/29/去雾算法浅析/" itemprop="commentCount"></span>
+                <a href="/2017/01/09/Civilization-V/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/09/Civilization-V/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -422,53 +401,28 @@
       
 
       
-        <p>何凯明博士在09年以 <a href="http://www.jiansun.org/papers/Dehaze_CVPR2009.pdf" target="_blank" rel="external">“Single Image Haze Removal Using Dark Channel Prior”</a> 一文技惊四座。此文甚至成为09年的CVPR最佳论文。本篇博文将对这种去雾算法进行简要的分析，并通过自己的实现来更好的进行介绍。</p>
+        <h2 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h2><p>让我们将地球的时钟拨到远古世纪，蜿蜒的河流边正孕育着文明的曙光，一队队移民正取下行装，准备在历史的长河中书写壮丽的篇章。一座座简陋的城市如雨后春笋般拔地而起，勾勒着美好的希望。手持木棒的勇士正开疆拓土，怀揣着一统天下的梦想。</p>
+<p>上述这些画面描述的就是文明系列游戏的开场。一把文明游戏就仿佛是人类文明盛衰兴亡的缩影，带给我的感触绝非是一般游戏可比拟的。一句话，文明系列，不仅仅是游戏。</p>
 <a id="more"></a>
-<h2 id="算法核心介绍"><a href="#算法核心介绍" class="headerlink" title="算法核心介绍"></a>算法核心介绍</h2><h3 id="Foggy-Image-model"><a href="#Foggy-Image-model" class="headerlink" title="Foggy Image model"></a>Foggy Image model</h3><p>首先，我们需要构建一个雾天图像的模型。公式如下所示，其中I表示雾天图像，J表示没有雾的图像，t表示空气穿透率，A表示纯雾。式子中的x均表示为图像中的像素点。</p>
-<p><img src="https://oh1ulkf4j.qnssl.com/fomula%201.jpg" alt="formula 1"></p>
-<p>上式非常容易理解：我们最终看到的雾天图像是由透过空气传递过来的原始景观图像和一定浓度的雾叠加而成。</p>
-<p>而作为去雾，我们是要依据已有的雾天图像I来得到原始的景观图像J，这就需要利用暗通道原理来求得模型中的空气穿透率t。</p>
-<h3 id="暗通道"><a href="#暗通道" class="headerlink" title="暗通道"></a>暗通道</h3><p>基于观察，何凯明博士提出了这样的假设：自然界中的大部分非天空物体，其rgb三个颜色通道中至少有一个值非常低，其表达式如下所示：</p>
-<p><img src="https://oh1ulkf4j.qnssl.com/fomula%202.jpg" alt="formula 2"></p>
-<p>其中Ω为x*x的像素方块。</p>
-<p>下图是先取图像中三个通道的最小值构成一张灰度图，然后在做一个一定窗口大小的最小值滤波，最终得到暗通道处理图。</p>
-<p><img src="https://oh1ulkf4j.qnssl.com/image%201.JPG" alt="image 1"></p>
-<p><img src="https://oh1ulkf4j.qnssl.com/Min%28R,G,B%29%201.JPG" alt="image grey 1"></p>
-<p><img src="https://oh1ulkf4j.qnssl.com/After%20filter%201.JPG" alt="image dark channel 1"></p>
-<p>通过处理图片我们可以清晰看出，除了白色的部分（三通道的值都比较大），其余部分的暗通道值很小，近似符合暗通道趋向0的假设。</p>
-<h2 id="去雾模型推导"><a href="#去雾模型推导" class="headerlink" title="去雾模型推导"></a>去雾模型推导</h2><p>对于雾天模型的公式，我们现在做如下处理：</p>
-<p><img src="https://oh1ulkf4j.qnssl.com/fomula%203.jpg" alt="formula 3"></p>
-<p>为了得到最终的去雾图像，我们需要求得t和A。推导过程如下所示：</p>
-<p><img src="https://oh1ulkf4j.qnssl.com/fomula%204.jpg" alt="formula 4"></p>
-<p>由于即便在正常的天气中，原始景观传过来的时候也是经过了一定浓度的大气（可以认为是雾）。<br><br>而对于参数A，我们是这样计算的：选取一定区域内亮度最大的值作为A（理论上认为纯雾接近纯白）<br><br>这样就将t和A的值分别求了出来，从而得到去雾后的图像J。</p>
-<p>采用这样的方法得到的图像如下所示：</p>
-<p><img src="https://oh1ulkf4j.qnssl.com/image%202.JPG" alt="image 2"><br><img src="https://oh1ulkf4j.qnssl.com/J%202.JPG" alt="image 2 j"></p>
-<p><img src="https://oh1ulkf4j.qnssl.com/image%203.JPG" alt="image 3"><br><img src="https://oh1ulkf4j.qnssl.com/J%203.JPG" alt="image 3 j"></p>
-<p>由于在图像处理的过程中都不是基于一个像素而是一个像素集合的方块进行的，所以实际得到的图像中物体边缘会有比较明显的白边的存在，而对于这种现象，何凯明博士先后提出了两种理论予以解决。</p>
-<h2 id="去除伪影"><a href="#去除伪影" class="headerlink" title="去除伪影"></a>去除伪影</h2><h3 id="Soft-Matting-2009"><a href="#Soft-Matting-2009" class="headerlink" title="Soft Matting 2009"></a>Soft Matting 2009</h3><p>该方法较为复杂，且处理较慢，早已不用，本文不做赘述</p>
-<h3 id="Guided-Filter-导向滤波-2011"><a href="#Guided-Filter-导向滤波-2011" class="headerlink" title="Guided Filter 导向滤波 2011"></a>Guided Filter 导向滤波 2011</h3><p>导向滤波先做了一个如下的先验假设：所有邻近的点之间都是线性的，同时任何方程在局部的小段都可以认为是线性的。</p>
-<p><img src="https://oh1ulkf4j.qnssl.com/fomula%205.jpg" alt="formula 5"></p>
-<p>经过推导可得：</p>
-<p><img src="https://oh1ulkf4j.qnssl.com/fomula%206.jpg" alt="formula 6"></p>
-<p>其中q为输出图像，I为输入图像，p为滤波图像。i和k都是像素index，a和b是线性参数。在导向滤波中，I可以为任何导向图像</p>
-<p>上述式子的一大优点就是其可以保护边界值。</p>
-<p>通过上述式子我们可知，当像素强度变化不大时，a趋向于0而b等同于窗口的均值强度。等同于做一个均值滤波。</p>
-<p>而当强度变化大时，a趋向于1而b趋向于0。等同于不做滤波，保留边界。</p>
-<p>对之前的两张图片进行导向滤波处理，我们可以得到较好的结果。</p>
-<p><img src="https://oh1ulkf4j.qnssl.com/J_guild_filter%202.JPG" alt="image guided 2"></p>
-<p><img src="https://oh1ulkf4j.qnssl.com/J_guild_filter%203.JPG" alt="image guided 3"></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>最后我将展示一些去雾的效果：</p>
-<p>去雾算法在处理非天空的自然物体时效果很好。如图：</p>
-<p><img src="https://oh1ulkf4j.qnssl.com/image%204.JPG" alt="image 4"><br><img src="https://oh1ulkf4j.qnssl.com/J_guild_filter%204.JPG" alt="image guided 4"></p>
-<p>同时在处理城市建筑时也有着不俗的表现。如图：</p>
-<p><img src="https://oh1ulkf4j.qnssl.com/image%205.JPG" alt="image 5"><br><img src="https://oh1ulkf4j.qnssl.com/J_guild_filter%205.JPG" alt="image guided 5"></p>
-<p>但是同时其也有着一些不足之处</p>
-<p>比如在处理以白色物体为背景的图像时，会出现去雾效果不好以及色彩偏蓝的现象。这主要是因为去雾算法是基于暗通道值趋向为0的先验假设，而白色背景是不符合这种先验假设的，由于不符合物理模型所以才导致出错。如图：</p>
-<p><img src="https://oh1ulkf4j.qnssl.com/image%206.JPG" alt="image 6"><br><img src="https://oh1ulkf4j.qnssl.com/J_guild_filter%206.JPG" alt="image guided 6"></p>
-<p>此外当雾太厚的时候，还会出现过曝的情况，这是由于穿透参数t很小，根据之前的推导，我们会得到一个较大的J(x)。这才导致了过曝的现象。如图：</p>
-<p><img src="https://oh1ulkf4j.qnssl.com/image%207.JPG" alt="image 7"><br><img src="https://oh1ulkf4j.qnssl.com/J_guild_filter%207.JPG" alt="image guided 7"></p>
-<p>所以总而言之，去雾算法可以取得一个比较好的效果，不过也有其一定的局限性，要视具体的情况而定。</p>
-<p>想要上手参考的，详见我的<a href="https://github.com/Htiango/cvpr09-defog" target="_blank" rel="external">github</a></p>
+<p>如果说有什么游戏值得我整整一天宅在电脑前废寝忘食，那一定是席大大的文明系列。而在6代bug不断，4代画质感人的今日，5代的美丽新世界显得格外诱人，在一个又一个“next turn”的指引下，一切都如白驹过隙，一晃而逝。（友情提示，没有闹钟的，没有自制力的，请远离文明系列）</p>
+<h2 id="宏观看文明"><a href="#宏观看文明" class="headerlink" title="宏观看文明"></a>宏观看文明</h2><p>虽然不像P社四萌那样有着极高的历史还原度，但是在宏观层面上对人类文明的量化和物化我从未见过如文明这般卓越的。它将人类文明的核心量化为科技和文化，而各个国家的实力物化为一个个城市以及单位，彼此之间相互影响，构成了整个复杂交错的文明世界，也让玩家看到了数千年来人类文明发展的缩影，闲暇之余颇有感触。</p>
+<h3 id="科技与文化"><a href="#科技与文化" class="headerlink" title="科技与文化"></a>科技与文化</h3><p>在Civilization这系列游戏中，人类文明时刻被文化和科技点数推进着前行。随着科技的飞速发展，科技树茁壮成长着，一个个闻所未闻的建筑和单位出现在了城市的建设列表中，等待着一国之主的召唤。它们将进一步促进科技和文化的发展。而随着文化的积累，一项项政策被从上锁的黑箱拿上了台面，如同现在的城市规划和国家方针一样，指引着帝国步入黄金时代，迈入胜利的殿堂。</p>
+<p>的确，人类的文明从来都是一个厚积而薄发的过程，没有前期挖石头的技术，哪来之后的石油、煤矿等的大发现？没有律法的出现，哪来的意识形态的选择？纵使给远古时代的人民一百个爱因斯坦，也注定不会有相对论和量子力学的丁点萌芽。这也是为什么，在游戏中，政策的选择局限于时代，科技的研发取决于之前的积累。</p>
+<h3 id="城市与单位"><a href="#城市与单位" class="headerlink" title="城市与单位"></a>城市与单位</h3><p>玩家通过建造城市设施和调整市民工作来实现一个城市在粮食、产能、金钱、文化和信仰等方面的平衡，使之为帝国的发展贡献力量。每每在进入城市界面时，我的脑海中浮现的不是一个个单调的数字或是乏味的图标，而是一个个活生生的市民为了生计在城市之郊辛勤工作，为城市的产能和产粮做出微不足道的贡献。这样的生化当然难言快乐，尤其是当城市人口急剧膨胀之际，辛勤劳作了一天的市民不得不蜷曲在狭小的住处休息，这也是为什么在游戏中人口和城市数量的增长会带来大幅的不快乐。于国家而言，哪里有城市，哪里就有剥削，除非危及自身统治，人民的快乐不足为道，这又何尝不是现实生活的一个缩影呢？通过产出奢侈品和建设娱乐设施，市民们的快乐可以得到大幅提升，似乎被剥削的不快早已被抛之脑后，看来娱乐至死的年代由来已久啊。</p>
+<p>如果说用一句话总结文明系列的精髓，那就是国家的利益高于一切。在游戏界面中，渺渺众生不过是一串串简单的数字，一队队忠义无双的士兵，一个个任劳任怨的劳工。他们在玩家的带领下，为着最终的胜利默默奉献着自己。游戏中，为了保住珍贵的笑脸，我们往往不惜将攻占的城市付之一炬，看着城市的人口一回合一回合地下降，直至城池变为废墟。为了省下足够的金钱，我们往往会将多余的单位就地处决，看着他们化作一道光永远消逝在历史的长河中。为了抢在AI之前造出奇观，我们往往会强制让市民忍饥挨饿，没日没夜地为产能贡献力量。沉浸在游戏中的我们又怎会意识到呢，这些不就是曾经的“嘉定三屠”，“扬州十日”，“长平之战”后的白起杀降，布尔什维克在战后依然实施的“战时共产主义”？</p>
+<p>唯一带点个人色彩的也就是在城市中产出的伟人了，他们有着与真实历史中某位名人相同的名字，而在游戏中他们的命运也不外乎是为了一项奇观、一项科技、一个作品或是一场战役，鞠躬尽瘁死而后已。可即便如此，他们还是一个个义无反顾地诞生于城市，为了帝国的繁荣昌盛前赴后继。真可谓是“苟利国家生死以，岂因祸福避趋之”。</p>
+<h3 id="国家和城邦"><a href="#国家和城邦" class="headerlink" title="国家和城邦"></a>国家和城邦</h3><p>文明系列游戏经久不息的一个原因，就在于多样的文明种类。玩家可以从二三十个文明中挑选一个进行游戏，而这二三十个文明也都各具特色。好玩的一点在于，游戏选取这些文明中的一位著名统治者，将其作为游戏中该文明的领袖。所以在游戏界面中，我们得以看这样的场景，骑在马上的拿破仑不屑地评论着我羸弱的士兵，白宫中的华盛顿义正言辞地进行抗议，雍容华贵的武则天不怒自威地否决了我的交易。正是这些文明领袖们将我们更好地带入了游戏中，将复杂难表的国家关系用领袖们的喜怒哀乐鲜活地呈现给了玩家。</p>
+<p>在文明游戏中，国家关系是一个很重要的部分。两国间的良好关系是进行合作研究以及现金交易的前提。同时两国间的贸易也必须在非战争状态的条件下才能进行。这不就是现实的一个缩影吗？</p>
+<p>除了国家之外，在游戏中玩家还会碰到许多城邦，也就是现实中的“小国”。在第一次遇到时它们会给你一些钱，我总是开玩笑地说这是供奉给大国的礼金，摆出低调的姿态祈求乱世中的苟存。刚玩的时候我总是对这些城邦不屑一顾，对这些蝼蚁一直提出的烦人任务不理不睬。看着它们一个个成为了其他国家的盟友，想着这些小国送给你们也没什么用处，就这样一直开开心心地在家种田。一转眼国际形势骤变，昔日笑脸相迎的对手最终兵戎详见，我惊讶地发现那些城邦也都紧跟着它们主子的步伐，争先恐后地对我宣战。我当时第一个想到的不是打开存档，而是“这不就是北约？”。玩得越多，我越觉得城邦好处大大的，盟友会给你兵，给你文化，给你粮食，给你资源，给你信仰，还能给你快乐！而如果觉得完成城邦任务太麻烦，大可以拿钱砸，一堆堆金子砸在城邦的脸上，玩家就能享受到如同城邦爸爸一般的待遇，给吃给喝还能帮打架。</p>
+<p>可以说文明中对国家和城邦的设定很好地诠释出了大国与小国间的外交政策与外交姿态。</p>
+<h3 id="胜利种类"><a href="#胜利种类" class="headerlink" title="胜利种类"></a>胜利种类</h3><p>在Civilization V这款游戏中，总共有5种胜利的方式，而这5种方式也给玩家以不同的感悟。</p>
+<h4 id="外交胜利"><a href="#外交胜利" class="headerlink" title="外交胜利"></a>外交胜利</h4><p>有人说，联合国建立的意义是为了让全世界更好地按照大国意志来运转，而事实也确有几分相似。诸如伊拉克战争、古巴禁运等事件就是大国通过对联合国的控制来实现对小国的支配，从而更好地实现自身利益。在文明游戏中也是亦然，一旦世界议会选出了世界领袖，那么也就意味着该国有着将自己的意志以世界议会中某一议题的形式强加于他国的能力，也就实现了外交上的胜利。</p>
+<h4 id="征服胜利"><a href="#征服胜利" class="headerlink" title="征服胜利"></a>征服胜利</h4><p>文明V这款游戏也被称为野蛮V，不打仗怎么赢天下。一个无论科技和文化都远远落后的文明要想赢得游戏，只有用武力打破现有的状态。一旦取得了所有文明的首都，就取得了征服胜利。</p>
+<p>作为一名爱好和平的种田流玩家，从个人理念出发我是十分不喜欢玩征服胜利的，一个原因自然是因为操纵“百万大军”攻城下寨是一件极其繁琐的事。还有一个很重要的原因是我在游戏过程中探索出来的：在飞船起飞前的一回合，我抱着玩一玩的心态将我的“小男孩一号”原子弹投向了身边的埃及，瞬间一座人口30+的主城血条只剩下了一半左右，周边的单位也是死伤惨重，城市中隐约还有人群大喊哭泣的声音，虽然知道这不过是游戏一场，但是内心总感觉有些堵。当然啦，打仗是一定要打的，不过我更喜欢逼得对面割地赔款，然后我在安安心心发战争财。</p>
+<h4 id="科技胜利"><a href="#科技胜利" class="headerlink" title="科技胜利"></a>科技胜利</h4><p>从仰望星空开始的不仅仅有哲学，还有科学！将人类文明传播到更为浩瀚的宇宙一直是科学家们的梦想，也支撑着他们燃烧自己，成就科学的跃进。当飞船起飞的一刹那，人类文明的种子已播撒在银河系中，承载着无数人的梦想驶向远方。这也是我最喜欢的胜利模式！</p>
+<h4 id="文化胜利"><a href="#文化胜利" class="headerlink" title="文化胜利"></a>文化胜利</h4><p>当玩家的文化支配了其他文明，当那里的人民都穿着我们的衣服，说着我们的语言的时候，我们还能说这是别的国家吗？文化胜利的本质就是通过本国文化对他国潜移默化的影响，通过人民的融合实现国家的兼并。实现难度着实不小（一般都是打出来的。。。）</p>
+<h4 id="时间胜利"><a href="#时间胜利" class="headerlink" title="时间胜利"></a>时间胜利</h4><p>（一般都关闭时间胜利）满满都是吐槽。。。在世界末日前的那一刻，上帝说，拯救那个分数最高的文明吧，于是就有了时间胜利。。。（2050年分数最高的玩家获胜）</p>
+<h2 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h2><p>开了程序猿的脑洞写下了这篇civilization的Head First，文明带给我的不仅仅是绝佳的游戏体验，还让我有了很多思考，打算有时间出一篇Thinking in Civilization。</p>
 
       
     </div>
@@ -492,7 +446,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/去雾算法/" rel="tag"># 去雾算法</a>
+            <a href="/tags/Games/" rel="tag"># Games</a>
+          
+            <a href="/tags/Civilization/" rel="tag"># Civilization</a>
           
         </div>
       
@@ -501,8 +457,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/11/23/First-Article/" rel="next" title="First Article">
-                <i class="fa fa-chevron-left"></i> First Article
+              <a href="/2016/12/10/concurrent-programming/" rel="next" title="Concurrent Programming">
+                <i class="fa fa-chevron-left"></i> Concurrent Programming
               </a>
             
           </div>
@@ -510,10 +466,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/12/09/proxy-lab/" rel="prev" title="proxy-lab">
-                proxy-lab <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -562,8 +514,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/11/29/去雾算法浅析/"
-           data-title="去雾算法浅析" data-url="http://tianyuh.com/2016/11/29/去雾算法浅析/">
+      <div class="ds-thread" data-thread-key="2017/01/09/Civilization-V/"
+           data-title="Head First Civilization V" data-url="http://tianyuh.com/2017/01/09/Civilization-V/">
       </div>
     
   </div>
@@ -680,7 +632,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#算法核心介绍"><span class="nav-number">1.</span> <span class="nav-text">算法核心介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Foggy-Image-model"><span class="nav-number">1.1.</span> <span class="nav-text">Foggy Image model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#暗通道"><span class="nav-number">1.2.</span> <span class="nav-text">暗通道</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#去雾模型推导"><span class="nav-number">2.</span> <span class="nav-text">去雾模型推导</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#去除伪影"><span class="nav-number">3.</span> <span class="nav-text">去除伪影</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Soft-Matting-2009"><span class="nav-number">3.1.</span> <span class="nav-text">Soft Matting 2009</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Guided-Filter-导向滤波-2011"><span class="nav-number">3.2.</span> <span class="nav-text">Guided Filter 导向滤波 2011</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#开篇"><span class="nav-number">1.</span> <span class="nav-text">开篇</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#宏观看文明"><span class="nav-number">2.</span> <span class="nav-text">宏观看文明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#科技与文化"><span class="nav-number">2.1.</span> <span class="nav-text">科技与文化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#城市与单位"><span class="nav-number">2.2.</span> <span class="nav-text">城市与单位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#国家和城邦"><span class="nav-number">2.3.</span> <span class="nav-text">国家和城邦</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#胜利种类"><span class="nav-number">2.4.</span> <span class="nav-text">胜利种类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#外交胜利"><span class="nav-number">2.4.1.</span> <span class="nav-text">外交胜利</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#征服胜利"><span class="nav-number">2.4.2.</span> <span class="nav-text">征服胜利</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#科技胜利"><span class="nav-number">2.4.3.</span> <span class="nav-text">科技胜利</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文化胜利"><span class="nav-number">2.4.4.</span> <span class="nav-text">文化胜利</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#时间胜利"><span class="nav-number">2.4.5.</span> <span class="nav-text">时间胜利</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结尾"><span class="nav-number">3.</span> <span class="nav-text">结尾</span></a></li></ol></div>
             
 
           </div>
