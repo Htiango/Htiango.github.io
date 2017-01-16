@@ -5,7 +5,7 @@
     <entry>
       <title><![CDATA[007 Reverse Integer]]></title>
       <url>%2F2017%2F01%2F16%2FLeetcode-007%2F</url>
-      <content type="text"><![CDATA[题目Reverse digits of an integer. Example1: x = 123, return 321Example2: x = -123, return -321 解题思路方法很简单，即用循环取余的方法，在此不作赘述。这里唯一需要注意的是当转换后的数字超出int的范围时要返回0，所以需要在循环中进行判断。 1234567891011121314151617181920class Solution &#123;public: int reverse(int x) &#123; int result = 0, temp = 1; if(x &lt; 0)&#123; x = abs(x); temp = -1; &#125; while(x != 0)&#123; if(INT_MAX / 10 &lt; result) return 0; result *= 10; if(INT_MAX - (x % 10) &lt; result) return 0; result += x % 10; x /= 10; &#125; return temp * result; &#125;&#125;;]]></content>
+      <content type="text"><![CDATA[Leetcode 007，关于数字取反相关处理。 题目Reverse digits of an integer. Example1: x = 123, return 321Example2: x = -123, return -321 解题思路方法很简单，即用循环取余的方法，在此不作赘述。这里唯一需要注意的是当转换后的数字超出int的范围时要返回0，所以需要在循环中进行判断。 1234567891011121314151617181920class Solution &#123;public: int reverse(int x) &#123; int result = 0, temp = 1; if(x &lt; 0)&#123; x = abs(x); temp = -1; &#125; while(x != 0)&#123; if(INT_MAX / 10 &lt; result) return 0; result *= 10; if(INT_MAX - (x % 10) &lt; result) return 0; result += x % 10; x /= 10; &#125; return temp * result; &#125;&#125;;]]></content>
     </entry>
 
     
