@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="cpp,array," />
+  <meta name="keywords" content="number,cpp," />
 
 
 
@@ -84,16 +84,16 @@
 
 
 
-<meta name="description" content="Leetcode 004，关于array相关处理。">
+<meta name="description" content="Leetcode 008，判断数字是否是回文数。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="004 Median of Two Sorted Arrays">
-<meta property="og:url" content="http://tianyuh.com/2017/01/13/Leetcode-004/index.html">
+<meta property="og:title" content="009 Palindrome Number">
+<meta property="og:url" content="http://tianyuh.com/2017/01/17/Leetcode-009/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
-<meta property="og:description" content="Leetcode 004，关于array相关处理。">
-<meta property="og:updated_time" content="2017-01-13T08:47:39.000Z">
+<meta property="og:description" content="Leetcode 008，判断数字是否是回文数。">
+<meta property="og:updated_time" content="2017-01-17T03:41:06.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="004 Median of Two Sorted Arrays">
-<meta name="twitter:description" content="Leetcode 004，关于array相关处理。">
+<meta name="twitter:title" content="009 Palindrome Number">
+<meta name="twitter:description" content="Leetcode 008，判断数字是否是回文数。">
 
 
 
@@ -121,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://tianyuh.com/2017/01/13/Leetcode-004/"/>
+  <link rel="canonical" href="http://tianyuh.com/2017/01/17/Leetcode-009/"/>
 
 
 
 
 
-  <title> 004 Median of Two Sorted Arrays | 塞外麾下炙 </title>
+  <title> 009 Palindrome Number | 塞外麾下炙 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -300,7 +300,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/01/13/Leetcode-004/">
+  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/01/17/Leetcode-009/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Tianyu Hong">
@@ -324,7 +324,7 @@
             
             
               
-                004 Median of Two Sorted Arrays
+                009 Palindrome Number
               
             
           </h1>
@@ -337,8 +337,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-13T16:39:32+08:00">
-                2017-01-13
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-17T11:31:28+08:00">
+                2017-01-17
               </time>
             
 
@@ -371,8 +371,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2017/01/13/Leetcode-004/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/13/Leetcode-004/" itemprop="commentCount"></span>
+                <a href="/2017/01/17/Leetcode-009/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/17/Leetcode-009/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -398,13 +398,10 @@
       
 
       
-        <p>Leetcode 004，关于array相关处理。<br><a id="more"></a></p>
-<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>There are two sorted arrays nums1 and nums2 of size m and n respectively.</p>
-<p>Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).</p>
-<p>即找出两组按大小排列的数组的中位数。</p>
-<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>由于两个数组都是按好大小排列好的sorted array，所以我的思路是每次pop出两个数组中最大的那个，最终得到想要的中位数。</p>
-<p>具体代码见下，最后的运行时间为32ms，高于85%的答案，比较满意。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">double</span> <span class="title">findMedianSortedArrays</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums1, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums2)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> size1 = nums1.size(), size2 = nums2.size();</div><div class="line">        <span class="keyword">bool</span> odd  = (<span class="keyword">bool</span>)((size1 + size2) % <span class="number">2</span>);</div><div class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> tempNum = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> lastTempNum = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> countLimit = (size1 + size2) / <span class="number">2</span> + <span class="number">1</span>;</div><div class="line">        <span class="keyword">while</span>(count &lt; countLimit)&#123;</div><div class="line">        	lastTempNum = tempNum;</div><div class="line">        	count ++;</div><div class="line">        	<span class="keyword">if</span> (size1 == <span class="number">0</span>)&#123;</div><div class="line">        		<span class="keyword">if</span>(size2 == <span class="number">0</span>)&#123;</div><div class="line">        			<span class="keyword">return</span> <span class="literal">NULL</span>;</div><div class="line">        		&#125;</div><div class="line">        		size2--;</div><div class="line">        		tempNum = nums2.back();</div><div class="line">        		nums2.pop_back();</div><div class="line">        		<span class="keyword">continue</span>;</div><div class="line">        	&#125;</div><div class="line">        	<span class="keyword">else</span> <span class="keyword">if</span>(size2 == <span class="number">0</span>)&#123;</div><div class="line">        		size1--;</div><div class="line">        		tempNum = nums1.back();</div><div class="line">        		nums1.pop_back();</div><div class="line">        		<span class="keyword">continue</span>;</div><div class="line">        	&#125;</div><div class="line">        	<span class="keyword">if</span>(nums1[size1 - <span class="number">1</span>] &gt; nums2[size2 - <span class="number">1</span>])&#123;</div><div class="line">        		size1--;</div><div class="line">        		tempNum = nums1.back();</div><div class="line">        		nums1.pop_back();</div><div class="line">        	&#125;</div><div class="line">        	<span class="keyword">else</span>&#123;</div><div class="line">        		size2--;</div><div class="line">        		tempNum = nums2.back();</div><div class="line">        		nums2.pop_back();</div><div class="line">        	&#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (odd)&#123;</div><div class="line">        	<span class="keyword">return</span> tempNum;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">        	<span class="keyword">return</span> <span class="number">0.5</span> * (tempNum + lastTempNum);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+        <p>Leetcode 008，判断数字是否是回文数。<br><a id="more"></a></p>
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>Determine whether an integer is a palindrome. Do this without extra space.</p>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>将数字转成string来进行处理，需要注意的是任何的负数都不是回文数，因此在转换前可以先进行判断，若为负数直接返回false。具体代码详见下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isPalindrome</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(x &lt; <span class="number">0</span>)</div><div class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">        <span class="keyword">char</span> temp[<span class="number">64</span>];</div><div class="line">        <span class="built_in">sprintf</span>(temp, <span class="string">"%d"</span>, x);</div><div class="line">        <span class="function"><span class="built_in">string</span> <span class="title">s</span><span class="params">(temp)</span></span>;</div><div class="line">        <span class="keyword">int</span> length = s.length();</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length / <span class="number">2</span>; i++)&#123;</div><div class="line">            <span class="keyword">if</span>(s[i] != s[length - <span class="number">1</span> - i])</div><div class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
       
     </div>
 
@@ -427,9 +424,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/cpp/" rel="tag"># cpp</a>
+            <a href="/tags/number/" rel="tag"># number</a>
           
-            <a href="/tags/array/" rel="tag"># array</a>
+            <a href="/tags/cpp/" rel="tag"># cpp</a>
           
         </div>
       
@@ -438,8 +435,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/12/Leetcode-005/" rel="next" title="005 Longest Palindromic Substring">
-                <i class="fa fa-chevron-left"></i> 005 Longest Palindromic Substring
+              <a href="/2017/01/16/Leetcode-008/" rel="next" title="008 String to Integer (atoi)">
+                <i class="fa fa-chevron-left"></i> 008 String to Integer (atoi)
               </a>
             
           </div>
@@ -447,10 +444,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/01/16/Leetcode-006/" rel="prev" title="006 ZigZag Conversion">
-                006 ZigZag Conversion <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -499,8 +492,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/01/13/Leetcode-004/"
-           data-title="004 Median of Two Sorted Arrays" data-url="http://tianyuh.com/2017/01/13/Leetcode-004/">
+      <div class="ds-thread" data-thread-key="2017/01/17/Leetcode-009/"
+           data-title="009 Palindrome Number" data-url="http://tianyuh.com/2017/01/17/Leetcode-009/">
       </div>
     
   </div>
