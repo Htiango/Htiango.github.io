@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="number,cpp," />
+  <meta name="keywords" content="cpp,number," />
 
 
 
@@ -84,16 +84,16 @@
 
 
 
-<meta name="description" content="Leetcode 008，判断数字是否是回文数。">
+<meta name="description" content="Leetcode 009，判断数字是否是回文数。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="009 Palindrome Number">
 <meta property="og:url" content="http://tianyuh.com/2017/01/17/Leetcode-009/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
-<meta property="og:description" content="Leetcode 008，判断数字是否是回文数。">
-<meta property="og:updated_time" content="2017-01-17T03:41:06.000Z">
+<meta property="og:description" content="Leetcode 009，判断数字是否是回文数。">
+<meta property="og:updated_time" content="2017-01-17T03:53:23.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="009 Palindrome Number">
-<meta name="twitter:description" content="Leetcode 008，判断数字是否是回文数。">
+<meta name="twitter:description" content="Leetcode 009，判断数字是否是回文数。">
 
 
 
@@ -398,7 +398,7 @@
       
 
       
-        <p>Leetcode 008，判断数字是否是回文数。<br><a id="more"></a></p>
+        <p>Leetcode 009，判断数字是否是回文数。<br><a id="more"></a></p>
 <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>Determine whether an integer is a palindrome. Do this without extra space.</p>
 <h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>将数字转成string来进行处理，需要注意的是任何的负数都不是回文数，因此在转换前可以先进行判断，若为负数直接返回false。具体代码详见下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isPalindrome</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(x &lt; <span class="number">0</span>)</div><div class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">        <span class="keyword">char</span> temp[<span class="number">64</span>];</div><div class="line">        <span class="built_in">sprintf</span>(temp, <span class="string">"%d"</span>, x);</div><div class="line">        <span class="function"><span class="built_in">string</span> <span class="title">s</span><span class="params">(temp)</span></span>;</div><div class="line">        <span class="keyword">int</span> length = s.length();</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length / <span class="number">2</span>; i++)&#123;</div><div class="line">            <span class="keyword">if</span>(s[i] != s[length - <span class="number">1</span> - i])</div><div class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
@@ -424,9 +424,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/number/" rel="tag"># number</a>
-          
             <a href="/tags/cpp/" rel="tag"># cpp</a>
+          
+            <a href="/tags/number/" rel="tag"># number</a>
           
         </div>
       
@@ -444,6 +444,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/18/Leetcode-010/" rel="prev" title="010 Regular Expression Matching">
+                010 Regular Expression Matching <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -538,7 +542,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-count">12</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -555,7 +559,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
