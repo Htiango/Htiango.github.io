@@ -3,6 +3,13 @@
   
     
     <entry>
+      <title><![CDATA[014 Longest Common Prefix]]></title>
+      <url>%2F2017%2F01%2F19%2FLeetcode-014%2F</url>
+      <content type="text"><![CDATA[Leetcode 014，关于求数字串数组最长共同前缀的相关处理。 题目Write a function to find the longest common prefix string amongst an array of strings. 解题思路主要利用string类里的函数substr取字符串的子集，再用compare函数比较字符串。本题中通过遍历字符串数组，确定最大共同前缀的长度。 具体代码见下，总运行时间为6ms 1234567891011121314151617181920212223class Solution &#123;public: string longestCommonPrefix(vector&lt;string&gt;&amp; strs) &#123; int vec_length = strs.size(); if (vec_length == 0) return ""; if (vec_length == 1)&#123; return strs[0]; &#125; int sub_length = strs[0].length(); string str_temp = strs[0]; for(int i = 1; i &lt; vec_length; i++)&#123; sub_length = (sub_length &gt; strs[i].length()) ? strs[i].length() : sub_length; while(str_temp.substr(0, sub_length).compare(strs[i].substr(0, sub_length)) &amp;&amp; (sub_length &gt; 0))&#123; sub_length--; &#125; &#125; if(sub_length == 0) return ""; else return str_temp.substr(0, sub_length); &#125;&#125;;]]></content>
+    </entry>
+
+    
+    <entry>
       <title><![CDATA[013 Roman to Integer]]></title>
       <url>%2F2017%2F01%2F19%2FLeetcode-013%2F</url>
       <content type="text"><![CDATA[Leetcode 013，关于罗马数转数字的相关处理。 题目Given a roman numeral, convert it to an integer. Input is guaranteed to be within the range from 1 to 3999. 解题思路此题比较容易，我们只需要在遍历字符串的过程中注意I，X，C这三种字符的后一位即可。 代码见下，总运行时间为36ms 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647class Solution &#123;public: int romanToInt(string s) &#123; int length = s.length(), num = 0; for(int i = 0; i &lt; length; i++)&#123; if(s[i] == 'M') num += 1000; else if(s[i] == 'D') num += 500; else if(s[i] == 'C')&#123; if(i &lt; length - 1)&#123; if(s[i + 1] == 'D' || s[i + 1] == 'M') num -= 100; else num += 100; &#125; else num += 100; &#125; else if(s[i] == 'L') num += 50; else if(s[i] == 'X')&#123; if(i &lt; length - 1)&#123; if(s[i + 1] == 'L' || s[i + 1] == 'C') num -= 10; else num += 10; &#125; else num += 10; &#125; else if(s[i] == 'V') num += 5; else&#123; if(i &lt; length - 1)&#123; if(s[i + 1] == 'V' || s[i + 1] == 'X') num -= 1; else num += 1; &#125; else num += 1; &#125; &#125; return num; &#125;&#125;;]]></content>
