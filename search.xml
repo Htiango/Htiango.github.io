@@ -10,7 +10,7 @@
 
     
     <entry>
-      <title><![CDATA[019 Remove Nth Node From End of List]]></title>
+      <title><![CDATA[019 Remove Nth Node]]></title>
       <url>%2F2017%2F01%2F24%2FLeetcode-019%2F</url>
       <content type="text"><![CDATA[Leetcode 019，关于去除单链表尾部第n个节点的相关处理。 题目Given a linked list, remove the nth node from the end of list and return its head. For example, 123Given linked list: 1-&gt;2-&gt;3-&gt;4-&gt;5, and n = 2.After removing the second node from the end, the linked list becomes 1-&gt;2-&gt;3-&gt;5. Note Given n will always be valid.Try to do this in one pass. 解题思路只能先从头指针遍历一遍，求得链表的长度，然后确定导数第n个的具体位置。 1234567891011121314151617181920212223242526272829303132/** * Definition for singly-linked list. * struct ListNode &#123; * int val; * ListNode *next; * ListNode(int x) : val(x), next(NULL) &#123;&#125; * &#125;; */class Solution &#123;public: ListNode* removeNthFromEnd(ListNode* head, int n) &#123; ListNode* list = head; int count = 1; while(list-&gt;next != NULL)&#123; count++; list = list-&gt;next; &#125; int index = count - n; if(index == 0)&#123; head = head-&gt;next; return head; &#125; int i = 0; ListNode* list2 = head; while(i &lt; index - 1)&#123; i++; list2 = list2-&gt;next; &#125; list2-&gt;next = list2-&gt;next-&gt;next; return head; &#125;&#125;;]]></content>
     </entry>
