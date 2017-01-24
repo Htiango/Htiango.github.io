@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="cpp,string,number," />
+  <meta name="keywords" content="array,cpp,backtracing," />
 
 
 
@@ -84,16 +84,18 @@
 
 
 
-<meta name="description" content="Leetcode 013，关于罗马数转数字的相关处理。">
+<meta name="description" content="Leetcode 017，关于求手机9宫格打字的相关处理。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="013 Roman to Integer">
-<meta property="og:url" content="http://tianyuh.com/2017/01/19/Leetcode-013/index.html">
+<meta property="og:title" content="017 Letter Combinations of a Phone Number">
+<meta property="og:url" content="http://tianyuh.com/2017/01/24/Leetcode-017/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
-<meta property="og:description" content="Leetcode 013，关于罗马数转数字的相关处理。">
-<meta property="og:updated_time" content="2017-01-19T09:56:52.000Z">
+<meta property="og:description" content="Leetcode 017，关于求手机9宫格打字的相关处理。">
+<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/200px-Telephone-keypad2.svg.png">
+<meta property="og:updated_time" content="2017-01-24T10:18:54.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="013 Roman to Integer">
-<meta name="twitter:description" content="Leetcode 013，关于罗马数转数字的相关处理。">
+<meta name="twitter:title" content="017 Letter Combinations of a Phone Number">
+<meta name="twitter:description" content="Leetcode 017，关于求手机9宫格打字的相关处理。">
+<meta name="twitter:image" content="https://oh1ulkf4j.qnssl.com/200px-Telephone-keypad2.svg.png">
 
 
 
@@ -121,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://tianyuh.com/2017/01/19/Leetcode-013/"/>
+  <link rel="canonical" href="http://tianyuh.com/2017/01/24/Leetcode-017/"/>
 
 
 
 
 
-  <title> 013 Roman to Integer | 塞外麾下炙 </title>
+  <title> 017 Letter Combinations of a Phone Number | 塞外麾下炙 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -300,7 +302,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/01/19/Leetcode-013/">
+  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/01/24/Leetcode-017/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Tianyu Hong">
@@ -324,7 +326,7 @@
             
             
               
-                013 Roman to Integer
+                017 Letter Combinations of a Phone Number
               
             
           </h1>
@@ -337,8 +339,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-19T17:53:52+08:00">
-                2017-01-19
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-24T18:08:42+08:00">
+                2017-01-24
               </time>
             
 
@@ -371,8 +373,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2017/01/19/Leetcode-013/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/19/Leetcode-013/" itemprop="commentCount"></span>
+                <a href="/2017/01/24/Leetcode-017/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/24/Leetcode-017/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -398,13 +400,15 @@
       
 
       
-        <p>Leetcode 013，关于罗马数转数字的相关处理。<br><a id="more"></a></p>
-<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>Given a roman numeral, convert it to an integer.</p>
-<p>Input is guaranteed to be within the range from 1 to 3999.</p>
-<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>此题比较容易，我们只需要在遍历字符串的过程中注意I，X，C这三种字符的后一位即可。</p>
-<p>代码见下，总运行时间为36ms</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">romanToInt</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> length = s.length(), num = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length; i++)&#123;</div><div class="line">            <span class="keyword">if</span>(s[i] == <span class="string">'M'</span>)</div><div class="line">                num += <span class="number">1000</span>;</div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(s[i] == <span class="string">'D'</span>)</div><div class="line">                num += <span class="number">500</span>;</div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(s[i] == <span class="string">'C'</span>)&#123;</div><div class="line">                <span class="keyword">if</span>(i &lt; length - <span class="number">1</span>)&#123;</div><div class="line">                    <span class="keyword">if</span>(s[i + <span class="number">1</span>] == <span class="string">'D'</span> || s[i + <span class="number">1</span>] == <span class="string">'M'</span>)</div><div class="line">                        num -= <span class="number">100</span>;</div><div class="line">                    <span class="keyword">else</span></div><div class="line">                        num += <span class="number">100</span>;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span></div><div class="line">                    num += <span class="number">100</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(s[i] == <span class="string">'L'</span>)</div><div class="line">                num += <span class="number">50</span>;</div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(s[i] == <span class="string">'X'</span>)&#123;</div><div class="line">                <span class="keyword">if</span>(i &lt; length - <span class="number">1</span>)&#123;</div><div class="line">                    <span class="keyword">if</span>(s[i + <span class="number">1</span>] == <span class="string">'L'</span> || s[i + <span class="number">1</span>] == <span class="string">'C'</span>)</div><div class="line">                        num -= <span class="number">10</span>;</div><div class="line">                    <span class="keyword">else</span></div><div class="line">                        num += <span class="number">10</span>;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span></div><div class="line">                    num += <span class="number">10</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(s[i] == <span class="string">'V'</span>)</div><div class="line">                num += <span class="number">5</span>;</div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                <span class="keyword">if</span>(i &lt; length - <span class="number">1</span>)&#123;</div><div class="line">                    <span class="keyword">if</span>(s[i + <span class="number">1</span>] == <span class="string">'V'</span> || s[i + <span class="number">1</span>] == <span class="string">'X'</span>)</div><div class="line">                        num -= <span class="number">1</span>;</div><div class="line">                    <span class="keyword">else</span></div><div class="line">                        num += <span class="number">1</span>;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span></div><div class="line">                    num += <span class="number">1</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> num;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-
+        <p>Leetcode 017，关于求手机9宫格打字的相关处理。<br><a id="more"></a></p>
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>Given a digit string, return all possible letter combinations that the number could represent.</p>
+<p>A mapping of digit to letters (just like on the telephone buttons) is given below.</p>
+<p><img src="https://oh1ulkf4j.qnssl.com/200px-Telephone-keypad2.svg.png" alt=""></p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Inpu<span class="variable">t:Digit</span> <span class="built_in">string</span> <span class="string">"23"</span></div><div class="line">Outpu<span class="variable">t:</span> [<span class="string">"ad"</span>, <span class="string">"ae"</span>, <span class="string">"af"</span>, <span class="string">"bd"</span>, <span class="string">"be"</span>, <span class="string">"bf"</span>, <span class="string">"cd"</span>, <span class="string">"ce"</span>, <span class="string">"cf"</span>].</div></pre></td></tr></table></figure>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>本题采用backtracing的方法，在某种意义上也算是一种递归。</p>
+<p>对于一个长度为n的input，我们先获取n-1 input时的答案，在这个基础上最终得到结果。</p>
+<p>最终的运算时间为3ms</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt; reference = &#123;&#123;<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>&#125;,&#123;<span class="string">"d"</span>,<span class="string">"e"</span>,<span class="string">"f"</span>&#125;,&#123;<span class="string">"g"</span>,<span class="string">"h"</span>,<span class="string">"i"</span>&#125;,&#123;<span class="string">"j"</span>,<span class="string">"k"</span>,<span class="string">"l"</span>&#125;,&#123;<span class="string">"m"</span>,<span class="string">"n"</span>,<span class="string">"o"</span>&#125;,&#123;<span class="string">"p"</span>,<span class="string">"q"</span>,<span class="string">"r"</span>,<span class="string">"s"</span>&#125;,&#123;<span class="string">"t"</span>,<span class="string">"u"</span>,<span class="string">"v"</span>&#125;,&#123;<span class="string">"w"</span>,<span class="string">"x"</span>,<span class="string">"y"</span>,<span class="string">"z"</span>&#125;&#125;;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; letterCombinations(<span class="built_in">string</span> digits) &#123;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; result;</div><div class="line">        <span class="keyword">if</span>(digits.find(<span class="string">'0'</span>) != <span class="built_in">std</span>::<span class="built_in">string</span>::npos)</div><div class="line">            <span class="keyword">return</span> result;</div><div class="line">        <span class="keyword">if</span>(digits.find(<span class="string">'1'</span>) != <span class="built_in">std</span>::<span class="built_in">string</span>::npos)</div><div class="line">            <span class="keyword">return</span> result;</div><div class="line">        <span class="keyword">int</span> length = digits.length();</div><div class="line">        <span class="keyword">if</span>(length == <span class="number">0</span>)</div><div class="line">            <span class="keyword">return</span> result;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(length == <span class="number">1</span>)&#123;</div><div class="line">            result = reference[digits[<span class="number">0</span>] - <span class="string">'2'</span>];</div><div class="line">            <span class="keyword">return</span> result;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; temp_strs;</div><div class="line">            <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; temp_result = letterCombinations(digits.substr(<span class="number">0</span>, length - <span class="number">1</span>));</div><div class="line">            temp_strs = reference[digits[length - <span class="number">1</span>] - <span class="string">'2'</span>];</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; temp_result.size(); i++)&#123;</div><div class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; temp_strs.size(); j ++)&#123;</div><div class="line">                    result.push_back(temp_result[i] + temp_strs[j]);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
       
     </div>
 
@@ -427,11 +431,11 @@
       
         <div class="post-tags">
           
+            <a href="/tags/array/" rel="tag"># array</a>
+          
             <a href="/tags/cpp/" rel="tag"># cpp</a>
           
-            <a href="/tags/string/" rel="tag"># string</a>
-          
-            <a href="/tags/number/" rel="tag"># number</a>
+            <a href="/tags/backtracing/" rel="tag"># backtracing</a>
           
         </div>
       
@@ -440,8 +444,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/19/Leetcode-012/" rel="next" title="012 Integer to Roman">
-                <i class="fa fa-chevron-left"></i> 012 Integer to Roman
+              <a href="/2017/01/24/leetcode-016/" rel="next" title="016 3Sum Closest">
+                <i class="fa fa-chevron-left"></i> 016 3Sum Closest
               </a>
             
           </div>
@@ -449,10 +453,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/01/19/Leetcode-014/" rel="prev" title="014 Longest Common Prefix">
-                014 Longest Common Prefix <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -501,8 +501,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/01/19/Leetcode-013/"
-           data-title="013 Roman to Integer" data-url="http://tianyuh.com/2017/01/19/Leetcode-013/">
+      <div class="ds-thread" data-thread-key="2017/01/24/Leetcode-017/"
+           data-title="017 Letter Combinations of a Phone Number" data-url="http://tianyuh.com/2017/01/24/Leetcode-017/">
       </div>
     
   </div>
