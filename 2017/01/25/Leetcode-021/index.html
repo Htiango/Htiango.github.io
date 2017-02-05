@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="cpp,linklist," />
+  <meta name="keywords" content="cpp,linklist,merge sort," />
 
 
 
@@ -90,7 +90,7 @@
 <meta property="og:url" content="http://tianyuh.com/2017/01/25/Leetcode-021/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
 <meta property="og:description" content="Leetcode 021，关于合并两个有序单链表的相关操作。">
-<meta property="og:updated_time" content="2017-01-25T13:47:29.000Z">
+<meta property="og:updated_time" content="2017-02-05T09:18:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="021 Merge Two Sorted Lists">
 <meta name="twitter:description" content="Leetcode 021，关于合并两个有序单链表的相关操作。">
@@ -400,9 +400,13 @@
       
         <p>Leetcode 021，关于合并两个有序单链表的相关操作。<br><a id="more"></a></p>
 <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.</p>
-<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>由于是有序单链表，所以直接进行比较生成一个新的单链表即可。</p>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><h3 id="链表头直接比较"><a href="#链表头直接比较" class="headerlink" title="链表头直接比较"></a>链表头直接比较</h3><p>由于是有序单链表，所以直接进行比较生成一个新的单链表即可。</p>
 <p>具体代码见下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Definition for singly-linked list.</div><div class="line"> * struct ListNode &#123;</div><div class="line"> *     int val;</div><div class="line"> *     ListNode *next;</div><div class="line"> *     ListNode(int x) : val(x), next(NULL) &#123;&#125;</div><div class="line"> * &#125;;</div><div class="line"> */</div><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function">ListNode* <span class="title">mergeTwoLists</span><span class="params">(ListNode* l1, ListNode* l2)</span> </span>&#123;</div><div class="line">        ListNode* result = <span class="literal">NULL</span>;</div><div class="line">        <span class="keyword">if</span>(l1 == <span class="literal">NULL</span>)&#123;</div><div class="line">            <span class="keyword">if</span>(l2 == <span class="literal">NULL</span>)&#123;</div><div class="line">                <span class="keyword">return</span> result;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                result = l2;</div><div class="line">                l2 = l2-&gt;next;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(l2 == <span class="literal">NULL</span>)&#123;</div><div class="line">            result = l1;</div><div class="line">            l1 = l1-&gt;next;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            <span class="keyword">if</span>(l1-&gt;val &gt; l2-&gt;val)&#123;</div><div class="line">                result = l2;</div><div class="line">                l2 = l2-&gt;next;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                result = l1;</div><div class="line">                l1 = l1-&gt;next;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        ListNode* head = result;</div><div class="line">        <span class="keyword">while</span>(l1 != <span class="literal">NULL</span> || l2 != <span class="literal">NULL</span>)&#123;</div><div class="line">            <span class="keyword">if</span>(l1 == <span class="literal">NULL</span>)&#123;</div><div class="line">                result-&gt;next = l2;</div><div class="line">                result = result-&gt;next;</div><div class="line">                l2 = l2-&gt;next;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(l2 == <span class="literal">NULL</span>)&#123;</div><div class="line">                result -&gt;next = l1;</div><div class="line">                result = result-&gt;next;</div><div class="line">                l1 = l1-&gt;next;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                <span class="keyword">if</span>(l1-&gt;val &gt; l2-&gt;val)&#123;</div><div class="line">                    result-&gt;next = l2;</div><div class="line">                    result = result-&gt;next;</div><div class="line">                    l2 = l2-&gt;next;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span>&#123;</div><div class="line">                    result -&gt;next = l1;</div><div class="line">                    result = result-&gt;next;</div><div class="line">                    l1 = l1-&gt;next;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        result-&gt;next = <span class="literal">NULL</span>;</div><div class="line">        <span class="keyword">return</span> head;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="以一条链表为基准"><a href="#以一条链表为基准" class="headerlink" title="以一条链表为基准"></a>以一条链表为基准</h3><p>较之之前的方法，这种的一大优点就是它以一条链表作为基准进行比较，即假定next是l1，如果l2更小则将l2插入其中，否则直接移动l1。充分利用了原先的链表，减少了一些操作。</p>
+<p>这种操作也可以被认为是归并操作中的<a href="https://zh.wikipedia.org/wiki/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F#.E8.BF.AD.E4.BB.A3.E6.B3.95" target="_blank" rel="external">迭代法</a>。</p>
+<p>具体代码见下，运行时间为12ms</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function">ListNode* <span class="title">mergeTwoLists</span><span class="params">(ListNode* l1, ListNode* l2)</span> </span>&#123;</div><div class="line">        ListNode* result = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">        ListNode* head = result;</div><div class="line">        result-&gt;next = l1;</div><div class="line">        <span class="keyword">while</span>(l1 != <span class="literal">NULL</span> &amp;&amp; l2 != <span class="literal">NULL</span>)&#123;</div><div class="line">            <span class="keyword">if</span>(l1-&gt;val &gt; l2-&gt;val)&#123;</div><div class="line">                result-&gt;next = l2;</div><div class="line">                l2 = l2-&gt;next;</div><div class="line">                result-&gt;next-&gt;next = l1;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                l1 = l1-&gt;next;</div><div class="line">            &#125;</div><div class="line">            result = result-&gt;next;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(l2 != <span class="literal">NULL</span>)&#123;</div><div class="line">            result-&gt;next = l2;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> head-&gt;next;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
       
     </div>
 
@@ -428,6 +432,8 @@
             <a href="/tags/cpp/" rel="tag"># cpp</a>
           
             <a href="/tags/linklist/" rel="tag"># linklist</a>
+          
+            <a href="/tags/merge-sort/" rel="tag"># merge sort</a>
           
         </div>
       
@@ -543,7 +549,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-count">26</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -560,7 +566,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">19</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
@@ -615,7 +621,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目"><span class="nav-number">1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解题思路"><span class="nav-number">2.</span> <span class="nav-text">解题思路</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目"><span class="nav-number">1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解题思路"><span class="nav-number">2.</span> <span class="nav-text">解题思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#链表头直接比较"><span class="nav-number">2.1.</span> <span class="nav-text">链表头直接比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#以一条链表为基准"><span class="nav-number">2.2.</span> <span class="nav-text">以一条链表为基准</span></a></li></ol></li></ol></div>
             
 
           </div>
