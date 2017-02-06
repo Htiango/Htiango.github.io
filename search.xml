@@ -3,6 +3,13 @@
   
     
     <entry>
+      <title><![CDATA[025 Reverse Nodes in k-Group]]></title>
+      <url>%2F2017%2F02%2F06%2FLeetcode-025%2F</url>
+      <content type="text"><![CDATA[Leetcode 025，关于交换链表中每k个节点的相关操作。 题目Given a linked list, reverse the nodes of a linked list k at a time and return its modified list. k is a positive integer and is less than or equal to the length of the linked list. If the number of nodes is not a multiple of k then left-out nodes in the end should remain as it is. You may not alter the values in the nodes, only nodes itself may be changed. Only constant memory is allowed. For example,Given this linked list: 1-&gt;2-&gt;3-&gt;4-&gt;5 For k = 2, you should return: 2-&gt;1-&gt;4-&gt;3-&gt;5 For k = 3, you should return: 3-&gt;2-&gt;1-&gt;4-&gt;5 解题思路本题的方法是用stack来对每k个链表进行reverse，如果剩余部分不够k长度，则保持原有的链表不进行reverse。 代码见下： 1234567891011121314151617181920212223242526272829303132333435class Solution &#123;public: ListNode* temp = new ListNode(0); ListNode* result = temp; ListNode* node; ListNode* reverseKGroup(ListNode* head, int k) &#123; while(head!=NULL)&#123; generateList(head, k); head = node; &#125; return result-&gt;next; &#125; void generateList(ListNode* head, int k)&#123; stack&lt;ListNode*&gt; stack; ListNode* temp2 = head; while(k &gt; 0)&#123; stack.push(head); if(head == NULL)&#123; temp-&gt;next = temp2; node = head; return; &#125; head = head-&gt;next; k--; &#125; while(!stack.empty())&#123; temp-&gt;next = stack.top(); temp = temp-&gt;next; temp-&gt;next = NULL; stack.pop(); &#125; node = head; &#125;&#125;;]]></content>
+    </entry>
+
+    
+    <entry>
       <title><![CDATA[024 Swap Nodes in Pairs]]></title>
       <url>%2F2017%2F02%2F06%2FLeetcode-024%2F</url>
       <content type="text"><![CDATA[Leetcode 024，关于交换链表中每两个节点的相关操作。 题目Given a linked list, swap every two adjacent nodes and return its head. For example,Given 1-&gt;2-&gt;3-&gt;4, you should return the list as 2-&gt;1-&gt;4-&gt;3. Your algorithm should use only constant space. You may not modify the values in the list, only nodes itself can be changed. 解题思路对于本题而言，只需要交换节点即可，注意指针的指向，基本没有大问题。 1234567891011121314151617181920212223class Solution &#123;public: ListNode* swapPairs(ListNode* head) &#123; ListNode* temp = new ListNode(0); ListNode* result = temp; while(head != NULL)&#123; ListNode* first = head; ListNode* second = head-&gt;next; if(second != NULL)&#123; head = second-&gt;next; temp-&gt;next = second; temp-&gt;next-&gt;next = first; temp-&gt;next-&gt;next-&gt;next = NULL; temp = temp-&gt;next-&gt;next; &#125; else&#123; temp-&gt;next = first; break; &#125; &#125; return result-&gt;next; &#125;&#125;;]]></content>
