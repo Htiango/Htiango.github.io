@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="cpp,string,number," />
+  <meta name="keywords" content="tianyuh, Navie" />
 
 
 
@@ -84,16 +84,15 @@
 
 
 
-<meta name="description" content="Leetcode 012，关于数字转罗马数相关处理。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="012 Integer to Roman">
-<meta property="og:url" content="http://tianyuh.com/2017/01/19/Leetcode-012/index.html">
+<meta name="description" content="Why so serious!">
+<meta property="og:type" content="website">
+<meta property="og:title" content="塞外麾下炙">
+<meta property="og:url" content="http://tianyuh.com/tags/hash-table/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
-<meta property="og:description" content="Leetcode 012，关于数字转罗马数相关处理。">
-<meta property="og:updated_time" content="2017-01-19T09:42:35.000Z">
+<meta property="og:description" content="Why so serious!">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="012 Integer to Roman">
-<meta name="twitter:description" content="Leetcode 012，关于数字转罗马数相关处理。">
+<meta name="twitter:title" content="塞外麾下炙">
+<meta name="twitter:description" content="Why so serious!">
 
 
 
@@ -121,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://tianyuh.com/2017/01/19/Leetcode-012/"/>
+  <link rel="canonical" href="http://tianyuh.com/tags/hash-table/"/>
 
 
 
 
 
-  <title> 012 Integer to Roman | 塞外麾下炙 </title>
+  <title> Tag: hash table | 塞外麾下炙 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -167,7 +166,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
+  <div class="container one-collumn sidebar-position-left  ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -290,207 +289,46 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/01/19/Leetcode-012/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Tianyu Hong">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="http://oh1ulkf4j.qnssl.com/gravatar2.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="塞外麾下炙">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="塞外麾下炙" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                012 Integer to Roman
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-19T17:38:27+08:00">
-                2017-01-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">Leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <a href="/2017/01/19/Leetcode-012/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/19/Leetcode-012/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>Leetcode 012，关于数字转罗马数相关处理。<br><a id="more"></a></p>
-<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>Given an integer, convert it to a roman numeral.</p>
-<p>Input is guaranteed to be within the range from 1 to 3999.</p>
-<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>对于这道题而言，难度主要是在对罗马数的理解上，可以通过查阅wiki得到。再从较大的罗马数开始进行逐步判断。</p>
-<p>具体代码见下，总运行时间为32ms</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div></pre></td><td class="code"><pre><div class="line">class Solution &#123;</div><div class="line">public:</div><div class="line">    string intToRoman(int num) &#123;</div><div class="line">        vector&lt;char&gt; vec;</div><div class="line">        int temp = num;</div><div class="line">        while(temp - 1000 &gt;= 0)&#123;</div><div class="line">            vec.push_back('M');</div><div class="line">            temp -= 1000;</div><div class="line">        &#125;</div><div class="line">        if(1000 - temp &lt;= 100)&#123;</div><div class="line">            vec.push_back('C');</div><div class="line">            vec.push_back('M');</div><div class="line">            temp -= 900;</div><div class="line">        &#125;</div><div class="line">        if(temp - 500 &gt;= 0)&#123;</div><div class="line">            vec.push_back('D');</div><div class="line">            temp -= 500;</div><div class="line">        &#125;</div><div class="line">        if(500 - temp &lt;= 100)&#123;</div><div class="line">            vec.push_back('C');</div><div class="line">            vec.push_back('D');</div><div class="line">            temp -= 400;</div><div class="line">        &#125;</div><div class="line">        while(temp - 100 &gt;= 0)&#123;</div><div class="line">            vec.push_back('C');</div><div class="line">            temp -= 100;</div><div class="line">        &#125;</div><div class="line">        if(100 - temp &lt;= 10)&#123;</div><div class="line">            vec.push_back('X');</div><div class="line">            vec.push_back('C');</div><div class="line">            temp -= 90;</div><div class="line">        &#125;</div><div class="line">        if(temp - 50 &gt;= 0)&#123;</div><div class="line">            vec.push_back('L');</div><div class="line">            temp -= 50;</div><div class="line">        &#125;</div><div class="line">        if(50 - temp &lt;= 10)&#123;</div><div class="line">            vec.push_back('X');</div><div class="line">            vec.push_back('L');</div><div class="line">            temp -= 40;</div><div class="line">        &#125;</div><div class="line">        while(temp - 10 &gt;= 0)&#123;</div><div class="line">            vec.push_back('X');</div><div class="line">            temp -= 10;</div><div class="line">        &#125;</div><div class="line">        if(10 - temp &lt;= 1)&#123;</div><div class="line">            vec.push_back('I');</div><div class="line">            vec.push_back('X');</div><div class="line">            temp -= 9;</div><div class="line">        &#125;</div><div class="line">        if(temp - 5 &gt;= 0)&#123;</div><div class="line">            vec.push_back('V');</div><div class="line">            temp -= 5;</div><div class="line">        &#125;</div><div class="line">        if(5 - temp &lt;= 1)&#123;</div><div class="line">            vec.push_back('I');</div><div class="line">            vec.push_back('V');</div><div class="line">            temp -= 4;</div><div class="line">        &#125;</div><div class="line">        while(temp - 1 &gt;= 0)&#123;</div><div class="line">            vec.push_back('I');</div><div class="line">            temp -= 1;</div><div class="line">        &#125;</div><div class="line">        string str(vec.begin(), vec.end());</div><div class="line">        return str;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-      
+  <div id="posts" class="posts-collapse">
+    <div class="collection-title">
+      <h2 >
+        hash table
+        <small>Tag</small>
+      </h2>
     </div>
 
-    <div>
+    
       
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h1 class="post-title">
         
-
-      
-    </div>
-
-    <div>
-      
+            <a class="post-title-link" href="/2017/02/07/Leetcode-030/" itemprop="url">
+              
+                <span itemprop="name">030 Substring with Concatenation of All Words</span>
+              
+            </a>
         
+      </h1>
 
-      
-    </div>
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2017-02-07T15:32:49+08:00"
+              content="2017-02-07" >
+          02-07
+        </time>
+      </div>
 
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/cpp/" rel="tag"># cpp</a>
-          
-            <a href="/tags/string/" rel="tag"># string</a>
-          
-            <a href="/tags/number/" rel="tag"># number</a>
-          
-        </div>
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/01/19/Leetcode-011/" rel="next" title="011 Container With Most Water">
-                <i class="fa fa-chevron-left"></i> 011 Container With Most Water
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/01/19/Leetcode-013/" rel="prev" title="013 Roman to Integer">
-                013 Roman to Integer <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
+    </header>
   </article>
 
 
-
-    <div class="post-spread">
-      
-        <!-- JiaThis Button BEGIN -->
-<div class="jiathis_style">
-  <a class="jiathis_button_tsina"></a>
-  <a class="jiathis_button_tqq"></a>
-  <a class="jiathis_button_weixin"></a>
-  <a class="jiathis_button_cqq"></a>
-  <a class="jiathis_button_douban"></a>
-  <a class="jiathis_button_renren"></a>
-  <a class="jiathis_button_qzone"></a>
-  <a class="jiathis_button_kaixin001"></a>
-  <a class="jiathis_button_copy"></a>
-  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
-  <a class="jiathis_counter_style"></a>
-</div>
-<script type="text/javascript" >
-  var jiathis_config={
-    hideMore:false
-  }
-</script>
-<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
-<!-- JiaThis Button END -->
-
-      
-    </div>
+    
   </div>
+
+  
 
 
           </div>
@@ -498,14 +336,6 @@
 
 
           
-  <div class="comments" id="comments">
-    
-      <div class="ds-thread" data-thread-key="2017/01/19/Leetcode-012/"
-           data-title="012 Integer to Roman" data-url="http://tianyuh.com/2017/01/19/Leetcode-012/">
-      </div>
-    
-  </div>
-
 
         </div>
         
@@ -525,17 +355,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://oh1ulkf4j.qnssl.com/gravatar2.jpg"
@@ -608,22 +429,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目"><span class="nav-number">1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解题思路"><span class="nav-number">2.</span> <span class="nav-text">解题思路</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
     </div>
@@ -722,10 +527,6 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
-
-
 
   
 
