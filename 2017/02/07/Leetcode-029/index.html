@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="cpp,number," />
+  <meta name="keywords" content="cpp,binary search," />
 
 
 
@@ -84,16 +84,16 @@
 
 
 
-<meta name="description" content="Leetcode 007，关于数字取反相关处理。">
+<meta name="description" content="Leetcode 029，不用乘除法获得除法运算结果的相关操作。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="007 Reverse Integer">
-<meta property="og:url" content="http://tianyuh.com/2017/01/16/Leetcode-007/index.html">
+<meta property="og:title" content="029 Divide Two Integers">
+<meta property="og:url" content="http://tianyuh.com/2017/02/07/Leetcode-029/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
-<meta property="og:description" content="Leetcode 007，关于数字取反相关处理。">
-<meta property="og:updated_time" content="2017-01-16T10:31:24.000Z">
+<meta property="og:description" content="Leetcode 029，不用乘除法获得除法运算结果的相关操作。">
+<meta property="og:updated_time" content="2017-02-07T03:36:38.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="007 Reverse Integer">
-<meta name="twitter:description" content="Leetcode 007，关于数字取反相关处理。">
+<meta name="twitter:title" content="029 Divide Two Integers">
+<meta name="twitter:description" content="Leetcode 029，不用乘除法获得除法运算结果的相关操作。">
 
 
 
@@ -121,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://tianyuh.com/2017/01/16/Leetcode-007/"/>
+  <link rel="canonical" href="http://tianyuh.com/2017/02/07/Leetcode-029/"/>
 
 
 
 
 
-  <title> 007 Reverse Integer | 塞外麾下炙 </title>
+  <title> 029 Divide Two Integers | 塞外麾下炙 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -300,7 +300,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/01/16/Leetcode-007/">
+  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/02/07/Leetcode-029/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Tianyu Hong">
@@ -324,7 +324,7 @@
             
             
               
-                007 Reverse Integer
+                029 Divide Two Integers
               
             
           </h1>
@@ -337,8 +337,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-16T18:25:45+08:00">
-                2017-01-16
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-07T11:27:11+08:00">
+                2017-02-07
               </time>
             
 
@@ -371,8 +371,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2017/01/16/Leetcode-007/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/16/Leetcode-007/" itemprop="commentCount"></span>
+                <a href="/2017/02/07/Leetcode-029/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/07/Leetcode-029/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -398,11 +398,14 @@
       
 
       
-        <p>Leetcode 007，关于数字取反相关处理。<br><a id="more"></a></p>
-<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>Reverse digits of an integer.</p>
-<p>Example1: x = 123, return 321<br>Example2: x = -123, return -321</p>
-<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>方法很简单，即用循环取余的方法，在此不作赘述。这里唯一需要注意的是当转换后的数字超出int的范围时要返回0，所以需要在循环中进行判断。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">reverse</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> result = <span class="number">0</span>, temp = <span class="number">1</span>;</div><div class="line">        <span class="keyword">if</span>(x &lt; <span class="number">0</span>)&#123;</div><div class="line">            x = <span class="built_in">abs</span>(x);</div><div class="line">            temp = <span class="number">-1</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">while</span>(x != <span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">if</span>(INT_MAX / <span class="number">10</span> &lt; result)</div><div class="line">                <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">            result *= <span class="number">10</span>;</div><div class="line">            <span class="keyword">if</span>(INT_MAX - (x % <span class="number">10</span>) &lt; result)</div><div class="line">                <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">            result += x % <span class="number">10</span>;</div><div class="line">            x /= <span class="number">10</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> temp * result;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+        <p>Leetcode 029，不用乘除法获得除法运算结果的相关操作。<br><a id="more"></a></p>
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>Divide two integers without using multiplication, division and mod operator.</p>
+<p>If it is overflow, return MAX_INT.</p>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>本题的主要思路是利用binary search配合位的移动来实现。</p>
+<p>将除数按位向左移动直至比被除数大或相等，被除数减去其右移一位得到此时的“余数”。对余数重复进行上述操作直至最后余数小于除数为止。</p>
+<p>本题特别需要注意的是，int的范围。由于在左移的过程中有可能超出范围，所以在本题中我采用的是long形式来避免这种情况。</p>
+<p>代码见下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="keyword">int</span> MAX_INT = <span class="number">2147483647</span>;</div><div class="line">    <span class="keyword">int</span> result = <span class="number">0</span>;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">divide</span><span class="params">(<span class="keyword">int</span> dividend, <span class="keyword">int</span> divisor)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(dividend == <span class="number">-2147483648</span> &amp;&amp; divisor == <span class="number">-1</span>)</div><div class="line">            <span class="keyword">return</span> MAX_INT;</div><div class="line">        <span class="keyword">bool</span> flag;</div><div class="line">        <span class="keyword">if</span>(dividend &lt; <span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">if</span>(divisor &gt; <span class="number">0</span>)</div><div class="line">                flag = <span class="literal">false</span>;</div><div class="line">            <span class="keyword">else</span></div><div class="line">                flag = <span class="literal">true</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            <span class="keyword">if</span>(divisor &gt; <span class="number">0</span>)</div><div class="line">                flag = <span class="literal">true</span>;</div><div class="line">            <span class="keyword">else</span></div><div class="line">                flag = <span class="literal">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">long</span> dummy_dividend = <span class="built_in">abs</span>(<span class="keyword">long</span>(dividend));</div><div class="line">        <span class="keyword">long</span> dummy_divisor = <span class="built_in">abs</span>(<span class="keyword">long</span>(divisor));</div><div class="line">        <span class="keyword">if</span>(dummy_dividend &lt; dummy_divisor)</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span>(dummy_dividend &gt;= dummy_divisor)&#123;</div><div class="line">            dummy_dividend = getRe(dummy_dividend, dummy_divisor);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(flag)</div><div class="line">            <span class="keyword">return</span> result;</div><div class="line">        <span class="keyword">else</span></div><div class="line">            <span class="keyword">return</span> (~result + <span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getRe</span><span class="params">(<span class="keyword">long</span> dividend, <span class="keyword">long</span> divisor)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span>(dividend &gt; divisor)&#123;</div><div class="line">            divisor = divisor&lt;&lt;<span class="number">1</span>;</div><div class="line">            count ++;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(dividend == divisor)&#123;</div><div class="line">            result += <span class="number">1</span> &lt;&lt; count; </div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            result += <span class="number">1</span> &lt;&lt; (count <span class="number">-1</span>);</div><div class="line">            <span class="keyword">return</span> dividend - (divisor &gt;&gt; <span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+
       
     </div>
 
@@ -427,7 +430,7 @@
           
             <a href="/tags/cpp/" rel="tag"># cpp</a>
           
-            <a href="/tags/number/" rel="tag"># number</a>
+            <a href="/tags/binary-search/" rel="tag"># binary search</a>
           
         </div>
       
@@ -436,8 +439,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/16/Leetcode-006/" rel="next" title="006 ZigZag Conversion">
-                <i class="fa fa-chevron-left"></i> 006 ZigZag Conversion
+              <a href="/2017/02/06/Leetcode-028/" rel="next" title="028 Implement strStr()">
+                <i class="fa fa-chevron-left"></i> 028 Implement strStr()
               </a>
             
           </div>
@@ -445,10 +448,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/01/16/Leetcode-008/" rel="prev" title="008 String to Integer (atoi)">
-                008 String to Integer (atoi) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -497,8 +496,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/01/16/Leetcode-007/"
-           data-title="007 Reverse Integer" data-url="http://tianyuh.com/2017/01/16/Leetcode-007/">
+      <div class="ds-thread" data-thread-key="2017/02/07/Leetcode-029/"
+           data-title="029 Divide Two Integers" data-url="http://tianyuh.com/2017/02/07/Leetcode-029/">
       </div>
     
   </div>

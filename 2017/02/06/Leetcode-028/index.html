@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="cpp,number," />
+  <meta name="keywords" content="cpp,string," />
 
 
 
@@ -84,16 +84,16 @@
 
 
 
-<meta name="description" content="Leetcode 007，关于数字取反相关处理。">
+<meta name="description" content="Leetcode 028，关于找出字符串中某一子集开始的位置的相关操作。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="007 Reverse Integer">
-<meta property="og:url" content="http://tianyuh.com/2017/01/16/Leetcode-007/index.html">
+<meta property="og:title" content="028 Implement strStr()">
+<meta property="og:url" content="http://tianyuh.com/2017/02/06/Leetcode-028/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
-<meta property="og:description" content="Leetcode 007，关于数字取反相关处理。">
-<meta property="og:updated_time" content="2017-01-16T10:31:24.000Z">
+<meta property="og:description" content="Leetcode 028，关于找出字符串中某一子集开始的位置的相关操作。">
+<meta property="og:updated_time" content="2017-02-07T03:27:59.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="007 Reverse Integer">
-<meta name="twitter:description" content="Leetcode 007，关于数字取反相关处理。">
+<meta name="twitter:title" content="028 Implement strStr()">
+<meta name="twitter:description" content="Leetcode 028，关于找出字符串中某一子集开始的位置的相关操作。">
 
 
 
@@ -121,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://tianyuh.com/2017/01/16/Leetcode-007/"/>
+  <link rel="canonical" href="http://tianyuh.com/2017/02/06/Leetcode-028/"/>
 
 
 
 
 
-  <title> 007 Reverse Integer | 塞外麾下炙 </title>
+  <title> 028 Implement strStr() | 塞外麾下炙 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -300,7 +300,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/01/16/Leetcode-007/">
+  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/02/06/Leetcode-028/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Tianyu Hong">
@@ -324,7 +324,7 @@
             
             
               
-                007 Reverse Integer
+                028 Implement strStr()
               
             
           </h1>
@@ -337,8 +337,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-16T18:25:45+08:00">
-                2017-01-16
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-06T15:36:15+08:00">
+                2017-02-06
               </time>
             
 
@@ -371,8 +371,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2017/01/16/Leetcode-007/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/16/Leetcode-007/" itemprop="commentCount"></span>
+                <a href="/2017/02/06/Leetcode-028/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/06/Leetcode-028/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -398,11 +398,14 @@
       
 
       
-        <p>Leetcode 007，关于数字取反相关处理。<br><a id="more"></a></p>
-<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>Reverse digits of an integer.</p>
-<p>Example1: x = 123, return 321<br>Example2: x = -123, return -321</p>
-<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>方法很简单，即用循环取余的方法，在此不作赘述。这里唯一需要注意的是当转换后的数字超出int的范围时要返回0，所以需要在循环中进行判断。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">reverse</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> result = <span class="number">0</span>, temp = <span class="number">1</span>;</div><div class="line">        <span class="keyword">if</span>(x &lt; <span class="number">0</span>)&#123;</div><div class="line">            x = <span class="built_in">abs</span>(x);</div><div class="line">            temp = <span class="number">-1</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">while</span>(x != <span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">if</span>(INT_MAX / <span class="number">10</span> &lt; result)</div><div class="line">                <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">            result *= <span class="number">10</span>;</div><div class="line">            <span class="keyword">if</span>(INT_MAX - (x % <span class="number">10</span>) &lt; result)</div><div class="line">                <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">            result += x % <span class="number">10</span>;</div><div class="line">            x /= <span class="number">10</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> temp * result;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+        <p>Leetcode 028，关于找出字符串中某一子集开始的位置的相关操作。<br><a id="more"></a></p>
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>Implement strStr().</p>
+<p>Returns the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.</p>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>采用string中的find函数一步到位。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">size_t</span> find (<span class="keyword">const</span> <span class="built_in">string</span>&amp; str, <span class="keyword">size_t</span> pos = <span class="number">0</span>) <span class="keyword">const</span>;</div></pre></td></tr></table></figure>
+<p>函数中如果未找到，则返回string::npos，即-1.</p>
+<p>代码见下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">strStr</span><span class="params">(<span class="built_in">string</span> haystack, <span class="built_in">string</span> needle)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> haystack.find(needle);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
       
     </div>
 
@@ -427,7 +430,7 @@
           
             <a href="/tags/cpp/" rel="tag"># cpp</a>
           
-            <a href="/tags/number/" rel="tag"># number</a>
+            <a href="/tags/string/" rel="tag"># string</a>
           
         </div>
       
@@ -436,8 +439,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/16/Leetcode-006/" rel="next" title="006 ZigZag Conversion">
-                <i class="fa fa-chevron-left"></i> 006 ZigZag Conversion
+              <a href="/2017/02/06/Leetcode-027/" rel="next" title="027 Remove Element">
+                <i class="fa fa-chevron-left"></i> 027 Remove Element
               </a>
             
           </div>
@@ -446,8 +449,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/01/16/Leetcode-008/" rel="prev" title="008 String to Integer (atoi)">
-                008 String to Integer (atoi) <i class="fa fa-chevron-right"></i>
+              <a href="/2017/02/07/Leetcode-029/" rel="prev" title="029 Divide Two Integers">
+                029 Divide Two Integers <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -497,8 +500,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/01/16/Leetcode-007/"
-           data-title="007 Reverse Integer" data-url="http://tianyuh.com/2017/01/16/Leetcode-007/">
+      <div class="ds-thread" data-thread-key="2017/02/06/Leetcode-028/"
+           data-title="028 Implement strStr()" data-url="http://tianyuh.com/2017/02/06/Leetcode-028/">
       </div>
     
   </div>

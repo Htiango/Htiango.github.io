@@ -3,7 +3,21 @@
   
     
     <entry>
-      <title><![CDATA[Leetcode-027]]></title>
+      <title><![CDATA[029 Divide Two Integers]]></title>
+      <url>%2F2017%2F02%2F07%2FLeetcode-029%2F</url>
+      <content type="text"><![CDATA[Leetcode 029，不用乘除法获得除法运算结果的相关操作。 题目Divide two integers without using multiplication, division and mod operator. If it is overflow, return MAX_INT. 解题思路本题的主要思路是利用binary search配合位的移动来实现。 将除数按位向左移动直至比被除数大或相等，被除数减去其右移一位得到此时的“余数”。对余数重复进行上述操作直至最后余数小于除数为止。 本题特别需要注意的是，int的范围。由于在左移的过程中有可能超出范围，所以在本题中我采用的是long形式来避免这种情况。 代码见下：12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849class Solution &#123;public: int MAX_INT = 2147483647; int result = 0; int divide(int dividend, int divisor) &#123; if(dividend == -2147483648 &amp;&amp; divisor == -1) return MAX_INT; bool flag; if(dividend &lt; 0)&#123; if(divisor &gt; 0) flag = false; else flag = true; &#125; else&#123; if(divisor &gt; 0) flag = true; else flag = false; &#125; long dummy_dividend = abs(long(dividend)); long dummy_divisor = abs(long(divisor)); if(dummy_dividend &lt; dummy_divisor) return 0; while(dummy_dividend &gt;= dummy_divisor)&#123; dummy_dividend = getRe(dummy_dividend, dummy_divisor); &#125; if(flag) return result; else return (~result + 1); &#125; int getRe(long dividend, long divisor)&#123; int count = 0; while(dividend &gt; divisor)&#123; divisor = divisor&lt;&lt;1; count ++; &#125; if(dividend == divisor)&#123; result += 1 &lt;&lt; count; return 0; &#125; else&#123; result += 1 &lt;&lt; (count -1); return dividend - (divisor &gt;&gt; 1); &#125; &#125;&#125;;]]></content>
+    </entry>
+
+    
+    <entry>
+      <title><![CDATA[028 Implement strStr()]]></title>
+      <url>%2F2017%2F02%2F06%2FLeetcode-028%2F</url>
+      <content type="text"><![CDATA[Leetcode 028，关于找出字符串中某一子集开始的位置的相关操作。 题目Implement strStr(). Returns the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack. 解题思路采用string中的find函数一步到位。 1size_t find (const string&amp; str, size_t pos = 0) const; 函数中如果未找到，则返回string::npos，即-1. 代码见下： 123456class Solution &#123;public: int strStr(string haystack, string needle) &#123; return haystack.find(needle); &#125;&#125;;]]></content>
+    </entry>
+
+    
+    <entry>
+      <title><![CDATA[027 Remove Element]]></title>
       <url>%2F2017%2F02%2F06%2FLeetcode-027%2F</url>
       <content type="text"><![CDATA[Leetcode 027，关于去除数组中某一个值的相关操作。 题目Given an array and a value, remove all instances of that value in place and return the new length. Do not allocate extra space for another array, you must do this in place with constant memory. The order of elements can be changed. It doesn’t matter what you leave beyond the new length. Example:Given input array nums = [3,2,2,3], val = 3 Your function should return length = 2, with the first two elements of nums being 2. 解题思路本题的方法是用two pointer的方法，将不为该值的元素放在前n个数组中，最后在对数组进行resize即可 代码见下： 123456789101112131415class Solution &#123;public: int removeElement(vector&lt;int&gt;&amp; nums, int val) &#123; int i = 0; int size = nums.size(); for(int j = 0; j &lt; size; j++)&#123; if(nums[j] != val)&#123; nums[i] = nums[j]; i++; &#125; &#125; nums.resize(i); return i; &#125;&#125;;]]></content>
     </entry>
