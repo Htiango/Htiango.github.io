@@ -3,6 +3,20 @@
   
     
     <entry>
+      <title><![CDATA[Leetcode-036]]></title>
+      <url>%2F2017%2F02%2F10%2FLeetcode-036%2F</url>
+      <content type="text"><![CDATA[Leetcode 036，关于判断数独是否正确的相关操作。 题目Determine if a Sudoku is valid, according to: Sudoku Puzzles - The Rules. The Sudoku board could be partially filled, where empty cells are filled with the character ‘.’. 解题思路分别判断行、列、每个九宫格是否valid（各9个） 代码见下 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061class Solution &#123;public: bool isValidSudoku(vector&lt;vector&lt;char&gt;&gt;&amp; board) &#123; for(int i = 0; i &lt; 9; i++)&#123; if(!isValidRow(board[i]) || !isValidColumn(board, i) || !isValidBox(board, i))&#123; return false; &#125; &#125; return true; &#125; bool isValidRow(vector&lt;char&gt;&amp; board)&#123; unordered_map&lt;char, int&gt; charMap; for(int i = 0; i &lt; 9; i++)&#123; if(charMap.count(board[i]) &gt; 0)&#123; if(board[i] != '.') return false; &#125; else&#123; charMap[board[i]] = 1; &#125; &#125; return true; &#125; bool isValidColumn(vector&lt;vector&lt;char&gt;&gt;&amp; board, int index)&#123; unordered_map&lt;char, int&gt; charMap; char temp; for(int i = 0; i &lt; 9; i++)&#123; temp = board[i][index]; if(charMap.count(temp) &gt; 0)&#123; if(temp != '.') return false; &#125; else&#123; charMap[temp] = 1; &#125; &#125; return true; &#125; bool isValidBox(vector&lt;vector&lt;char&gt;&gt;&amp; board, int index)&#123; unordered_map&lt;char, int&gt; charMap; int row = index / 3; int column = index % 3; char temp; for(int i = 0; i &lt; 3; i++)&#123; for(int j = 0; j &lt; 3; j++)&#123; temp = board[row * 3 + i][column * 3 + j]; if(charMap.count(temp) &gt; 0)&#123; if(temp != '.') return false; &#125; else&#123; charMap[temp] = 1; &#125; &#125; &#125; return true; &#125;&#125;;]]></content>
+    </entry>
+
+    
+    <entry>
+      <title><![CDATA[035 Search Insert Position]]></title>
+      <url>%2F2017%2F02%2F09%2FLeetcode-035%2F</url>
+      <content type="text"><![CDATA[Leetcode 035，关于找到某元素在sorted array中的位置相关操作。 题目Given a sorted array and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order. You may assume no duplicates in the array. Here are few examples.[1,3,5,6], 5 → 2 [1,3,5,6], 2 → 1 [1,3,5,6], 7 → 4 [1,3,5,6], 0 → 0 解题思路同样也是采用二分法，本题比较简单，具体代码见下 123456789101112131415161718192021222324class Solution &#123;public: int searchInsert(vector&lt;int&gt;&amp; nums, int target) &#123; int size = nums.size(); if(size == 0) return 0; int start = 0, end = size - 1, mid; while(start &lt; end)&#123; mid = (start + end) / 2; if(target &gt; nums[mid]) start = mid + 1; else end = mid; &#125; if(nums[start] == target) return start; else&#123; if(nums[start] &lt; target) return start + 1; else return start; &#125; &#125;&#125;;]]></content>
+    </entry>
+
+    
+    <entry>
       <title><![CDATA[034 Search for a Range]]></title>
       <url>%2F2017%2F02%2F09%2FLeetcode-034%2F</url>
       <content type="text"><![CDATA[Leetcode 034，关于从sorted array中找出某元素范围的相关操作。 题目Given an array of integers sorted in ascending order, find the starting and ending position of a given target value. Your algorithm’s runtime complexity must be in the order of O(log n). If the target is not found in the array, return [-1, -1]. For example,Given [5, 7, 7, 8, 8, 10] and target value 8,return [3, 4]. 解题思路本题采用二分法来解，分别找出有序数组中该元素第一次出现的位置和最后一次出现的位置。 代码见下： 123456789101112131415161718192021222324252627282930313233class Solution &#123;public: vector&lt;int&gt; searchRange(vector&lt;int&gt;&amp; nums, int target) &#123; vector&lt;int&gt; result(2,-1); int size = nums.size(); if(size == 0) return result; int start = 0, end = size - 1, middle; while(start &lt; end)&#123; middle = (start + end) / 2; if(target &gt; nums[middle]) start = middle + 1; else end = middle; &#125; if(nums[start] != target) return result; else result[0] = start; end = size - 1; while(start &lt; end)&#123; middle = (start + end) / 2 + 1; if(target &lt; nums[middle]) end = middle - 1; else start = middle; &#125; result[1] = start; return result; &#125;&#125;;]]></content>

@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="cpp,string,two pointer,hash table," />
+  <meta name="keywords" content="array,cpp,hash table," />
 
 
 
@@ -84,16 +84,16 @@
 
 
 
-<meta name="description" content="Leetcode 030，不用乘除法获得除法运算结果的相关操作。">
+<meta name="description" content="Leetcode 036，关于判断数独是否正确的相关操作。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="030 Substring with Concatenation of All Words">
-<meta property="og:url" content="http://tianyuh.com/2017/02/07/Leetcode-030/index.html">
+<meta property="og:title" content="Leetcode-036">
+<meta property="og:url" content="http://tianyuh.com/2017/02/10/Leetcode-036/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
-<meta property="og:description" content="Leetcode 030，不用乘除法获得除法运算结果的相关操作。">
-<meta property="og:updated_time" content="2017-02-07T07:55:11.000Z">
+<meta property="og:description" content="Leetcode 036，关于判断数独是否正确的相关操作。">
+<meta property="og:updated_time" content="2017-02-10T15:01:38.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="030 Substring with Concatenation of All Words">
-<meta name="twitter:description" content="Leetcode 030，不用乘除法获得除法运算结果的相关操作。">
+<meta name="twitter:title" content="Leetcode-036">
+<meta name="twitter:description" content="Leetcode 036，关于判断数独是否正确的相关操作。">
 
 
 
@@ -121,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://tianyuh.com/2017/02/07/Leetcode-030/"/>
+  <link rel="canonical" href="http://tianyuh.com/2017/02/10/Leetcode-036/"/>
 
 
 
 
 
-  <title> 030 Substring with Concatenation of All Words | 塞外麾下炙 </title>
+  <title> Leetcode-036 | 塞外麾下炙 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -300,7 +300,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/02/07/Leetcode-030/">
+  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/02/10/Leetcode-036/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Tianyu Hong">
@@ -324,7 +324,7 @@
             
             
               
-                030 Substring with Concatenation of All Words
+                Leetcode-036
               
             
           </h1>
@@ -337,8 +337,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-07T15:32:49+08:00">
-                2017-02-07
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-10T22:57:14+08:00">
+                2017-02-10
               </time>
             
 
@@ -371,8 +371,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2017/02/07/Leetcode-030/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/07/Leetcode-030/" itemprop="commentCount"></span>
+                <a href="/2017/02/10/Leetcode-036/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/10/Leetcode-036/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -398,18 +398,12 @@
       
 
       
-        <p>Leetcode 030，不用乘除法获得除法运算结果的相关操作。<br><a id="more"></a></p>
-<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>You are given a string, s, and a list of words, words, that are all of the same length. Find all starting indices of substring(s) in s that is a concatenation of each word in words exactly once and without any intervening characters.</p>
-<p>For example, given:</p>
-<p>s: “barfoothefoobarman”</p>
-<p>words: [“foo”, “bar”]</p>
-<p>You should return the indices: [0,9].<br>(order does not matter).</p>
-<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>这道题我思考了很久，一开始陷在了str.find()中，后来发现还是str.substr()一步步下来更加方便。</p>
-<p>本题的一大难点就在于需要用一个容器来装载所有的词，以便于在确定一个词后从容器中将该词删除。这就需要我们用到hash table，一种十分便于查询的容器。</p>
-<p>首先我们需要先将vector中的词存到map中，用数字表示其出现的次数。然后用str.substr()遍历整个字符串，看是否存在容器中。</p>
-<p>代码见下：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; findSubstring(<span class="built_in">string</span> s, <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; words) &#123;</div><div class="line">        <span class="built_in">unordered_map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt; wordMap;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; result;</div><div class="line">        <span class="keyword">int</span> wordsNum = words.size();</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; wordsNum; i++)&#123;</div><div class="line">            <span class="keyword">if</span>(wordMap.count(words[i]))</div><div class="line">                wordMap[words[i]]++;</div><div class="line">            <span class="keyword">else</span></div><div class="line">                wordMap[words[i]] = <span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> wordSize = words[<span class="number">0</span>].length();</div><div class="line">        <span class="keyword">int</span> length = s.length() - wordSize * wordsNum;</div><div class="line">        <span class="built_in">string</span> temp;</div><div class="line">        <span class="keyword">bool</span> valid;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= length; i++)&#123;</div><div class="line">            <span class="built_in">unordered_map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt; tempMap = wordMap;</div><div class="line">            valid = <span class="literal">true</span>;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; wordSize*wordsNum; j+=wordSize)&#123;</div><div class="line">                temp = s.substr(i + j, wordSize);</div><div class="line">                <span class="keyword">if</span>(tempMap.count(temp))&#123;</div><div class="line">                    tempMap[temp]--;</div><div class="line">                    <span class="keyword">if</span>(tempMap[temp] &lt; <span class="number">0</span>)&#123;</div><div class="line">                        valid = <span class="literal">false</span>;</div><div class="line">                        <span class="keyword">break</span>;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span>&#123;</div><div class="line">                    valid = <span class="literal">false</span>;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span>(valid)&#123;</div><div class="line">                result.push_back(i);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-
+        <p>Leetcode 036，关于判断数独是否正确的相关操作。<br><a id="more"></a></p>
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>Determine if a Sudoku is valid, according to: <a href="http://sudoku.com.au/TheRules.aspx" target="_blank" rel="external">Sudoku Puzzles - The Rules</a>.</p>
+<p>The Sudoku board could be partially filled, where empty cells are filled with the character ‘.’.</p>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>分别判断行、列、每个九宫格是否valid（各9个）</p>
+<p>代码见下</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isValidSudoku</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt;&amp; board)</span> </span>&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">9</span>; i++)&#123;</div><div class="line">            <span class="keyword">if</span>(!isValidRow(board[i]) || !isValidColumn(board, i) || !isValidBox(board, i))&#123;</div><div class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isValidRow</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&amp; board)</span></span>&#123;</div><div class="line">        <span class="built_in">unordered_map</span>&lt;<span class="keyword">char</span>, <span class="keyword">int</span>&gt; charMap;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">9</span>; i++)&#123;</div><div class="line">            <span class="keyword">if</span>(charMap.count(board[i]) &gt; <span class="number">0</span>)&#123;</div><div class="line">                <span class="keyword">if</span>(board[i] != <span class="string">'.'</span>)</div><div class="line">                    <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                charMap[board[i]] = <span class="number">1</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isValidColumn</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt;&amp; board, <span class="keyword">int</span> index)</span></span>&#123;</div><div class="line">        <span class="built_in">unordered_map</span>&lt;<span class="keyword">char</span>, <span class="keyword">int</span>&gt; charMap;</div><div class="line">        <span class="keyword">char</span> temp;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">9</span>; i++)&#123;</div><div class="line">            temp = board[i][index];</div><div class="line">            <span class="keyword">if</span>(charMap.count(temp) &gt; <span class="number">0</span>)&#123;</div><div class="line">                <span class="keyword">if</span>(temp != <span class="string">'.'</span>)</div><div class="line">                    <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                charMap[temp] = <span class="number">1</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isValidBox</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt;&amp; board, <span class="keyword">int</span> index)</span></span>&#123;</div><div class="line">        <span class="built_in">unordered_map</span>&lt;<span class="keyword">char</span>, <span class="keyword">int</span>&gt; charMap;</div><div class="line">        <span class="keyword">int</span> row = index / <span class="number">3</span>;</div><div class="line">        <span class="keyword">int</span> column = index % <span class="number">3</span>;</div><div class="line">        <span class="keyword">char</span> temp;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++)&#123;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">3</span>; j++)&#123;</div><div class="line">                temp = board[row * <span class="number">3</span> + i][column * <span class="number">3</span> + j];</div><div class="line">                <span class="keyword">if</span>(charMap.count(temp) &gt; <span class="number">0</span>)&#123;</div><div class="line">                    <span class="keyword">if</span>(temp != <span class="string">'.'</span>)</div><div class="line">                        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span>&#123;</div><div class="line">                    charMap[temp] = <span class="number">1</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
       
     </div>
 
@@ -432,11 +426,9 @@
       
         <div class="post-tags">
           
+            <a href="/tags/array/" rel="tag"># array</a>
+          
             <a href="/tags/cpp/" rel="tag"># cpp</a>
-          
-            <a href="/tags/string/" rel="tag"># string</a>
-          
-            <a href="/tags/two-pointer/" rel="tag"># two pointer</a>
           
             <a href="/tags/hash-table/" rel="tag"># hash table</a>
           
@@ -447,8 +439,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/07/Leetcode-029/" rel="next" title="029 Divide Two Integers">
-                <i class="fa fa-chevron-left"></i> 029 Divide Two Integers
+              <a href="/2017/02/09/Leetcode-035/" rel="next" title="035 Search Insert Position">
+                <i class="fa fa-chevron-left"></i> 035 Search Insert Position
               </a>
             
           </div>
@@ -456,10 +448,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/07/Leetcode-031/" rel="prev" title="031 Next Permutation">
-                031 Next Permutation <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -508,8 +496,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/02/07/Leetcode-030/"
-           data-title="030 Substring with Concatenation of All Words" data-url="http://tianyuh.com/2017/02/07/Leetcode-030/">
+      <div class="ds-thread" data-thread-key="2017/02/10/Leetcode-036/"
+           data-title="Leetcode-036" data-url="http://tianyuh.com/2017/02/10/Leetcode-036/">
       </div>
     
   </div>
