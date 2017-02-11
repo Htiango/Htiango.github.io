@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="array,cpp," />
+  <meta name="keywords" content="array,cpp,recursive," />
 
 
 
@@ -84,16 +84,19 @@
 
 
 
-<meta name="description" content="Leetcode 031，将一串数组变为字典序比其大一个的数组的相关操作。">
+<meta name="description" content="Leetcode 037，解数独题的相关操作。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="031 Next Permutation">
-<meta property="og:url" content="http://tianyuh.com/2017/02/07/Leetcode-031/index.html">
+<meta property="og:title" content="037 Sudoku Solver">
+<meta property="og:url" content="http://tianyuh.com/2017/02/11/Leetcode-037/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
-<meta property="og:description" content="Leetcode 031，将一串数组变为字典序比其大一个的数组的相关操作。">
-<meta property="og:updated_time" content="2017-02-08T08:57:31.000Z">
+<meta property="og:description" content="Leetcode 037，解数独题的相关操作。">
+<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/250px-Sudoku-by-L2G-20050714.svg.png">
+<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/250px-Sudoku-by-L2G-20050714_solution.svg.png">
+<meta property="og:updated_time" content="2017-02-11T11:55:48.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="031 Next Permutation">
-<meta name="twitter:description" content="Leetcode 031，将一串数组变为字典序比其大一个的数组的相关操作。">
+<meta name="twitter:title" content="037 Sudoku Solver">
+<meta name="twitter:description" content="Leetcode 037，解数独题的相关操作。">
+<meta name="twitter:image" content="https://oh1ulkf4j.qnssl.com/250px-Sudoku-by-L2G-20050714.svg.png">
 
 
 
@@ -121,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://tianyuh.com/2017/02/07/Leetcode-031/"/>
+  <link rel="canonical" href="http://tianyuh.com/2017/02/11/Leetcode-037/"/>
 
 
 
 
 
-  <title> 031 Next Permutation | 塞外麾下炙 </title>
+  <title> 037 Sudoku Solver | 塞外麾下炙 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -300,7 +303,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/02/07/Leetcode-031/">
+  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/02/11/Leetcode-037/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Tianyu Hong">
@@ -324,7 +327,7 @@
             
             
               
-                031 Next Permutation
+                037 Sudoku Solver
               
             
           </h1>
@@ -337,8 +340,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-07T17:05:16+08:00">
-                2017-02-07
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-11T19:34:36+08:00">
+                2017-02-11
               </time>
             
 
@@ -371,8 +374,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2017/02/07/Leetcode-031/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/07/Leetcode-031/" itemprop="commentCount"></span>
+                <a href="/2017/02/11/Leetcode-037/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/11/Leetcode-037/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -398,21 +401,19 @@
       
 
       
-        <p>Leetcode 031，将一串数组变为字典序比其大一个的数组的相关操作。<br><a id="more"></a></p>
-<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>Implement next permutation, which rearranges numbers into the lexicographically next greater permutation of numbers.</p>
-<p>If such arrangement is not possible, it must rearrange it as the lowest possible order (ie, sorted in ascending order).</p>
-<p>The replacement must be in-place, do not allocate extra memory.</p>
-<p>Here are some examples. Inputs are in the left-hand column and its corresponding outputs are in the right-hand column.</p>
-<p><strong>1,2,3 → 1,3,2</strong></p>
-<p><strong>3,2,1 → 1,2,3</strong></p>
-<p><strong>1,1,5 → 1,5,1</strong></p>
-<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>算法如下：</p>
-<ol>
-<li>从前往后依次找出递减的子集，找出最后的一个的第一个数（即最大值）。</li>
-<li>在递减子集最大值之后，找出比这个最大值前一个数大的数的最小值，并和最大数前的那个数交换。</li>
-<li>在对交换后的子集进行sort排列，有小到大。</li>
-</ol>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">nextPermutation</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> size = nums.size();</div><div class="line">        <span class="keyword">if</span>(size == <span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> index = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> prev = nums[<span class="number">0</span>];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; size; i++)&#123;</div><div class="line">            <span class="keyword">if</span>(nums[i] &gt; prev)&#123;</div><div class="line">                index = i;</div><div class="line">            &#125;</div><div class="line">            prev = nums[i];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(index == <span class="number">0</span>)&#123;</div><div class="line">            sort(nums.begin(), nums.end());</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> temp = nums[index - <span class="number">1</span>];</div><div class="line">        </div><div class="line">        <span class="keyword">int</span> secondLarge = nums[index];</div><div class="line">        <span class="keyword">int</span> secIndex = index;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = index + <span class="number">1</span>; i &lt; size; i++)&#123;</div><div class="line">            <span class="keyword">if</span>(nums[i] &lt; secondLarge &amp;&amp; nums[i] &gt; temp)&#123;</div><div class="line">                secondLarge = nums[i];</div><div class="line">                secIndex = i;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(secIndex == index)&#123;</div><div class="line">            nums[index - <span class="number">1</span>] = nums[index];</div><div class="line">            nums[index] = temp;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            nums[index - <span class="number">1</span>] = nums[secIndex];</div><div class="line">            nums[secIndex] = temp;</div><div class="line">        &#125;</div><div class="line">        sort(nums.begin() + index , nums.end());</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+        <p>Leetcode 037，解数独题的相关操作。<br><a id="more"></a></p>
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>Write a program to solve a Sudoku puzzle by filling the empty cells.</p>
+<p>Empty cells are indicated by the character ‘.’.</p>
+<p>You may assume that there will be only one unique solution.</p>
+<p><img src="https://oh1ulkf4j.qnssl.com/250px-Sudoku-by-L2G-20050714.svg.png" alt=""></p>
+<p><img src="https://oh1ulkf4j.qnssl.com/250px-Sudoku-by-L2G-20050714_solution.svg.png" alt=""></p>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>对于本道题，通过递归的方法来获得穷举。</p>
+<p>先找到第一个’.’的位置，通过行、列以及9宫格确定可以填入其中的数字。（这里是用一个set的方法来确定）</p>
+<p>然后再将set中的数字依次填入该位置中。需要注意的是，set只能通过iterator的方法来进行遍历。</p>
+<p>然后用上递归的方法重复上述过程。如果当set为空时表示数独无效，需要返回上一级继续set的遍历。</p>
+<p>代码见下，运行时间为96ms</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">solveSudoku</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt;&amp; board)</span> </span>&#123;</div><div class="line">        getSudoku(board, <span class="number">0</span>, <span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">getSudoku</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt;&amp; board, <span class="keyword">int</span> i_index, <span class="keyword">int</span> j_index)</span></span>&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = i_index; i &lt; <span class="number">9</span>; i++)&#123;</div><div class="line">            <span class="keyword">int</span> j;</div><div class="line">            <span class="keyword">if</span>(i == i_index)</div><div class="line">                j = j_index;</div><div class="line">            <span class="keyword">else</span></div><div class="line">                j = <span class="number">0</span>;</div><div class="line">            <span class="keyword">for</span>(; j &lt; <span class="number">9</span>; j++)&#123;</div><div class="line">                <span class="keyword">if</span>(board[i][j] == <span class="string">'.'</span>)&#123;</div><div class="line">                    <span class="built_in">set</span>&lt;<span class="keyword">char</span>&gt; nums = &#123;<span class="string">'1'</span>,<span class="string">'2'</span>,<span class="string">'3'</span>,<span class="string">'4'</span>,<span class="string">'5'</span>,<span class="string">'6'</span>,<span class="string">'7'</span>,<span class="string">'8'</span>,<span class="string">'9'</span>&#125;;</div><div class="line">                    validNumRow(board[i], nums);</div><div class="line">                    validNumCol(board, j, nums);</div><div class="line">                    validNumBox(board, i, j, nums);</div><div class="line">                    <span class="keyword">int</span> size = nums.size();</div><div class="line">                    <span class="keyword">if</span>(size == <span class="number">0</span>)</div><div class="line">                        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">                    <span class="keyword">for</span>(<span class="built_in">set</span>&lt;<span class="keyword">char</span>&gt;::iterator it=nums.begin(); it != nums.end(); it++)&#123;</div><div class="line">                        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt; board_temp = board;</div><div class="line">                        board_temp[i][j] = *it;</div><div class="line">                        <span class="keyword">if</span>(getSudoku(board_temp, i, j))&#123;</div><div class="line">                            board = board_temp;</div><div class="line">                            <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">validNumRow</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&amp; board, <span class="built_in">set</span>&lt;<span class="keyword">char</span>&gt;&amp; nums)</span></span>&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">9</span>; i++)&#123;</div><div class="line">            <span class="keyword">if</span>(board[i] != <span class="string">'.'</span>)</div><div class="line">                nums.erase(board[i]);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">validNumCol</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt;&amp; board, <span class="keyword">int</span> index, <span class="built_in">set</span>&lt;<span class="keyword">char</span>&gt;&amp; nums)</span></span>&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">9</span>; i++)&#123;</div><div class="line">            <span class="keyword">if</span>(board[i][index] != <span class="string">'.'</span>)</div><div class="line">                nums.erase(board[i][index]);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">validNumBox</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt;&amp; board, <span class="keyword">int</span> i_index, <span class="keyword">int</span> j_index, <span class="built_in">set</span>&lt;<span class="keyword">char</span>&gt;&amp; nums)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> row = i_index / <span class="number">3</span>;</div><div class="line">        <span class="keyword">int</span> column = j_index / <span class="number">3</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++)&#123;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">3</span>; j++)&#123;</div><div class="line">                <span class="keyword">if</span>(board[row * <span class="number">3</span> + i][column * <span class="number">3</span> + j] !=<span class="string">'.'</span>)</div><div class="line">                    nums.erase(board[row * <span class="number">3</span> + i][column * <span class="number">3</span> + j]);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -439,6 +440,8 @@
           
             <a href="/tags/cpp/" rel="tag"># cpp</a>
           
+            <a href="/tags/recursive/" rel="tag"># recursive</a>
+          
         </div>
       
 
@@ -446,8 +449,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/07/Leetcode-030/" rel="next" title="030 Substring with Concatenation of All Words">
-                <i class="fa fa-chevron-left"></i> 030 Substring with Concatenation of All Words
+              <a href="/2017/02/10/Leetcode-036/" rel="next" title="036 Valid Sudoku">
+                <i class="fa fa-chevron-left"></i> 036 Valid Sudoku
               </a>
             
           </div>
@@ -455,10 +458,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/08/我看日剧/" rel="prev" title="我看日剧">
-                我看日剧 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -507,8 +506,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/02/07/Leetcode-031/"
-           data-title="031 Next Permutation" data-url="http://tianyuh.com/2017/02/07/Leetcode-031/">
+      <div class="ds-thread" data-thread-key="2017/02/11/Leetcode-037/"
+           data-title="037 Sudoku Solver" data-url="http://tianyuh.com/2017/02/11/Leetcode-037/">
       </div>
     
   </div>
