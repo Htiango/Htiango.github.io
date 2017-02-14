@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="cpp,linklist,stack," />
+  <meta name="keywords" content="array,cpp," />
 
 
 
@@ -84,16 +84,16 @@
 
 
 
-<meta name="description" content="Leetcode 025，关于交换链表中每k个节点的相关操作。">
+<meta name="description" content="Leetcode 041，获取数组中缺少的第一个正数。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="025 Reverse Nodes in k-Group">
-<meta property="og:url" content="http://tianyuh.com/2017/02/06/Leetcode-025/index.html">
+<meta property="og:title" content="041 First Missing Positive">
+<meta property="og:url" content="http://tianyuh.com/2017/02/14/Leetcode-041/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
-<meta property="og:description" content="Leetcode 025，关于交换链表中每k个节点的相关操作。">
-<meta property="og:updated_time" content="2017-02-06T06:29:30.000Z">
+<meta property="og:description" content="Leetcode 041，获取数组中缺少的第一个正数。">
+<meta property="og:updated_time" content="2017-02-14T02:26:34.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="025 Reverse Nodes in k-Group">
-<meta name="twitter:description" content="Leetcode 025，关于交换链表中每k个节点的相关操作。">
+<meta name="twitter:title" content="041 First Missing Positive">
+<meta name="twitter:description" content="Leetcode 041，获取数组中缺少的第一个正数。">
 
 
 
@@ -121,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://tianyuh.com/2017/02/06/Leetcode-025/"/>
+  <link rel="canonical" href="http://tianyuh.com/2017/02/14/Leetcode-041/"/>
 
 
 
 
 
-  <title> 025 Reverse Nodes in k-Group | 塞外麾下炙 </title>
+  <title> 041 First Missing Positive | 塞外麾下炙 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -300,7 +300,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/02/06/Leetcode-025/">
+  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/02/14/Leetcode-041/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Tianyu Hong">
@@ -324,7 +324,7 @@
             
             
               
-                025 Reverse Nodes in k-Group
+                041 First Missing Positive
               
             
           </h1>
@@ -337,8 +337,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-06T14:24:02+08:00">
-                2017-02-06
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-14T10:18:25+08:00">
+                2017-02-14
               </time>
             
 
@@ -371,8 +371,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2017/02/06/Leetcode-025/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/06/Leetcode-025/" itemprop="commentCount"></span>
+                <a href="/2017/02/14/Leetcode-041/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/14/Leetcode-041/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -398,18 +398,13 @@
       
 
       
-        <p>Leetcode 025，关于交换链表中每k个节点的相关操作。<br><a id="more"></a></p>
-<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>Given a linked list, reverse the nodes of a linked list k at a time and return its modified list.</p>
-<p>k is a positive integer and is less than or equal to the length of the linked list. If the number of nodes is not a multiple of k then left-out nodes in the end should remain as it is.</p>
-<p>You may not alter the values in the nodes, only nodes itself may be changed.</p>
-<p>Only constant memory is allowed.</p>
-<p>For example,<br>Given this linked list: <strong>1-&gt;2-&gt;3-&gt;4-&gt;5</strong></p>
-<p>For k = 2, you should return: <strong>2-&gt;1-&gt;4-&gt;3-&gt;5</strong></p>
-<p>For k = 3, you should return: <strong>3-&gt;2-&gt;1-&gt;4-&gt;5</strong></p>
-<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>本题的方法是用stack来对每k个链表进行reverse，如果剩余部分不够k长度，则保持原有的链表不进行reverse。</p>
-<p>代码见下：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    ListNode* temp = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">    ListNode* result = temp;</div><div class="line">    ListNode* node;</div><div class="line">    </div><div class="line">    <span class="function">ListNode* <span class="title">reverseKGroup</span><span class="params">(ListNode* head, <span class="keyword">int</span> k)</span> </span>&#123;</div><div class="line">        <span class="keyword">while</span>(head!=<span class="literal">NULL</span>)&#123;</div><div class="line">            generateList(head, k);</div><div class="line">            head = node;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result-&gt;next;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">generateList</span><span class="params">(ListNode* head, <span class="keyword">int</span> k)</span></span>&#123;</div><div class="line">        <span class="built_in">stack</span>&lt;ListNode*&gt; <span class="built_in">stack</span>;</div><div class="line">        ListNode* temp2 = head;</div><div class="line">        <span class="keyword">while</span>(k &gt; <span class="number">0</span>)&#123;</div><div class="line">            <span class="built_in">stack</span>.push(head);</div><div class="line">            <span class="keyword">if</span>(head == <span class="literal">NULL</span>)&#123;</div><div class="line">                temp-&gt;next = temp2;</div><div class="line">                node = head;</div><div class="line">                <span class="keyword">return</span>;</div><div class="line">            &#125;</div><div class="line">            head = head-&gt;next;</div><div class="line">            k--;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">while</span>(!<span class="built_in">stack</span>.empty())&#123;</div><div class="line">            temp-&gt;next = <span class="built_in">stack</span>.top();</div><div class="line">            temp = temp-&gt;next;</div><div class="line">            temp-&gt;next = <span class="literal">NULL</span>;</div><div class="line">            <span class="built_in">stack</span>.pop();</div><div class="line">        &#125;</div><div class="line">        node = head;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-
+        <p>Leetcode 041，获取数组中缺少的第一个正数。<br><a id="more"></a></p>
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>Given an unsorted integer array, find the first missing positive integer.</p>
+<p>For example,<br>Given [1,2,0] return 3,<br>and [3,4,-1,1] return 2.</p>
+<p>Your algorithm should run in O(n) time and uses constant space.</p>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>创建一个和数组同样大小的数组，初始为0，每个index对应着从1开始的正数。如果nums中有正数3，则将vector[2]的值设为1，意为存在。最后只需遍历vector，第一个为0的index对应的就是第一个缺少的正数。</p>
+<p>代码见下，运行时间为6ms。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">firstMissingPositive</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> size = nums.size();</div><div class="line">        <span class="keyword">if</span>(size == <span class="number">0</span>)</div><div class="line">            <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="built_in">map</span>(size, <span class="number">0</span>);</div><div class="line">        <span class="keyword">int</span> temp;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++)&#123;</div><div class="line">            temp = nums[i];</div><div class="line">            <span class="keyword">if</span>(temp &gt; <span class="number">0</span> &amp;&amp; temp &lt;= size)</div><div class="line">                <span class="built_in">map</span>[temp - <span class="number">1</span>] = <span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i&lt; size; i++)&#123;</div><div class="line">            <span class="keyword">if</span>(<span class="built_in">map</span>[i] == <span class="number">0</span>)</div><div class="line">                <span class="keyword">return</span> i + <span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> size + <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
       
     </div>
 
@@ -432,11 +427,9 @@
       
         <div class="post-tags">
           
+            <a href="/tags/array/" rel="tag"># array</a>
+          
             <a href="/tags/cpp/" rel="tag"># cpp</a>
-          
-            <a href="/tags/linklist/" rel="tag"># linklist</a>
-          
-            <a href="/tags/stack/" rel="tag"># stack</a>
           
         </div>
       
@@ -445,8 +438,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/06/Leetcode-024/" rel="next" title="024 Swap Nodes in Pairs">
-                <i class="fa fa-chevron-left"></i> 024 Swap Nodes in Pairs
+              <a href="/2017/02/13/Leetcode-040/" rel="next" title="040 Combination Sum II">
+                <i class="fa fa-chevron-left"></i> 040 Combination Sum II
               </a>
             
           </div>
@@ -454,10 +447,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/06/Leetcode-026/" rel="prev" title="026 Remove Duplicates from Sorted Array">
-                026 Remove Duplicates from Sorted Array <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -506,8 +495,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/02/06/Leetcode-025/"
-           data-title="025 Reverse Nodes in k-Group" data-url="http://tianyuh.com/2017/02/06/Leetcode-025/">
+      <div class="ds-thread" data-thread-key="2017/02/14/Leetcode-041/"
+           data-title="041 First Missing Positive" data-url="http://tianyuh.com/2017/02/14/Leetcode-041/">
       </div>
     
   </div>
