@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="string,cpp," />
+  <meta name="keywords" content="tianyuh, Navie" />
 
 
 
@@ -84,16 +84,15 @@
 
 
 
-<meta name="description" content="Leetcode 006，关于字符串和数组的相关处理。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="006 ZigZag Conversion">
-<meta property="og:url" content="http://tianyuh.com/2017/01/16/Leetcode-006/index.html">
+<meta name="description" content="Why so serious!">
+<meta property="og:type" content="website">
+<meta property="og:title" content="塞外麾下炙">
+<meta property="og:url" content="http://tianyuh.com/tags/cpp/page/5/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
-<meta property="og:description" content="Leetcode 006，关于字符串和数组的相关处理。">
-<meta property="og:updated_time" content="2017-01-16T09:55:32.000Z">
+<meta property="og:description" content="Why so serious!">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="006 ZigZag Conversion">
-<meta name="twitter:description" content="Leetcode 006，关于字符串和数组的相关处理。">
+<meta name="twitter:title" content="塞外麾下炙">
+<meta name="twitter:description" content="Why so serious!">
 
 
 
@@ -121,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://tianyuh.com/2017/01/16/Leetcode-006/"/>
+  <link rel="canonical" href="http://tianyuh.com/tags/cpp/page/5/"/>
 
 
 
 
 
-  <title> 006 ZigZag Conversion | 塞外麾下炙 </title>
+  <title> Tag: cpp | 塞外麾下炙 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -167,7 +166,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
+  <div class="container one-collumn sidebar-position-left  ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -290,210 +289,50 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/01/16/Leetcode-006/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Tianyu Hong">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="http://oh1ulkf4j.qnssl.com/gravatar2.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="塞外麾下炙">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="塞外麾下炙" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                006 ZigZag Conversion
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-16T17:03:14+08:00">
-                2017-01-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">Leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <a href="/2017/01/16/Leetcode-006/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/16/Leetcode-006/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>Leetcode 006，关于字符串和数组的相关处理。<br><a id="more"></a></p>
-<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>The string “PAYPALISHIRING” is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)</p>
-<pre><code>&lt; P   A   H   N 
-&lt; A P L S I I G 
-&lt; Y   I    R 
-</code></pre><p>And then read line by line: “PAHNAPLSIIGYIR”<br>Write the code that will take a string and make this conversion given a number of rows:</p>
-<pre><code>&lt; string convert(string text, int nRows);
-</code></pre><p>convert(“PAYPALISHIRING”, 3) should return “PAHNAPLSIIGYIR”.</p>
-<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>对于这道题，我的思路是先确定列数，再用行、列得到最终的字符串。</p>
-<p>具体代码如下所示：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">class Solution &#123;</div><div class="line">public:</div><div class="line">    string convert(string s, int numRows) &#123;</div><div class="line">        vector&lt;char&gt; vec;</div><div class="line">        int length = s.length();</div><div class="line">        int column = 0, columnN = 0, columnRemainder = 0, index = 0;</div><div class="line">        if (numRows == 1)</div><div class="line">            return s;</div><div class="line">        else&#123;</div><div class="line">            columnN = length / (2 * numRows - 2);</div><div class="line">            columnRemainder = length % (2 * numRows - 2);</div><div class="line">            if(!columnRemainder)</div><div class="line">                column = 2 * columnN;</div><div class="line">            else</div><div class="line">                column = columnN * 2 + (columnRemainder - 1) / numRows + 1;</div><div class="line">        &#125;</div><div class="line">        for(int i = 0; i &lt; numRows; i++)&#123;</div><div class="line">            for(int j = 0; j &lt; column; j++)&#123;</div><div class="line">                if (i == 0 || (i == (numRows - 1)))&#123;</div><div class="line">                    if(j % 2)</div><div class="line">                        continue;</div><div class="line">                    index = (2 * numRows - 2) * (j / 2) + i;</div><div class="line">                &#125;</div><div class="line">                else&#123;</div><div class="line">                    if(!(j % 2))</div><div class="line">                        index = (2 * numRows - 2) * (j / 2) + i;</div><div class="line">                    else</div><div class="line">                        index = (2 * numRows - 2) * (j / 2) +</div><div class="line">                         2 * numRows - 2 - i;</div><div class="line">                &#125;</div><div class="line">                if(index &lt; length)</div><div class="line">                    vec.push_back(s[index]);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        string str(vec.begin(), vec.end());</div><div class="line">        return str;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-      
+  <div id="posts" class="posts-collapse">
+    <div class="collection-title">
+      <h2 >
+        cpp
+        <small>Tag</small>
+      </h2>
     </div>
 
-    <div>
+    
       
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h1 class="post-title">
         
-
-      
-    </div>
-
-    <div>
-      
+            <a class="post-title-link" href="/2017/01/12/Leetcode-005/" itemprop="url">
+              
+                <span itemprop="name">005 Longest Palindromic Substring</span>
+              
+            </a>
         
+      </h1>
 
-      
-    </div>
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2017-01-12T21:28:05+08:00"
+              content="2017-01-12" >
+          01-12
+        </time>
+      </div>
 
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/string/" rel="tag"># string</a>
-          
-            <a href="/tags/cpp/" rel="tag"># cpp</a>
-          
-        </div>
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/01/13/Leetcode-004/" rel="next" title="004 Median of Two Sorted Arrays">
-                <i class="fa fa-chevron-left"></i> 004 Median of Two Sorted Arrays
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/01/16/Leetcode-007/" rel="prev" title="007 Reverse Integer">
-                007 Reverse Integer <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
+    </header>
   </article>
 
 
-
-    <div class="post-spread">
-      
-        <!-- JiaThis Button BEGIN -->
-<div class="jiathis_style">
-  <a class="jiathis_button_tsina"></a>
-  <a class="jiathis_button_tqq"></a>
-  <a class="jiathis_button_weixin"></a>
-  <a class="jiathis_button_cqq"></a>
-  <a class="jiathis_button_douban"></a>
-  <a class="jiathis_button_renren"></a>
-  <a class="jiathis_button_qzone"></a>
-  <a class="jiathis_button_kaixin001"></a>
-  <a class="jiathis_button_copy"></a>
-  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
-  <a class="jiathis_counter_style"></a>
-</div>
-<script type="text/javascript" >
-  var jiathis_config={
-    hideMore:false
-  }
-</script>
-<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
-<!-- JiaThis Button END -->
-
-      
-    </div>
+    
   </div>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/tags/cpp/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/tags/cpp/">1</a><span class="space">&hellip;</span><a class="page-number" href="/tags/cpp/page/4/">4</a><span class="page-number current">5</span>
+  </nav>
+
 
 
           </div>
@@ -501,14 +340,6 @@
 
 
           
-  <div class="comments" id="comments">
-    
-      <div class="ds-thread" data-thread-key="2017/01/16/Leetcode-006/"
-           data-title="006 ZigZag Conversion" data-url="http://tianyuh.com/2017/01/16/Leetcode-006/">
-      </div>
-    
-  </div>
-
 
         </div>
         
@@ -528,17 +359,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://oh1ulkf4j.qnssl.com/gravatar2.jpg"
@@ -611,22 +433,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目"><span class="nav-number">1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解题思路"><span class="nav-number">2.</span> <span class="nav-text">解题思路</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
     </div>
@@ -725,10 +531,6 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
-
-
 
   
 
