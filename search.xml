@@ -3,6 +3,13 @@
   
     
     <entry>
+      <title><![CDATA[048 Rotate Image]]></title>
+      <url>%2F2017%2F02%2F15%2FLeetcode-048%2F</url>
+      <content type="text"><![CDATA[Leetcode 048，有关旋转二维数组的相关操作。 题目You are given an n x n 2D matrix representing an image. Rotate the image by 90 degrees (clockwise). Follow up:Could you do this in-place? 解题思路新建矩阵存放顺时针旋转下，x[i][j]—-&gt;x[j][size - 1 - i] 新建矩阵存放即可，代码见下： 12345678910111213class Solution &#123;public: void rotate(vector&lt;vector&lt;int&gt;&gt;&amp; matrix) &#123; int size = matrix.size(); vector&lt;vector&lt;int&gt;&gt; tempMatrix (size, vector&lt;int&gt; (size, 0)); for(int i = 0; i &lt; size; i++)&#123; for(int j = 0; j &lt; size; j++)&#123; tempMatrix[i][j] = matrix[size - 1 - j][i]; &#125; &#125; matrix = tempMatrix; &#125;&#125;; 先转换再reverse为了不开辟新的空间，进行如下变换： 1231 2 3 7 8 9 7 4 14 5 6 =&gt; 4 5 6 =&gt; 8 5 27 8 9 1 2 3 9 6 3 代码见下 1234567891011class Solution &#123;public: void rotate(vector&lt;vector&lt;int&gt;&gt;&amp; matrix) &#123; reverse(matrix.begin(), matrix.end()); int size = matrix.size(); for(int i = 0; i &lt; size; i++)&#123; for(int j = i + 1; j &lt; size; j++) swap(matrix[i][j], matrix[j][i]); &#125; &#125;&#125;;]]></content>
+    </entry>
+
+    
+    <entry>
       <title><![CDATA[047 Permutations II]]></title>
       <url>%2F2017%2F02%2F15%2FLeetcode-047%2F</url>
       <content type="text"><![CDATA[Leetcode 047，获取有重复数组的数组中数字的所有排列。 题目Given a collection of numbers that might contain duplicates, return all possible unique permutations. For example,[1,1,2] have the following unique permutations: 12345[ [1,1,2], [1,2,1], [2,1,1]] 解题思路参考上一题的思路和方法。不过多进行一步处理和一些判断。 需要先对数组进行顺序排列，使得重复的数字能够集中在一起，便于进行之后的判断。 随后我们在进行取数组中的一个数对剩余数找出所有的排列的时候，判断下一个数是否与之相等，相等的话则无需重复进行上述操作。 代码见下，运行时间为23ms 1234567891011121314151617181920212223242526272829class Solution &#123;public: vector&lt;vector&lt;int&gt;&gt; result; vector&lt;vector&lt;int&gt;&gt; permuteUnique(vector&lt;int&gt;&amp; nums) &#123; sort(nums.begin(), nums.end()); vector&lt;int&gt; prev; getPermute(prev, nums); return result; &#125; void getPermute(vector&lt;int&gt;&amp; prev, vector&lt;int&gt;&amp; nums)&#123; if(nums.size() == 0) result.push_back(prev); int frontNum; for(int i = 0; i &lt; nums.size(); i++)&#123; if(i!= 0 &amp;&amp; nums[i] == frontNum) continue; else frontNum = nums[i]; vector&lt;int&gt; nextNums, nextPrev; nextPrev = prev; nextPrev.push_back(nums[i]); nextNums = nums; nextNums.erase(nextNums.begin() + i); getPermute(nextPrev, nextNums); &#125; &#125;&#125;;]]></content>
