@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="array,cpp,two pointer," />
+  <meta name="keywords" content="array,cpp,backtracing," />
 
 
 
@@ -84,16 +84,16 @@
 
 
 
-<meta name="description" content="Leetcode 015，关于求数组中所有和为0的3个元素集。">
+<meta name="description" content="Leetcode 045，获取数组中数字的所有排列。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="015 3Sum">
-<meta property="og:url" content="http://tianyuh.com/2017/01/24/Leetcode-015/index.html">
+<meta property="og:title" content="Leetcode-046">
+<meta property="og:url" content="http://tianyuh.com/2017/02/15/Leetcode-046/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
-<meta property="og:description" content="Leetcode 015，关于求数组中所有和为0的3个元素集。">
-<meta property="og:updated_time" content="2017-01-24T10:10:38.000Z">
+<meta property="og:description" content="Leetcode 045，获取数组中数字的所有排列。">
+<meta property="og:updated_time" content="2017-02-15T11:44:28.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="015 3Sum">
-<meta name="twitter:description" content="Leetcode 015，关于求数组中所有和为0的3个元素集。">
+<meta name="twitter:title" content="Leetcode-046">
+<meta name="twitter:description" content="Leetcode 045，获取数组中数字的所有排列。">
 
 
 
@@ -121,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://tianyuh.com/2017/01/24/Leetcode-015/"/>
+  <link rel="canonical" href="http://tianyuh.com/2017/02/15/Leetcode-046/"/>
 
 
 
 
 
-  <title> 015 3Sum | 塞外麾下炙 </title>
+  <title> Leetcode-046 | 塞外麾下炙 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -300,7 +300,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/01/24/Leetcode-015/">
+  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/02/15/Leetcode-046/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Tianyu Hong">
@@ -324,7 +324,7 @@
             
             
               
-                015 3Sum
+                Leetcode-046
               
             
           </h1>
@@ -337,8 +337,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-24T15:40:57+08:00">
-                2017-01-24
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-15T19:37:26+08:00">
+                2017-02-15
               </time>
             
 
@@ -371,8 +371,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2017/01/24/Leetcode-015/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/24/Leetcode-015/" itemprop="commentCount"></span>
+                <a href="/2017/02/15/Leetcode-046/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/15/Leetcode-046/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -398,15 +398,14 @@
       
 
       
-        <p>Leetcode 015，关于求数组中所有和为0的3个元素集。<br><a id="more"></a></p>
-<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.</p>
-<p>Note: The solution set must not contain duplicate triplets.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">For example, given array S = [-1, 0, 1, 2, -1, -4],</div><div class="line"></div><div class="line">A solution set is:</div><div class="line">[</div><div class="line">  [-1, 0, 1],</div><div class="line">  [-1, -1, 2]</div><div class="line">]</div></pre></td></tr></table></figure>
-<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>本题的思路主要是结合leetcode-001里面的two sum方法来做。即求两个元素的和等于某一target。</p>
-<p>在原函数的基础上稍作修改，构建一个新函数，在新函数中将符合条件的元素放入vector中。</p>
-<p>本题采用的核心算法是two pointer的方法。先将input的数组进行升序sort，再从前往后遍历，将选取的值的作为two sum的target，利用two pointer法求出符合的元素。</p>
-<p>具体代码见下，运行时间为62ms</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; threeSum(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums) &#123;</div><div class="line">        <span class="keyword">int</span> length = nums.size();</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; result;</div><div class="line">        <span class="keyword">if</span>(length &lt; <span class="number">3</span>)</div><div class="line">            <span class="keyword">return</span> result;</div><div class="line">        sort(nums.begin(), nums.end());</div><div class="line">        <span class="keyword">int</span> start, end;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length - <span class="number">2</span>; i++)&#123;</div><div class="line">            <span class="keyword">if</span>(i &gt; <span class="number">0</span> &amp;&amp; nums[i] == nums[i - <span class="number">1</span>])</div><div class="line">                <span class="keyword">continue</span>;</div><div class="line">            start = i + <span class="number">1</span>;</div><div class="line">            end = length - <span class="number">1</span>;</div><div class="line">            twoSum(nums, <span class="number">-1</span> * nums[i], start, end, result);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">twoSum</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target, <span class="keyword">int</span> start, <span class="keyword">int</span> end, </span></span></div><div class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; result) &#123;</div><div class="line">        <span class="keyword">int</span> sum; </div><div class="line">        <span class="keyword">while</span>(end &gt; start)&#123;</div><div class="line">            sum = nums[start] + nums[end];</div><div class="line">            <span class="keyword">if</span>(sum &gt; target)</div><div class="line">                end--;</div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(sum &lt; target)</div><div class="line">                start ++;</div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; temp;</div><div class="line">                temp.push_back(<span class="number">-1</span>* target);</div><div class="line">                temp.push_back(nums[start]);</div><div class="line">                temp.push_back(nums[end]);</div><div class="line">                result.push_back(temp);</div><div class="line">                end--;</div><div class="line">                start++;</div><div class="line">                <span class="keyword">while</span>(end &gt; start &amp;&amp; nums[end] == nums[end + <span class="number">1</span>])&#123;</div><div class="line">                    end--;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">while</span>(end &gt; start &amp;&amp; nums[start] == nums[start - <span class="number">1</span>])&#123;</div><div class="line">                    start++;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+        <p>Leetcode 045，获取数组中数字的所有排列。<br><a id="more"></a></p>
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>Given a collection of distinct numbers, return all possible permutations.</p>
+<p>For example,<br>[1,2,3] have the following permutations:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  [1,2,3],</div><div class="line">  [1,3,2],</div><div class="line">  [2,1,3],</div><div class="line">  [2,3,1],</div><div class="line">  [3,1,2],</div><div class="line">  [3,2,1]</div><div class="line">]</div></pre></td></tr></table></figure>
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>本题的主要方法是通过backtracing来一步步往前推。先取出其中的一个数，对剩余数找出所有的排列，再对所有元素重复上述操作即可。</p>
+<p>代码见下，运行时间为12ms</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; result;</div><div class="line">    </div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; permute(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums) &#123;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; prev;</div><div class="line">        getPermute(prev, nums);</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">getPermute</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; prev, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(nums.size() == <span class="number">0</span>)</div><div class="line">            result.push_back(prev);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.size(); i++)&#123;</div><div class="line">            <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; nextNums, nextPrev;</div><div class="line">            nextPrev = prev;</div><div class="line">            nextPrev.push_back(nums[i]);</div><div class="line">            nextNums = nums;</div><div class="line">            nextNums.erase(nextNums.begin() + i);</div><div class="line">            getPermute(nextPrev, nextNums);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -433,7 +432,7 @@
           
             <a href="/tags/cpp/" rel="tag"># cpp</a>
           
-            <a href="/tags/two-pointer/" rel="tag"># two pointer</a>
+            <a href="/tags/backtracing/" rel="tag"># backtracing</a>
           
         </div>
       
@@ -442,8 +441,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/19/Leetcode-014/" rel="next" title="014 Longest Common Prefix">
-                <i class="fa fa-chevron-left"></i> 014 Longest Common Prefix
+              <a href="/2017/02/15/Leetcode-045/" rel="next" title="045 Jump Game II">
+                <i class="fa fa-chevron-left"></i> 045 Jump Game II
               </a>
             
           </div>
@@ -452,8 +451,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/01/24/leetcode-016/" rel="prev" title="016 3Sum Closest">
-                016 3Sum Closest <i class="fa fa-chevron-right"></i>
+              <a href="/2017/02/15/Leetcode-047/" rel="prev" title="Leetcode-047">
+                Leetcode-047 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -503,8 +502,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/01/24/Leetcode-015/"
-           data-title="015 3Sum" data-url="http://tianyuh.com/2017/01/24/Leetcode-015/">
+      <div class="ds-thread" data-thread-key="2017/02/15/Leetcode-046/"
+           data-title="Leetcode-046" data-url="http://tianyuh.com/2017/02/15/Leetcode-046/">
       </div>
     
   </div>
@@ -621,7 +620,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目"><span class="nav-number">1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解题思路"><span class="nav-number">2.</span> <span class="nav-text">解题思路</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目"><span class="nav-number">1.</span> <span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解题思路"><span class="nav-number">1.1.</span> <span class="nav-text">解题思路</span></a></li></ol></li></ol></div>
             
 
           </div>

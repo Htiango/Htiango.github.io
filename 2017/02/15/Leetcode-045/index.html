@@ -90,7 +90,7 @@
 <meta property="og:url" content="http://tianyuh.com/2017/02/15/Leetcode-045/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
 <meta property="og:description" content="Leetcode 045，关于找到最小跳动步数的相关操作。">
-<meta property="og:updated_time" content="2017-02-15T07:41:21.000Z">
+<meta property="og:updated_time" content="2017-02-15T11:16:19.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="045 Jump Game II">
 <meta name="twitter:description" content="Leetcode 045，关于找到最小跳动步数的相关操作。">
@@ -405,7 +405,7 @@
 <p>For example:<br>Given array A = [2,3,1,1,4]</p>
 <p>The minimum number of jumps to reach the last index is 2. (Jump 1 step from index 0 to 1, then 3 steps to the last index.)</p>
 <p>Note:<br>You can assume that you can always reach the last index.</p>
-<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>本题最好的方法是采用贪心法来解。由于数组中的是最大的跳动步数，也就意味着只要在某一位置的所有潜在跳动位置中取到能够跳到最大位置的，则也包含了其余所有的位置的情况，所以只需找出这个位置采用迭代即可。</p>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>本题最好的方法是采用贪心法来解。由于数组每个位置的数n表示的是最大的跳动步数，也就意味着这个位置能够跳到n个位置。所以，我们只需要在这n个位置中找到下一步能跳到最远距离的位置，这个最远位置也包含了其余所有的位置的情况，所以只需找出这个位置采用迭代即可。</p>
 <p>代码见下，运行时间为13ms：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">jump</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> size = nums.size();</div><div class="line">        <span class="keyword">if</span>(size == <span class="number">1</span>)</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">return</span> getStep(nums, <span class="number">0</span>, size, <span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getStep</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> index, <span class="keyword">int</span> size, <span class="keyword">int</span> step)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> value = nums[index];</div><div class="line">        <span class="keyword">if</span>(index + value &gt;= size - <span class="number">1</span>)</div><div class="line">            <span class="keyword">return</span> step + <span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> max = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> maxIndex = index;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= value; i++)&#123;</div><div class="line">            <span class="keyword">if</span>(i + nums[index + i] &gt; max)&#123;</div><div class="line">                <span class="keyword">if</span>(nums[index + i] != <span class="number">0</span>)&#123;</div><div class="line">                    max = i + nums[index + i];</div><div class="line">                    maxIndex = i + index;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> getStep(nums, maxIndex, size, step + <span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
       
@@ -452,6 +452,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/15/Leetcode-046/" rel="prev" title="Leetcode-046">
+                Leetcode-046 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -546,7 +550,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">49</span>
+              <span class="site-state-item-count">51</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
