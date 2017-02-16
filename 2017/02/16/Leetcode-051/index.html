@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="array,cpp,string,hash table," />
+  <meta name="keywords" content="cpp,backtracing," />
 
 
 
@@ -84,16 +84,18 @@
 
 
 
-<meta name="description" content="Leetcode 049，找出数组中所有含有同样字符的字符串。">
+<meta name="description" content="Leetcode 051，在n * n的国际象棋棋盘上找到所有n个皇后互不攻击的排法。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="049 Group Anagrams">
-<meta property="og:url" content="http://tianyuh.com/2017/02/16/Leetcode-049/index.html">
+<meta property="og:title" content="Leetcode-051">
+<meta property="og:url" content="http://tianyuh.com/2017/02/16/Leetcode-051/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
-<meta property="og:description" content="Leetcode 049，找出数组中所有含有同样字符的字符串。">
-<meta property="og:updated_time" content="2017-02-16T03:14:32.000Z">
+<meta property="og:description" content="Leetcode 051，在n * n的国际象棋棋盘上找到所有n个皇后互不攻击的排法。">
+<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/8-queens.png">
+<meta property="og:updated_time" content="2017-02-16T14:16:33.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="049 Group Anagrams">
-<meta name="twitter:description" content="Leetcode 049，找出数组中所有含有同样字符的字符串。">
+<meta name="twitter:title" content="Leetcode-051">
+<meta name="twitter:description" content="Leetcode 051，在n * n的国际象棋棋盘上找到所有n个皇后互不攻击的排法。">
+<meta name="twitter:image" content="https://oh1ulkf4j.qnssl.com/8-queens.png">
 
 
 
@@ -121,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://tianyuh.com/2017/02/16/Leetcode-049/"/>
+  <link rel="canonical" href="http://tianyuh.com/2017/02/16/Leetcode-051/"/>
 
 
 
 
 
-  <title> 049 Group Anagrams | 塞外麾下炙 </title>
+  <title> Leetcode-051 | 塞外麾下炙 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -300,7 +302,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/02/16/Leetcode-049/">
+  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/02/16/Leetcode-051/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Tianyu Hong">
@@ -324,7 +326,7 @@
             
             
               
-                049 Group Anagrams
+                Leetcode-051
               
             
           </h1>
@@ -337,7 +339,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-16T11:09:02+08:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-16T22:00:32+08:00">
                 2017-02-16
               </time>
             
@@ -371,8 +373,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2017/02/16/Leetcode-049/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/16/Leetcode-049/" itemprop="commentCount"></span>
+                <a href="/2017/02/16/Leetcode-051/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/16/Leetcode-051/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -398,13 +400,18 @@
       
 
       
-        <p>Leetcode 049，找出数组中所有含有同样字符的字符串。<br><a id="more"></a></p>
-<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>Given an array of strings, group anagrams together.</p>
-<p>For example, given: [“eat”, “tea”, “tan”, “ate”, “nat”, “bat”],<br>Return:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  [&quot;ate&quot;, &quot;eat&quot;,&quot;tea&quot;],</div><div class="line">  [&quot;nat&quot;,&quot;tan&quot;],</div><div class="line">  [&quot;bat&quot;]</div><div class="line">]</div></pre></td></tr></table></figure>
-<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>本题最好的方法是采用hash table来解决，key为排列好的字符串，value为所有含有这些字符串的字符串数组。最后通过遍历hash table来得到想要的二维数组。</p>
-<p>代码见下，运行时间为36ms</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt; groupAnagrams(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; strs) &#123;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt; result;</div><div class="line">        <span class="built_in">unordered_map</span>&lt;<span class="built_in">string</span>, <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt; hashGroup;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; strs.size(); i++)&#123;</div><div class="line">            <span class="built_in">string</span> sortString = strs[i];</div><div class="line">            sort(sortString.begin(), sortString.end());</div><div class="line">            <span class="keyword">if</span>(hashGroup.count(sortString))</div><div class="line">                hashGroup[sortString].push_back(strs[i]);</div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; temp;</div><div class="line">                temp.push_back(strs[i]);</div><div class="line">                hashGroup[sortString] = temp;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> it = hashGroup.begin(); it!=hashGroup.end(); it++)&#123;</div><div class="line">            result.push_back(it-&gt;second);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+        <p>Leetcode 051，在n * n的国际象棋棋盘上找到所有n个皇后互不攻击的排法。<br><a id="more"></a></p>
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>The n-queens puzzle is the problem of placing n queens on an n×n chessboard such that no two queens attack each other.</p>
+<p><img src="https://oh1ulkf4j.qnssl.com/8-queens.png" alt=""></p>
+<p>Given an integer n, return all distinct solutions to the n-queens puzzle.</p>
+<p>Each solution contains a distinct board configuration of the n-queens’ placement, where ‘Q’ and ‘.’ both indicate a queen and an empty space respectively.</p>
+<p>For example,<br>There exist two distinct solutions to the 4-queens puzzle:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line"> [&quot;.Q..&quot;,  // Solution 1</div><div class="line">  &quot;...Q&quot;,</div><div class="line">  &quot;Q...&quot;,</div><div class="line">  &quot;..Q.&quot;],</div><div class="line"></div><div class="line"> [&quot;..Q.&quot;,  // Solution 2</div><div class="line">  &quot;Q...&quot;,</div><div class="line">  &quot;...Q&quot;,</div><div class="line">  &quot;.Q..&quot;]</div><div class="line">]</div></pre></td></tr></table></figure>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>本题的思路是采用backtracing逐行递归，在每行中对每个位置都进行递归，最终将成功走到最后一行且通过测试的index排列放入一个vector中。这样我们可以得到所有可行放法的index排列。</p>
+<p>再对这些排列进行转换，变为题目中要求的那样.</p>
+<p>代码见下，运行时间为6ms</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; resultIndex;</div><div class="line">    </div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt; solveNQueens(<span class="keyword">int</span> n) &#123;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; prev;</div><div class="line">        getAnswer(<span class="number">0</span>, n , prev);</div><div class="line">        <span class="keyword">return</span> transfer(resultIndex);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">getAnswer</span><span class="params">(<span class="keyword">int</span> index, <span class="keyword">int</span> n, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; prev)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(index == n)</div><div class="line">            resultIndex.push_back(prev);</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)&#123;</div><div class="line">                <span class="keyword">bool</span> flag = <span class="literal">true</span>;</div><div class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; prev.size(); j++)&#123;</div><div class="line">                    <span class="keyword">if</span>(<span class="built_in">abs</span>(prev[j] - i) == index - j || prev[j] == i)&#123;</div><div class="line">                        flag = <span class="literal">false</span>;</div><div class="line">                        <span class="keyword">break</span>;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span>(flag)&#123;</div><div class="line">                    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; prevNext = prev;</div><div class="line">                    prevNext.push_back(i);</div><div class="line">                    getAnswer(index + <span class="number">1</span>, n, prevNext);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt; transfer(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; index)&#123;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt; result;</div><div class="line">        <span class="keyword">int</span> setNum = index.size();</div><div class="line">        <span class="comment">// cout &lt;&lt; "size = " &lt;&lt; size &lt;&lt; endl;</span></div><div class="line">        <span class="keyword">if</span>(setNum == <span class="number">0</span>)</div><div class="line">            <span class="keyword">return</span> result;</div><div class="line">        <span class="keyword">int</span> size = index[<span class="number">0</span>].size();</div><div class="line">        <span class="built_in">string</span> s = <span class="string">"."</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; size; i++)&#123;</div><div class="line">            s += <span class="string">"."</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; setNum; i++)&#123;</div><div class="line">            <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; temp_result;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; size; j++)&#123;</div><div class="line">                <span class="comment">// cout &lt;&lt; index[i][j] &lt;&lt; " "; </span></div><div class="line">                <span class="built_in">string</span> temp_s = s;</div><div class="line">                temp_s[index[i][j]] = <span class="string">'Q'</span>;</div><div class="line">                temp_result.push_back(temp_s);</div><div class="line">            &#125;</div><div class="line">            result.push_back(temp_result);</div><div class="line">            <span class="comment">// cout &lt;&lt; endl;</span></div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -427,13 +434,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/array/" rel="tag"># array</a>
-          
             <a href="/tags/cpp/" rel="tag"># cpp</a>
           
-            <a href="/tags/string/" rel="tag"># string</a>
-          
-            <a href="/tags/hash-table/" rel="tag"># hash table</a>
+            <a href="/tags/backtracing/" rel="tag"># backtracing</a>
           
         </div>
       
@@ -442,8 +445,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/15/Leetcode-048/" rel="next" title="048 Rotate Image">
-                <i class="fa fa-chevron-left"></i> 048 Rotate Image
+              <a href="/2017/02/16/Leetcode-050/" rel="next" title="050 Pow(x, n)">
+                <i class="fa fa-chevron-left"></i> 050 Pow(x, n)
               </a>
             
           </div>
@@ -451,10 +454,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/16/Leetcode-050/" rel="prev" title="050 Pow(x, n)">
-                050 Pow(x, n) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -503,8 +502,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/02/16/Leetcode-049/"
-           data-title="049 Group Anagrams" data-url="http://tianyuh.com/2017/02/16/Leetcode-049/">
+      <div class="ds-thread" data-thread-key="2017/02/16/Leetcode-051/"
+           data-title="Leetcode-051" data-url="http://tianyuh.com/2017/02/16/Leetcode-051/">
       </div>
     
   </div>
