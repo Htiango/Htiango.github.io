@@ -3,6 +3,13 @@
   
     
     <entry>
+      <title><![CDATA[049 Group Anagrams]]></title>
+      <url>%2F2017%2F02%2F16%2FLeetcode-049%2F</url>
+      <content type="text"><![CDATA[Leetcode 049，找出数组中所有含有同样字符的字符串。 题目Given an array of strings, group anagrams together. For example, given: [“eat”, “tea”, “tan”, “ate”, “nat”, “bat”],Return: 12345[ [&quot;ate&quot;, &quot;eat&quot;,&quot;tea&quot;], [&quot;nat&quot;,&quot;tan&quot;], [&quot;bat&quot;]] 解题思路本题最好的方法是采用hash table来解决，key为排列好的字符串，value为所有含有这些字符串的字符串数组。最后通过遍历hash table来得到想要的二维数组。 代码见下，运行时间为36ms 12345678910111213141516171819202122class Solution &#123;public: vector&lt;vector&lt;string&gt;&gt; groupAnagrams(vector&lt;string&gt;&amp; strs) &#123; vector&lt;vector&lt;string&gt;&gt; result; unordered_map&lt;string, vector&lt;string&gt;&gt; hashGroup; for(int i = 0; i &lt; strs.size(); i++)&#123; string sortString = strs[i]; sort(sortString.begin(), sortString.end()); if(hashGroup.count(sortString)) hashGroup[sortString].push_back(strs[i]); else&#123; vector&lt;string&gt; temp; temp.push_back(strs[i]); hashGroup[sortString] = temp; &#125; &#125; for(auto it = hashGroup.begin(); it!=hashGroup.end(); it++)&#123; result.push_back(it-&gt;second); &#125; return result; &#125;&#125;;]]></content>
+    </entry>
+
+    
+    <entry>
       <title><![CDATA[048 Rotate Image]]></title>
       <url>%2F2017%2F02%2F15%2FLeetcode-048%2F</url>
       <content type="text"><![CDATA[Leetcode 048，有关旋转二维数组的相关操作。 题目You are given an n x n 2D matrix representing an image. Rotate the image by 90 degrees (clockwise). Follow up:Could you do this in-place? 解题思路新建矩阵存放顺时针旋转下，x[i][j]—-&gt;x[j][size - 1 - i] 新建矩阵存放即可，代码见下： 12345678910111213class Solution &#123;public: void rotate(vector&lt;vector&lt;int&gt;&gt;&amp; matrix) &#123; int size = matrix.size(); vector&lt;vector&lt;int&gt;&gt; tempMatrix (size, vector&lt;int&gt; (size, 0)); for(int i = 0; i &lt; size; i++)&#123; for(int j = 0; j &lt; size; j++)&#123; tempMatrix[i][j] = matrix[size - 1 - j][i]; &#125; &#125; matrix = tempMatrix; &#125;&#125;; 先转换再reverse为了不开辟新的空间，进行如下变换： 1231 2 3 7 8 9 7 4 14 5 6 =&gt; 4 5 6 =&gt; 8 5 27 8 9 1 2 3 9 6 3 代码见下 1234567891011class Solution &#123;public: void rotate(vector&lt;vector&lt;int&gt;&gt;&amp; matrix) &#123; reverse(matrix.begin(), matrix.end()); int size = matrix.size(); for(int i = 0; i &lt; size; i++)&#123; for(int j = i + 1; j &lt; size; j++) swap(matrix[i][j], matrix[j][i]); &#125; &#125;&#125;;]]></content>
