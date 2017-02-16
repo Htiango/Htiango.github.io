@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="cpp,linklist,divide and conquer," />
+  <meta name="keywords" content="cpp,backtracing," />
 
 
 
@@ -84,16 +84,18 @@
 
 
 
-<meta name="description" content="Leetcode 023，关于合并多个有序单链表的相关操作。">
+<meta name="description" content="Leetcode 052，在n * n的国际象棋棋盘上找到所有n个皇后互不攻击的排法数。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="023 Merge k Sorted Lists">
-<meta property="og:url" content="http://tianyuh.com/2017/02/05/Leetcode-023/index.html">
+<meta property="og:title" content="Leetcode-052">
+<meta property="og:url" content="http://tianyuh.com/2017/02/16/Leetcode-052/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
-<meta property="og:description" content="Leetcode 023，关于合并多个有序单链表的相关操作。">
-<meta property="og:updated_time" content="2017-02-06T04:31:37.000Z">
+<meta property="og:description" content="Leetcode 052，在n * n的国际象棋棋盘上找到所有n个皇后互不攻击的排法数。">
+<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/8-queens.png">
+<meta property="og:updated_time" content="2017-02-16T14:21:33.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="023 Merge k Sorted Lists">
-<meta name="twitter:description" content="Leetcode 023，关于合并多个有序单链表的相关操作。">
+<meta name="twitter:title" content="Leetcode-052">
+<meta name="twitter:description" content="Leetcode 052，在n * n的国际象棋棋盘上找到所有n个皇后互不攻击的排法数。">
+<meta name="twitter:image" content="https://oh1ulkf4j.qnssl.com/8-queens.png">
 
 
 
@@ -121,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://tianyuh.com/2017/02/05/Leetcode-023/"/>
+  <link rel="canonical" href="http://tianyuh.com/2017/02/16/Leetcode-052/"/>
 
 
 
 
 
-  <title> 023 Merge k Sorted Lists | 塞外麾下炙 </title>
+  <title> Leetcode-052 | 塞外麾下炙 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -300,7 +302,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/02/05/Leetcode-023/">
+  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/02/16/Leetcode-052/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Tianyu Hong">
@@ -324,7 +326,7 @@
             
             
               
-                023 Merge k Sorted Lists
+                Leetcode-052
               
             
           </h1>
@@ -337,8 +339,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-05T16:50:31+08:00">
-                2017-02-05
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-16T22:17:18+08:00">
+                2017-02-16
               </time>
             
 
@@ -371,8 +373,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2017/02/05/Leetcode-023/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/05/Leetcode-023/" itemprop="commentCount"></span>
+                <a href="/2017/02/16/Leetcode-052/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/16/Leetcode-052/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -398,15 +400,14 @@
       
 
       
-        <p>Leetcode 023，关于合并多个有序单链表的相关操作。<br><a id="more"></a></p>
-<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.</p>
-<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><h3 id="直接比较链表头"><a href="#直接比较链表头" class="headerlink" title="直接比较链表头"></a>直接比较链表头</h3><p>第一种比较简单的方法就是直接进行链表头的比较，取出较小的并移动其链表头。这种方法在运算时间上相对比较复杂。</p>
-<p>代码见下，运行时间为模式为482ms。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function">ListNode* <span class="title">mergeKLists</span><span class="params">(<span class="built_in">vector</span>&lt;ListNode*&gt;&amp; lists)</span> </span>&#123;</div><div class="line">        ListNode* temp = <span class="literal">NULL</span>;</div><div class="line">        ListNode* result = temp;</div><div class="line">        <span class="keyword">int</span> size = lists.size();</div><div class="line">        <span class="keyword">int</span> num = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> count, min, index;</div><div class="line">        <span class="keyword">while</span>(<span class="number">1</span>)&#123;</div><div class="line">            count = <span class="number">0</span>;</div><div class="line">            min = <span class="number">0</span>;</div><div class="line">            index = <span class="number">0</span>;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++)&#123;</div><div class="line">                <span class="keyword">if</span>(lists[i] == <span class="literal">NULL</span>)</div><div class="line">                    <span class="keyword">continue</span>;</div><div class="line">                <span class="keyword">if</span>(count == <span class="number">0</span>)&#123;</div><div class="line">                    min = lists[i]-&gt;val;</div><div class="line">                    index = i;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(min &gt; lists[i]-&gt;val)&#123;</div><div class="line">                    min = lists[i]-&gt;val;</div><div class="line">                    index = i;</div><div class="line">                &#125;</div><div class="line">                count++;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span>(count == <span class="number">0</span>)</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">if</span>(num == <span class="number">0</span>)&#123;</div><div class="line">                temp = lists[index];</div><div class="line">                result = temp;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                temp-&gt;next = lists[index];</div><div class="line">                temp = temp-&gt;next;</div><div class="line">            &#125;</div><div class="line">            lists[index] = lists[index]-&gt;next;</div><div class="line">            num++;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<h3 id="分治法-Divide-and-Conquer"><a href="#分治法-Divide-and-Conquer" class="headerlink" title="分治法(Divide and Conquer)"></a>分治法(Divide and Conquer)</h3><p>这里我们可以考虑<a href="http://tianyuh.com/2017/01/25/Leetcode-021/#more">leetcode-021 Merge Two Sorted Lists</a>。将vector中的链表两两先进行merge，采用递归的方法得到最终的结果。</p>
-<p>思路可以参考<a href="https://zh.wikipedia.org/wiki/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F#.E8.BF.AD.E4.BB.A3.E6.B3.95" target="_blank" rel="external">wiki中的动图</a></p>
-<p>代码见下，运行时间为32ms,时间复杂度为O(nklogk)，n为lists中最长的值</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function">ListNode* <span class="title">mergeKLists</span><span class="params">(<span class="built_in">vector</span>&lt;ListNode*&gt;&amp; lists)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(lists.size() == <span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">NULL</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> helper(lists, <span class="number">0</span>, lists.size() - <span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function">ListNode* <span class="title">helper</span><span class="params">(<span class="built_in">vector</span>&lt;ListNode*&gt;&amp; lists, <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(left &lt; right)&#123;</div><div class="line">            <span class="keyword">int</span> middle = (right + left) / <span class="number">2</span>;</div><div class="line">            <span class="keyword">return</span> mergeTwoLists(helper(lists, left, middle), helper(lists, middle + <span class="number">1</span>, right));</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> lists[left];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function">ListNode* <span class="title">mergeTwoLists</span><span class="params">(ListNode* l1, ListNode* l2)</span> </span>&#123;</div><div class="line">        ListNode* result = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">        ListNode* head = result;</div><div class="line">        result-&gt;next = l1;</div><div class="line">        <span class="keyword">while</span>(l1 != <span class="literal">NULL</span> &amp;&amp; l2 != <span class="literal">NULL</span>)&#123;</div><div class="line">            <span class="keyword">if</span>(l1-&gt;val &gt; l2-&gt;val)&#123;</div><div class="line">                result-&gt;next = l2;</div><div class="line">                l2 = l2-&gt;next;</div><div class="line">                result-&gt;next-&gt;next = l1;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                l1 = l1-&gt;next;</div><div class="line">            &#125;</div><div class="line">            result = result-&gt;next;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(l2 != <span class="literal">NULL</span>)&#123;</div><div class="line">            result-&gt;next = l2;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> head-&gt;next;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+        <p>Leetcode 052，在n * n的国际象棋棋盘上找到所有n个皇后互不攻击的排法数。<br><a id="more"></a></p>
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>Follow up for N-Queens problem.</p>
+<p>Now, instead outputting board configurations, return the total number of distinct solutions.</p>
+<p><img src="https://oh1ulkf4j.qnssl.com/8-queens.png" alt=""></p>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>本题在上一题的基础上，只需对最终存放所有可行index的矩阵求大小，即可得到放法数。</p>
+<p>解题思路参见<a href="http://tianyuh.com/2017/02/16/Leetcode-051/">上一题051</a></p>
+<p>代码见下，运行时间为3ms。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line"></div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; resultIndex;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">totalNQueens</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; prev;</div><div class="line">        getAnswer(<span class="number">0</span>, n , prev);</div><div class="line">        <span class="keyword">return</span> resultIndex.size();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">getAnswer</span><span class="params">(<span class="keyword">int</span> index, <span class="keyword">int</span> n, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; prev)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(index == n)</div><div class="line">            resultIndex.push_back(prev);</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)&#123;</div><div class="line">                <span class="keyword">bool</span> flag = <span class="literal">true</span>;</div><div class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; prev.size(); j++)&#123;</div><div class="line">                    <span class="keyword">if</span>(<span class="built_in">abs</span>(prev[j] - i) == index - j || prev[j] == i)&#123;</div><div class="line">                        flag = <span class="literal">false</span>;</div><div class="line">                        <span class="keyword">break</span>;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span>(flag)&#123;</div><div class="line">                    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; prevNext = prev;</div><div class="line">                    prevNext.push_back(i);</div><div class="line">                    getAnswer(index + <span class="number">1</span>, n, prevNext);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
       
     </div>
 
@@ -431,9 +432,7 @@
           
             <a href="/tags/cpp/" rel="tag"># cpp</a>
           
-            <a href="/tags/linklist/" rel="tag"># linklist</a>
-          
-            <a href="/tags/divide-and-conquer/" rel="tag"># divide and conquer</a>
+            <a href="/tags/backtracing/" rel="tag"># backtracing</a>
           
         </div>
       
@@ -442,8 +441,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/05/Leetcode-022/" rel="next" title="022 Generate Parentheses">
-                <i class="fa fa-chevron-left"></i> 022 Generate Parentheses
+              <a href="/2017/02/16/Leetcode-051/" rel="next" title="Leetcode-051">
+                <i class="fa fa-chevron-left"></i> Leetcode-051
               </a>
             
           </div>
@@ -451,10 +450,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/06/Leetcode-024/" rel="prev" title="024 Swap Nodes in Pairs">
-                024 Swap Nodes in Pairs <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -503,8 +498,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/02/05/Leetcode-023/"
-           data-title="023 Merge k Sorted Lists" data-url="http://tianyuh.com/2017/02/05/Leetcode-023/">
+      <div class="ds-thread" data-thread-key="2017/02/16/Leetcode-052/"
+           data-title="Leetcode-052" data-url="http://tianyuh.com/2017/02/16/Leetcode-052/">
       </div>
     
   </div>
@@ -621,7 +616,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目"><span class="nav-number">1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解题思路"><span class="nav-number">2.</span> <span class="nav-text">解题思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#直接比较链表头"><span class="nav-number">2.1.</span> <span class="nav-text">直接比较链表头</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分治法-Divide-and-Conquer"><span class="nav-number">2.2.</span> <span class="nav-text">分治法(Divide and Conquer)</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目"><span class="nav-number">1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解题思路"><span class="nav-number">2.</span> <span class="nav-text">解题思路</span></a></li></ol></div>
             
 
           </div>
