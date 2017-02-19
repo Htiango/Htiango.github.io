@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="tianyuh, Navie" />
+  <meta name="keywords" content="array,cpp,dp," />
 
 
 
@@ -84,15 +84,16 @@
 
 
 
-<meta name="description" content="Why so serious!">
-<meta property="og:type" content="website">
-<meta property="og:title" content="塞外麾下炙">
-<meta property="og:url" content="http://tianyuh.com/tags/影评/index.html">
+<meta name="description" content="Leetcode 053，找出数组中和最大的子集。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="053 Maximum Subarray">
+<meta property="og:url" content="http://tianyuh.com/2017/02/19/Leetcode-053/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
-<meta property="og:description" content="Why so serious!">
+<meta property="og:description" content="Leetcode 053，找出数组中和最大的子集。">
+<meta property="og:updated_time" content="2017-02-19T06:47:45.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="塞外麾下炙">
-<meta name="twitter:description" content="Why so serious!">
+<meta name="twitter:title" content="053 Maximum Subarray">
+<meta name="twitter:description" content="Leetcode 053，找出数组中和最大的子集。">
 
 
 
@@ -120,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://tianyuh.com/tags/影评/"/>
+  <link rel="canonical" href="http://tianyuh.com/2017/02/19/Leetcode-053/"/>
 
 
 
 
 
-  <title> Tag: 影评 | 塞外麾下炙 </title>
+  <title> 053 Maximum Subarray | 塞外麾下炙 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -166,7 +167,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left  ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -289,46 +290,212 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h2 >
-        影评
-        <small>Tag</small>
-      </h2>
-    </div>
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/02/19/Leetcode-053/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Tianyu Hong">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://oh1ulkf4j.qnssl.com/gravatar2.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="塞外麾下炙">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="塞外麾下炙" src="">
+    </span>
+  </span>
 
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                053 Maximum Subarray
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-19T13:26:10+08:00">
+                2017-02-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">Leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/02/19/Leetcode-053/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/19/Leetcode-053/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
       
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+      
+        <p>Leetcode 053，找出数组中和最大的子集。<br><a id="more"></a></p>
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>Find the contiguous subarray within an array (containing at least one number) which has the largest sum.</p>
+<p>For example, given the array [-2,1,-3,4,-1,2,1,-5,4],<br>the contiguous subarray [4,-1,2,1] has the largest sum = 6.</p>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>本题的解题思路有多种</p>
+<h3 id="条件判断"><a href="#条件判断" class="headerlink" title="条件判断"></a>条件判断</h3><p>要找到数组中加和最大的子集，我们需要对数组进行遍历：</p>
+<ol>
+<li>一旦遇到负数则将之前的和存到最大值中，和之前的最大值进行一个比较。</li>
+<li>一旦遇到非负数，且如果之前为负数，则需要判断之前为负数的系列和是否小于0，如果是，则令sum等于这个正数，如果不是，则在之前的系列上加上这个正数。</li>
+<li>最后，求最大值和之后的sum两者之间的最大值即可</li>
+</ol>
+<p>代码见下，运行时间为12ms</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxSubArray</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</div><div class="line">        <span class="keyword">bool</span> flag = <span class="literal">false</span>;</div><div class="line">        <span class="keyword">int</span> sum = INT_MIN, max_sum = INT_MIN,size = nums.size();</div><div class="line">        <span class="keyword">if</span>(size == <span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">return</span> sum;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            sum = nums[<span class="number">0</span>];</div><div class="line">            <span class="keyword">if</span>(sum &gt;= <span class="number">0</span>)&#123;</div><div class="line">                flag = <span class="literal">true</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; size; i++)&#123;</div><div class="line">            <span class="keyword">if</span>(nums[i] &lt; <span class="number">0</span>)&#123;</div><div class="line">                max_sum = max(max(sum, nums[i]), max_sum);</div><div class="line">                sum += nums[i];</div><div class="line">                flag = <span class="literal">false</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                <span class="keyword">if</span>(!flag)&#123;</div><div class="line">                    <span class="keyword">if</span>(sum &lt; <span class="number">0</span>)</div><div class="line">                        sum = nums[i];</div><div class="line">                    <span class="keyword">else</span></div><div class="line">                        sum += nums[i];</div><div class="line">                    flag = <span class="literal">true</span>;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span>&#123;</div><div class="line">                    sum += nums[i];</div><div class="line">                &#125;;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> max(max_sum, sum);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="Dynamic-Program"><a href="#Dynamic-Program" class="headerlink" title="Dynamic Program"></a>Dynamic Program</h3><p>用矩阵dp[i]表示以nums[i]结尾的子集的和的最大值，如果dp[i - 1]大于0，则dp[i] = dp[i - 1] + nums[i]，否则dp[i] = nums[i]</p>
+<p>代码见下，运行时间为15ms</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxSubArray</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> size = nums.size();</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; dp (size, <span class="number">0</span>);</div><div class="line">        dp[<span class="number">0</span>] = nums[<span class="number">0</span>];</div><div class="line">        <span class="keyword">int</span> max = dp[<span class="number">0</span>];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; size; i++)&#123;</div><div class="line">            <span class="keyword">if</span>(dp[i - <span class="number">1</span>] &gt; <span class="number">0</span>)</div><div class="line">                dp[i] = dp[i - <span class="number">1</span>] + nums[i];</div><div class="line">            <span class="keyword">else</span></div><div class="line">                dp[i] = nums[i];</div><div class="line">            <span class="keyword">if</span>(max &lt; dp[i])</div><div class="line">                max= dp[i];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> max;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+      
+    </div>
 
-      <h1 class="post-title">
+    <div>
+      
         
-            <a class="post-title-link" href="/2017/02/08/我看日剧/" itemprop="url">
-              
-                <span itemprop="name">我看日剧</span>
-              
-            </a>
+
+      
+    </div>
+
+    <div>
+      
         
-      </h1>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-02-08T14:02:02+08:00"
-              content="2017-02-08" >
-          02-08
-        </time>
-      </div>
+      
+    </div>
 
-    </header>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/array/" rel="tag"># array</a>
+          
+            <a href="/tags/cpp/" rel="tag"># cpp</a>
+          
+            <a href="/tags/dp/" rel="tag"># dp</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/16/Leetcode-052/" rel="next" title="052 N-Queens II">
+                <i class="fa fa-chevron-left"></i> 052 N-Queens II
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </article>
 
 
-    
-  </div>
 
-  
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
 
 
           </div>
@@ -336,6 +503,14 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/02/19/Leetcode-053/"
+           data-title="053 Maximum Subarray" data-url="http://tianyuh.com/2017/02/19/Leetcode-053/">
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -355,8 +530,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://oh1ulkf4j.qnssl.com/gravatar2.jpg"
@@ -429,6 +613,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目"><span class="nav-number">1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解题思路"><span class="nav-number">2.</span> <span class="nav-text">解题思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#条件判断"><span class="nav-number">2.1.</span> <span class="nav-text">条件判断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dynamic-Program"><span class="nav-number">2.2.</span> <span class="nav-text">Dynamic Program</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>
@@ -527,6 +727,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 
