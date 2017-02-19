@@ -3,6 +3,13 @@
   
     
     <entry>
+      <title><![CDATA[055 Jump Game]]></title>
+      <url>%2F2017%2F02%2F19%2FLeetcode-055%2F</url>
+      <content type="text"><![CDATA[Leetcode 055，求数组能否跳到最后的位置。 题目Given an array of non-negative integers, you are initially positioned at the first index of the array. Each element in the array represents your maximum jump length at that position. Determine if you are able to reach the last index. For example:A = [2,3,1,1,4], return true. A = [3,2,1,0,4], return false. 解题思路本题的思路可以参考第45题，利用贪心法找到能走到的最远的地方，如果返回的最大index和输入的index相同，则表明被trap了，不能走到最后。 代码见下，运行时间为13ms 123456789101112131415161718192021222324252627class Solution &#123;public: bool canJump(vector&lt;int&gt;&amp; nums) &#123; int size = nums.size(); if(size == 1) return true; return getStep(nums, 0, size); &#125; bool getStep(vector&lt;int&gt;&amp; nums, int index, int size)&#123; int value = nums[index]; if(index + value &gt;= size - 1) return true; int max = 0; int maxIndex = index; for(int i = 1; i &lt;= value; i++)&#123; if(i + nums[index + i] &gt; max)&#123; if(nums[index + i] != 0)&#123; max = i + nums[index + i]; maxIndex = i + index; &#125; &#125; &#125; if(maxIndex == index) return false; return getStep(nums, maxIndex, size); &#125;&#125;;]]></content>
+    </entry>
+
+    
+    <entry>
       <title><![CDATA[054 Spiral Matrix]]></title>
       <url>%2F2017%2F02%2F19%2FLeetcode-054%2F</url>
       <content type="text"><![CDATA[Leetcode 054，求二维数组的螺旋排列。 题目Given a matrix of m x n elements (m rows, n columns), return all elements of the matrix in spiral order. For example,Given the following matrix: 12345[ [ 1, 2, 3 ], [ 4, 5, 6 ], [ 7, 8, 9 ]] You should return [1,2,3,6,9,8,7,4,5]. 解题思路将每个螺旋视为一个cycle（从左到右，从上到下，从右到左，从下到上），先求出矩阵的cycle数，再在循环中找到对应的值。 这里需要考虑的一点是在矩阵不为方阵的时候，要避免重复加某一行或某一列的情况 代码见下，运行时间为3ms 123456789101112131415161718192021222324252627class Solution &#123;public: vector&lt;int&gt; spiralOrder(vector&lt;vector&lt;int&gt;&gt;&amp; matrix) &#123; vector&lt;int&gt; result; int row_size = matrix.size(); if(row_size == 0) return result; int column_size = matrix[0].size(); int cycle = (min(row_size, column_size) + 1) / 2; for(int i = 0; i &lt; cycle; i++)&#123; for(int j = i; j &lt; column_size - i; j++) result.push_back(matrix[i][j]); for(int k = i + 1; k &lt; row_size - i; k++) result.push_back(matrix[k][column_size - i - 1]); int row_index = row_size - i - 1; if(row_index &gt; i)&#123; for(int l = column_size - i - 2; l &gt;= i; l--) result.push_back(matrix[row_index][l]); &#125; if(column_size - i - 1 &gt; i)&#123; for(int m = row_size - i - 2; m &gt; i; m--) result.push_back(matrix[m][i]); &#125; &#125; return result; &#125;&#125;;]]></content>
