@@ -3,6 +3,13 @@
   
     
     <entry>
+      <title><![CDATA[059 Spiral Matrix II]]></title>
+      <url>%2F2017%2F02%2F22%2FLeetcode-059%2F</url>
+      <content type="text"><![CDATA[Leetcode 059，求出大小为n * n的方阵的螺旋矩阵排列。 题目Given an integer n, generate a square matrix filled with elements from 1 to n2 in spiral order. For example,Given n = 3, You should return the following matrix: 12345[ [ 1, 2, 3 ], [ 8, 9, 4 ], [ 7, 6, 5 ]] 解题思路和第54题的思路一样，我们利用cycle的方法来确定最终的螺旋矩阵排列。 代码见下： 12345678910111213141516171819202122232425262728class Solution &#123;public: vector&lt;vector&lt;int&gt;&gt; generateMatrix(int n) &#123; vector&lt;vector&lt;int&gt;&gt; matrix (n, vector&lt;int&gt;(n, 0)); if(n == 0) return matrix; int cycle = (n + 1) / 2, count = 1; for(int i = 0; i &lt; cycle; i++)&#123; for(int j = i; j &lt; n - i; j++)&#123; matrix[i][j] = count; count++; &#125; for(int k = i + 1; k &lt; n - i; k++)&#123; matrix[k][n - i - 1] = count; count++; &#125; for(int l = n - i - 2; l &gt;= i; l--)&#123; matrix[n - i - 1][l] = count; count++; &#125; for(int m = n - i - 2; m &gt; i; m--)&#123; matrix[m][i] = count; count++; &#125; &#125; return matrix; &#125;&#125;;]]></content>
+    </entry>
+
+    
+    <entry>
       <title><![CDATA[058 Length of Last Word]]></title>
       <url>%2F2017%2F02%2F22%2FLeetcode-058%2F</url>
       <content type="text"><![CDATA[Leetcode 058，求出字符串最后一个单词的长度。 题目Given a string s consists of upper/lower-case alphabets and empty space characters ‘ ‘, return the length of last word in the string. If the last word does not exist, return 0. Note: A word is defined as a character sequence consists of non-space characters only. For example, Given s = “Hello World”, return 5. 解题思路本题非常简单，从后往前做即可。 代码见下： 123456789101112131415161718192021222324252627class Solution &#123;public: int lengthOfLastWord(string s) &#123; int length = s.length(); if(length == 0) return 0; bool flag = false; char temp; int count = 0; for(int i = length - 1; i &gt;= 0; i--)&#123; temp = s[i]; if(!flag)&#123; if(temp != ' ')&#123; flag = true; count += 1; &#125; &#125; else&#123; if(temp != ' ') count += 1; else break; &#125; &#125; return count; &#125;&#125;;]]></content>
