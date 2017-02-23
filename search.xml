@@ -3,6 +3,13 @@
   
     
     <entry>
+      <title><![CDATA[063 Unique Paths II]]></title>
+      <url>%2F2017%2F02%2F23%2FLeetcode-063%2F</url>
+      <content type="text"><![CDATA[Leetcode 063，求一个m * n的矩阵从左上角到右下角的走法(中间有阻碍)。 题目Follow up for “Unique Paths”: Now consider if some obstacles are added to the grids. How many unique paths would there be? An obstacle and empty space is marked as 1 and 0 respectively in the grid. For example,There is one obstacle in the middle of a 3x3 grid as illustrated below. 12345[ [0,0,0], [0,1,0], [0,0,0]] The total number of unique paths is 2. Note: m and n will be at most 100. 解题思路本题采用dp的方法来解题，整体思路和第62题相似，不同的是我们在进行dp往后推的过程中需要判断是否是障碍，如果是则将该点的值置为0。以此类推下来。 代码见下，运行时间为6ms 123456789101112131415161718192021222324252627282930313233class Solution &#123;public: int uniquePathsWithObstacles(vector&lt;vector&lt;int&gt;&gt;&amp; obstacleGrid) &#123; int row_size = obstacleGrid.size(); if(row_size == 0) return 0; int column_size = obstacleGrid[0].size(); if(column_size == 0) return 1; vector&lt;vector&lt;int&gt;&gt; dp (row_size, vector&lt;int&gt;(column_size, 0)); for(int i = 0; i&lt; row_size; i++)&#123; if(obstacleGrid[i][0] != 1) dp[i][0] = 1; else break; &#125; for(int j = 0; j &lt; column_size; j++)&#123; if(obstacleGrid[0][j] != 1) dp[0][j] = 1; else break; &#125; for(int i = 1; i &lt; row_size; i++)&#123; for(int j = 1; j &lt; column_size; j++)&#123; if(obstacleGrid[i][j] == 1) dp[i][j] = 0; else dp[i][j] = dp[i - 1][j] + dp[i][j - 1]; &#125; &#125; return dp[row_size - 1][column_size - 1]; &#125;&#125;;]]></content>
+    </entry>
+
+    
+    <entry>
       <title><![CDATA[062 Unique Paths]]></title>
       <url>%2F2017%2F02%2F23%2FLeetcode-062%2F</url>
       <content type="text"><![CDATA[Leetcode 062，求一个m * n的矩阵从左上角到右下角的走法。 题目A robot is located at the top-left corner of a m x n grid (marked ‘Start’ in the diagram below). The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked ‘Finish’ in the diagram below). How many possible unique paths are there? Note: m and n will be at most 100. 解题思路本题我最开始是采用backtracing的递归方法来做，即 = uniquePaths(m - 1) + uniquePaths(n - 1)。结果出现了超时。分析结果我发现由于uniquePaths(m - 1, n - 1)被计算了两遍，而在过程中的一些位置可能更多，这是一种浪费，所以我决定采用dynamic programming的方法来做。 这里需要注意的一点是，dp和backtracing的主要区别就在于前者是从前往后，后者是从后往前。 代码见下，运行时间为3ms 123456789101112class Solution &#123;public: int uniquePaths(int m, int n) &#123; vector&lt;vector&lt;int&gt;&gt; dp (m, vector&lt;int&gt;(n, 1)); for(int i = 1; i &lt; m; i++)&#123; for(int j = 1; j &lt; n; j++)&#123; dp[i][j] = dp[i - 1][j] + dp[i][j - 1]; &#125; &#125; return dp[m - 1][n - 1]; &#125;&#125;;]]></content>
