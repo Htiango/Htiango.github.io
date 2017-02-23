@@ -3,7 +3,14 @@
   
     
     <entry>
-      <title><![CDATA[Leetcode-061]]></title>
+      <title><![CDATA[062 Unique Paths]]></title>
+      <url>%2F2017%2F02%2F23%2FLeetcode-062%2F</url>
+      <content type="text"><![CDATA[Leetcode 062，求一个m * n的矩阵从左上角到右下角的走法。 题目A robot is located at the top-left corner of a m x n grid (marked ‘Start’ in the diagram below). The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked ‘Finish’ in the diagram below). How many possible unique paths are there? Note: m and n will be at most 100. 解题思路本题我最开始是采用backtracing的递归方法来做，即 = uniquePaths(m - 1) + uniquePaths(n - 1)。结果出现了超时。分析结果我发现由于uniquePaths(m - 1, n - 1)被计算了两遍，而在过程中的一些位置可能更多，这是一种浪费，所以我决定采用dynamic programming的方法来做。 这里需要注意的一点是，dp和backtracing的主要区别就在于前者是从前往后，后者是从后往前。 代码见下，运行时间为3ms 123456789101112class Solution &#123;public: int uniquePaths(int m, int n) &#123; vector&lt;vector&lt;int&gt;&gt; dp (m, vector&lt;int&gt;(n, 1)); for(int i = 1; i &lt; m; i++)&#123; for(int j = 1; j &lt; n; j++)&#123; dp[i][j] = dp[i - 1][j] + dp[i][j - 1]; &#125; &#125; return dp[m - 1][n - 1]; &#125;&#125;;]]></content>
+    </entry>
+
+    
+    <entry>
+      <title><![CDATA[061 Rotate List]]></title>
       <url>%2F2017%2F02%2F23%2FLeetcode-061%2F</url>
       <content type="text"><![CDATA[Leetcode 061，求出n个数字排列的第k个排列。 题目Given a list, rotate the list to the right by k places, where k is non-negative. For example:Given 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL and k = 2,return 4-&gt;5-&gt;1-&gt;2-&gt;3-&gt;NULL. 解题思路本题首先要确定链表的长度，再根据链表的长度来判断移到前排的位置。 2遍遍历第一遍遍历是为了确定链表的长度，求得长度后重新确定k的大小（取余数），再进行遍历找到变换的位置。 代码见下，运行时间为13ms 12345678910111213141516171819202122232425262728293031323334/** * Definition for singly-linked list. * struct ListNode &#123; * int val; * ListNode *next; * ListNode(int x) : val(x), next(NULL) &#123;&#125; * &#125;; */class Solution &#123;public: ListNode* rotateRight(ListNode* head, int k) &#123; ListNode* node = head; if(node == NULL) return head; int length = 1; while(node-&gt;next != NULL)&#123; length ++; node = node-&gt;next; &#125; k %= length; if(k == 0) return head; node-&gt;next = head; node = head; int count = 1; while(count &lt; length - k)&#123; node = node-&gt;next; count++; &#125; ListNode* newHead = node-&gt;next; node-&gt;next = NULL; return newHead; &#125;&#125;; 先存后找（1遍遍历）我发现在第一遍遍历的过程中，可以将每个节点存在vector中，主要在确定k后直接可以通过index来寻找变换的位置而不用再进行一次遍历了。 代码见下，运行时间为12ms 1234567891011121314151617181920212223242526272829303132/** * Definition for singly-linked list. * struct ListNode &#123; * int val; * ListNode *next; * ListNode(int x) : val(x), next(NULL) &#123;&#125; * &#125;; */class Solution &#123;public: ListNode* rotateRight(ListNode* head, int k) &#123; ListNode* node = head; if(node == NULL) return head; int length = 1; vector&lt;ListNode *&gt; store; while(node-&gt;next != NULL)&#123; store.push_back(node); length ++; node = node-&gt;next; &#125; store.push_back(node); k %= length; if(k == 0) return head; node-&gt;next = head; node = head; ListNode* newHead = store[length - k]; store[length- k - 1]-&gt;next = NULL; return newHead; &#125;&#125;;]]></content>
     </entry>

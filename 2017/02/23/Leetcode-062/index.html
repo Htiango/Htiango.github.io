@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="cpp,string," />
+  <meta name="keywords" content="array,cpp,dp," />
 
 
 
@@ -84,16 +84,18 @@
 
 
 
-<meta name="description" content="Leetcode 038，获取特定条件下数组中的某位的string的相关操作。">
+<meta name="description" content="Leetcode 062，求一个m * n的矩阵从左上角到右下角的走法。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="038 Count and Say">
-<meta property="og:url" content="http://tianyuh.com/2017/02/11/Leetcode-038/index.html">
+<meta property="og:title" content="062 Unique Paths">
+<meta property="og:url" content="http://tianyuh.com/2017/02/23/Leetcode-062/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
-<meta property="og:description" content="Leetcode 038，获取特定条件下数组中的某位的string的相关操作。">
-<meta property="og:updated_time" content="2017-02-11T12:57:33.000Z">
+<meta property="og:description" content="Leetcode 062，求一个m * n的矩阵从左上角到右下角的走法。">
+<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/robot_maze.png">
+<meta property="og:updated_time" content="2017-02-23T03:34:20.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="038 Count and Say">
-<meta name="twitter:description" content="Leetcode 038，获取特定条件下数组中的某位的string的相关操作。">
+<meta name="twitter:title" content="062 Unique Paths">
+<meta name="twitter:description" content="Leetcode 062，求一个m * n的矩阵从左上角到右下角的走法。">
+<meta name="twitter:image" content="https://oh1ulkf4j.qnssl.com/robot_maze.png">
 
 
 
@@ -121,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://tianyuh.com/2017/02/11/Leetcode-038/"/>
+  <link rel="canonical" href="http://tianyuh.com/2017/02/23/Leetcode-062/"/>
 
 
 
 
 
-  <title> 038 Count and Say | 塞外麾下炙 </title>
+  <title> 062 Unique Paths | 塞外麾下炙 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -300,7 +302,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/02/11/Leetcode-038/">
+  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/02/23/Leetcode-062/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Tianyu Hong">
@@ -324,7 +326,7 @@
             
             
               
-                038 Count and Say
+                062 Unique Paths
               
             
           </h1>
@@ -337,8 +339,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-11T20:54:04+08:00">
-                2017-02-11
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-23T11:27:28+08:00">
+                2017-02-23
               </time>
             
 
@@ -371,8 +373,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2017/02/11/Leetcode-038/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/11/Leetcode-038/" itemprop="commentCount"></span>
+                <a href="/2017/02/23/Leetcode-062/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/23/Leetcode-062/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -398,16 +400,17 @@
       
 
       
-        <p>Leetcode 038，获取特定条件下数组中的某位的string的相关操作。<br><a id="more"></a></p>
-<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>The count-and-say sequence is the sequence of integers beginning as follows:<br><strong>1, 11, 21, 1211, 111221, …</strong></p>
-<p>1 is read off as “one 1” or 11.</p>
-<p>11 is read off as “two 1s” or 21.</p>
-<p>21 is read off as “one 2, then one 1” or 1211.</p>
-<p>Given an integer n, generate the nth sequence.</p>
-<p>Note: The sequence of integers will be represented as a string.</p>
-<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>这道题比较简单，用循环即可得到所需的string。</p>
-<p>代码见下：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="built_in">string</span> <span class="title">countAndSay</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        <span class="built_in">string</span> result = <span class="string">"1"</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n - <span class="number">1</span>; i++)&#123;</div><div class="line">            result = getSay(result);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="built_in">string</span> <span class="title">getSay</span><span class="params">(<span class="built_in">string</span> input)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> length = input.length();</div><div class="line">        <span class="keyword">int</span> count = <span class="number">1</span>;</div><div class="line">        <span class="keyword">char</span> prev = <span class="string">'a'</span>;</div><div class="line">        <span class="built_in">string</span> result = <span class="string">""</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length; i++)&#123;</div><div class="line">            <span class="keyword">if</span>(prev == input[i])&#123;</div><div class="line">                count++;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                count = <span class="number">1</span>;</div><div class="line">                prev = input[i];</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span>((i + <span class="number">1</span> == length) || (prev != input[i + <span class="number">1</span>]))&#123;</div><div class="line">                result += (count + <span class="string">'0'</span>);</div><div class="line">                result += prev;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+        <p>Leetcode 062，求一个m * n的矩阵从左上角到右下角的走法。<br><a id="more"></a></p>
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>A robot is located at the top-left corner of a m x n grid (marked ‘Start’ in the diagram below).</p>
+<p>The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked ‘Finish’ in the diagram below).</p>
+<p>How many possible unique paths are there?</p>
+<p><img src="https://oh1ulkf4j.qnssl.com/robot_maze.png" alt=""></p>
+<p>Note: m and n will be at most 100.</p>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>本题我最开始是采用backtracing的递归方法来做，即 = uniquePaths(m - 1) + uniquePaths(n - 1)。结果出现了超时。分析结果我发现由于uniquePaths(m - 1, n - 1)被计算了两遍，而在过程中的一些位置可能更多，这是一种浪费，所以我决定采用dynamic programming的方法来做。</p>
+<p>这里需要注意的一点是，dp和backtracing的主要区别就在于前者是从前往后，后者是从后往前。</p>
+<p>代码见下，运行时间为3ms</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">uniquePaths</span><span class="params">(<span class="keyword">int</span> m, <span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; dp (m, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(n, <span class="number">1</span>));</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; m; i++)&#123;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; n; j++)&#123;</div><div class="line">                dp[i][j] = dp[i - <span class="number">1</span>][j] + dp[i][j - <span class="number">1</span>];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> dp[m - <span class="number">1</span>][n - <span class="number">1</span>];</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -430,9 +433,11 @@
       
         <div class="post-tags">
           
+            <a href="/tags/array/" rel="tag"># array</a>
+          
             <a href="/tags/cpp/" rel="tag"># cpp</a>
           
-            <a href="/tags/string/" rel="tag"># string</a>
+            <a href="/tags/dp/" rel="tag"># dp</a>
           
         </div>
       
@@ -441,8 +446,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/11/Leetcode-037/" rel="next" title="037 Sudoku Solver">
-                <i class="fa fa-chevron-left"></i> 037 Sudoku Solver
+              <a href="/2017/02/23/Leetcode-061/" rel="next" title="061 Rotate List">
+                <i class="fa fa-chevron-left"></i> 061 Rotate List
               </a>
             
           </div>
@@ -450,10 +455,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/11/Leetcode-039/" rel="prev" title="039 Combination Sum">
-                039 Combination Sum <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -502,8 +503,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/02/11/Leetcode-038/"
-           data-title="038 Count and Say" data-url="http://tianyuh.com/2017/02/11/Leetcode-038/">
+      <div class="ds-thread" data-thread-key="2017/02/23/Leetcode-062/"
+           data-title="062 Unique Paths" data-url="http://tianyuh.com/2017/02/23/Leetcode-062/">
       </div>
     
   </div>
