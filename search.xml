@@ -3,6 +3,13 @@
   
     
     <entry>
+      <title><![CDATA[070 Climbing Stairs]]></title>
+      <url>%2F2017%2F02%2F26%2FLeetcode-070%2F</url>
+      <content type="text"><![CDATA[Leetcode 070，爬梯子的方法数。 题目You are climbing a stair case. It takes n steps to reach to the top. Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top? Note: Given n will be a positive integer. 解题思路本题采用动态规划的方法来解决。 dp[n] = dp[n - 1] + dp[n - 2] 代码见下，运行时间为3ms 12345678910111213class Solution &#123;public: int climbStairs(int n) &#123; if(n &lt;= 2) return n; vector&lt;int&gt; dp (n, 0); dp[0] = 1; dp[1] = 2; for(int i = 2; i &lt; n; i++) dp[i] = dp[i - 1] + dp[i - 2]; return dp[n - 1]; &#125;&#125;;]]></content>
+    </entry>
+
+    
+    <entry>
       <title><![CDATA[069 Sqrt(x)]]></title>
       <url>%2F2017%2F02%2F24%2FLeetcode-069%2F</url>
       <content type="text"><![CDATA[Leetcode 069，完成开根号的操作。 题目Implement int sqrt(int x). Compute and return the square root of x. 解题思路本题采用的方法是二分法，比较简单不做赘述 代码见下，运行时间为6ms 123456789101112131415161718192021222324class Solution &#123;public: int mySqrt(int x) &#123; if(x &lt; 0) return INT_MIN; long x1 = x; long div = x1; while(div * div &gt; x1) div /= 2; long i; long start = div, end = div * 3; while(1)&#123; i = (start + end) / 2; if (i == start) return start; if(i * i &gt; x1) end = i; else if(i * i == x1) return i; else start = i; &#125; &#125;&#125;;]]></content>
