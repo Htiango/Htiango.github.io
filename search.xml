@@ -3,6 +3,13 @@
   
     
     <entry>
+      <title><![CDATA[071 Simplify Path]]></title>
+      <url>%2F2017%2F02%2F26%2FLeetcode-071%2F</url>
+      <content type="text"><![CDATA[Leetcode 070，爬梯子的方法数。 题目Given an absolute path for a file (Unix-style), simplify it. For example,path = “/home/“, =&gt; “/home”path = “/a/./b/../../c/“, =&gt; “/c” 解题思路需要考虑以下问题： ‘..’表示返回上一级，’.’表示在这本级，而多个点则表示正常路径。 如果以及返回到最上层，再通过’..’返回，只会在本层。 多个’/‘并不影响或是叠加 本题采用类似stack的方法来做，取到合适子路径将其放入vector中，若要返回则将其出栈pop掉 代码见下，运行时间为9ms： 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051class Solution &#123;public: string simplifyPath(string path) &#123; vector&lt;string&gt; result; int size = path.length(); int index = 0; char temp; while(index &lt; size)&#123; temp = path[index]; if(temp == '/') index++; else&#123; bool flag = false; int count = 0, temp_index = index; if(temp == '.')&#123; while(temp_index &lt; size &amp;&amp; path[temp_index] != '/')&#123; if(!flag &amp;&amp; count &lt; 2 &amp;&amp; path[temp_index] == '.') count += 1; else flag = true; temp_index ++; &#125; &#125; if(temp !='.' || flag)&#123; string local = ""; while(index &lt; size &amp;&amp; path[index] != '/')&#123; local += path[index]; index++; &#125; result.push_back(local); &#125; else&#123; if(count == 2)&#123; index ++; if(result.size()) result.pop_back(); &#125; index++; &#125; &#125; &#125; string output = ""; for(int i = 0; i &lt; result.size();i++)&#123; output += '/'; output += result[i]; &#125; if(output.length() == 0) output = "/"; return output; &#125;&#125;;]]></content>
+    </entry>
+
+    
+    <entry>
       <title><![CDATA[070 Climbing Stairs]]></title>
       <url>%2F2017%2F02%2F26%2FLeetcode-070%2F</url>
       <content type="text"><![CDATA[Leetcode 070，爬梯子的方法数。 题目You are climbing a stair case. It takes n steps to reach to the top. Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top? Note: Given n will be a positive integer. 解题思路本题采用动态规划的方法来解决。 dp[n] = dp[n - 1] + dp[n - 2] 代码见下，运行时间为3ms 12345678910111213class Solution &#123;public: int climbStairs(int n) &#123; if(n &lt;= 2) return n; vector&lt;int&gt; dp (n, 0); dp[0] = 1; dp[1] = 2; for(int i = 2; i &lt; n; i++) dp[i] = dp[i - 1] + dp[i - 2]; return dp[n - 1]; &#125;&#125;;]]></content>
