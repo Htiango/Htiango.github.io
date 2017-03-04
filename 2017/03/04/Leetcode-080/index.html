@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="deep learning,introduction," />
+  <meta name="keywords" content="array,cpp,two pointer," />
 
 
 
@@ -84,19 +84,16 @@
 
 
 
-<meta name="description" content="最近想要系统地学习下deep learning，因此找了Ian Goodfellow写的”Deep Learning”一书来啃，我会将每章所讲内容整理后放在blog上。本篇就简要介绍下deep learning一书的第一章，Introduction。">
+<meta name="description" content="Leetcode 080，除去顺序数组中重复超过两个的元素。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Deep learning Chapter 1">
-<meta property="og:url" content="http://tianyuh.com/2017/02/22/Deep-learning-Chapter-1/index.html">
+<meta property="og:title" content="080 Remove Duplicates from Sorted Array II">
+<meta property="og:url" content="http://tianyuh.com/2017/03/04/Leetcode-080/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
-<meta property="og:description" content="最近想要系统地学习下deep learning，因此找了Ian Goodfellow写的”Deep Learning”一书来啃，我会将每章所讲内容整理后放在blog上。本篇就简要介绍下deep learning一书的第一章，Introduction。">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/Screen%20Shot%202017-02-22%20at%208.46.15%20PM.png">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/Screen%20Shot%202017-02-22%20at%208.52.32%20PM.png">
-<meta property="og:updated_time" content="2017-02-22T13:39:07.000Z">
+<meta property="og:description" content="Leetcode 080，除去顺序数组中重复超过两个的元素。">
+<meta property="og:updated_time" content="2017-03-04T08:22:53.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Deep learning Chapter 1">
-<meta name="twitter:description" content="最近想要系统地学习下deep learning，因此找了Ian Goodfellow写的”Deep Learning”一书来啃，我会将每章所讲内容整理后放在blog上。本篇就简要介绍下deep learning一书的第一章，Introduction。">
-<meta name="twitter:image" content="https://oh1ulkf4j.qnssl.com/Screen%20Shot%202017-02-22%20at%208.46.15%20PM.png">
+<meta name="twitter:title" content="080 Remove Duplicates from Sorted Array II">
+<meta name="twitter:description" content="Leetcode 080，除去顺序数组中重复超过两个的元素。">
 
 
 
@@ -124,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://tianyuh.com/2017/02/22/Deep-learning-Chapter-1/"/>
+  <link rel="canonical" href="http://tianyuh.com/2017/03/04/Leetcode-080/"/>
 
 
 
 
 
-  <title> Deep learning Chapter 1 | 塞外麾下炙 </title>
+  <title> 080 Remove Duplicates from Sorted Array II | 塞外麾下炙 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -303,7 +300,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/02/22/Deep-learning-Chapter-1/">
+  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/03/04/Leetcode-080/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Tianyu Hong">
@@ -327,7 +324,7 @@
             
             
               
-                Deep learning Chapter 1
+                080 Remove Duplicates from Sorted Array II
               
             
           </h1>
@@ -340,8 +337,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-22T20:37:30+08:00">
-                2017-02-22
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-04T16:09:25+08:00">
+                2017-03-04
               </time>
             
 
@@ -359,8 +356,8 @@
               <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/读数笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">读数笔记</span>
+                  <a href="/categories/Leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">Leetcode</span>
                   </a>
                 </span>
 
@@ -374,8 +371,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2017/02/22/Deep-learning-Chapter-1/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/22/Deep-learning-Chapter-1/" itemprop="commentCount"></span>
+                <a href="/2017/03/04/Leetcode-080/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/04/Leetcode-080/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -401,29 +398,14 @@
       
 
       
-        <p>最近想要系统地学习下deep learning，因此找了Ian Goodfellow写的”Deep Learning”一书来啃，我会将每章所讲内容整理后放在blog上。本篇就简要介绍下deep learning一书的第一章，Introduction。</p>
-<a id="more"></a>
-<h2 id="What-is-Deep-Learning？"><a href="#What-is-Deep-Learning？" class="headerlink" title="What is Deep Learning？"></a>What is Deep Learning？</h2><p>什么是深度学习？虽然这一词早已为大家所熟知，但是这一概念可能大部分人都不胜了解。其实一张简单的韦恩图就可以清晰简洁的表示：</p>
-<p><img src="https://oh1ulkf4j.qnssl.com/Screen%20Shot%202017-02-22%20at%208.46.15%20PM.png" alt=""></p>
-<p>简单地说，深度学习是一种表示学习(representation learning)，也是一种机器学习，可用于许多AI方法。</p>
-<p>那么深度学习又和之前的这些概念有什么区别呢？</p>
-<p><img src="https://oh1ulkf4j.qnssl.com/Screen%20Shot%202017-02-22%20at%208.52.32%20PM.png" alt=""></p>
-<p>从这张图中我们可以看出，对于经典的机器学习方法，我们需要手动设计出特点进行导入来实现目的。而Representation Learning则是能够自己发掘特征，找到并导入来实现结果。</p>
-<p>而对于深度学习而言，特征的找取是分多层多次实现的：先是通过原有的数据进行简单的特征提取，再根据提取的简单特征，进一步提取出更加抽象的特征来，这层递增，最终实现结果。</p>
-<p>以图像识别的例子而言就是这样的：</p>
-<ol>
-<li>第一层可以是edge，通过图像中像素值的突变来实现edge这一特征的提取；</li>
-<li>第二层可以是corners and contours，在edge的基础上，我们可以识别出轮廓和角的边的集合，将轮廓和角等提取出来；</li>
-<li>第三次则是object parts，通过轮廓和角的集合，我们可以测定处特定对象的整个部分；</li>
-</ol>
-<p>有了上述这三个hidden layer，我们就可以最终判断出图像是哪种物体了。</p>
-<h2 id="Brief-Introduction-about-the-History"><a href="#Brief-Introduction-about-the-History" class="headerlink" title="Brief Introduction about the History"></a>Brief Introduction about the History</h2><p>之前我上过Ng在coursera上的“Machine Learning”课，在课的后半部分简要地带过了一些关于神经网络的知识点。如今想来，二三年前深度学习还大部分时候还是以神经网络这一概念展现在我们面前的。</p>
-<p>的确，深度学习作为一个早已提出的概念，经历过三次发展浪潮，直到最近才以 Deep Learning 这一词示人。</p>
-<p>在Ng课中介绍的神经网络，就是一种从神经科学的角度出发的简单的线性模型。这些模型被设计为使用一组n个输入{x1,…,xn}，并将其与一个输出y关联，这些模型希望学习一组权重{w1,…,wn},输出y=x1 <em> w1 + … + xn </em> wn，多层这样的结果就构成了这种早期的神经网络的雏形。一般是用back-propagation的方法来进行参数的训练。这种方法直至今日仍然是训练深度模型的主导方法。</p>
-<p>由于多层的结构再加上多层之间的信息传递（训练时的正向、反向传播），使得这一模型也被称为神经网络模型。的确神经科学被视为深度学习研究的一个重要灵感来源，但是由于我们没有足够的关于大脑的信息来进行进一步研究指导，其作用逐渐被削弱。现在的大多数神经网络是基于一个成为Rectified linear unit的神经单元模型。</p>
-<p>在80年代，神经网络在认知科学的背景下随着Connectionism或者说parallel distributed processing的出现而引来了又一个发展高潮。通过将大量简单的计算单元连接在一起构成网络从而实现智能的行为，用分布式表示的方法，将多个特征彼此分立开，每个输入都有多个特征表示，每个特征都参与表示多个输入，从而分立进行训练。随着back-propagation的普及，这种方法走向了潮流。</p>
-<p>随着硬件的发展，当年遥不可及的计算代价如今得以了实现，从而引来了第三次的发展。而大量的数据集的出现也使得训练变得更为方便和准确，而模型规模的增大也使得能够实现更多复杂的内容。</p>
-
+        <p>Leetcode 080，除去顺序数组中重复超过两个的元素。<br><a id="more"></a></p>
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>Follow up for “Remove Duplicates”:<br>What if duplicates are allowed at most twice?</p>
+<p>For example,<br>Given sorted array nums = [1,1,1,2,2,3],</p>
+<p>Your function should return length = 5, with the first five elements of nums being 1, 1, 2, 2 and 3. It doesn’t matter what you leave beyond the new length.</p>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>本题可以参考<a href="http://tianyuh.com/2017/02/06/Leetcode-026/">第26题</a>，用一个index表示相同元素的起始位置，另一个index对数组进行遍历。</p>
+<p>与26题不同的是，本题可以最多保留2个相同的元素，因此我们引入一个计数器进行计数。需要注意的一点是，结束后如果计数器不为1，表明最后有多的重复元素，则还要进一步进行处理才可。</p>
+<p>代码见下，运行时间为12ms：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">removeDuplicates</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> size = nums.size();</div><div class="line">        <span class="keyword">if</span>(size &lt;= <span class="number">2</span>)</div><div class="line">            <span class="keyword">return</span> size;</div><div class="line">        <span class="keyword">int</span> prev_index = <span class="number">0</span>, count = <span class="number">1</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; size; i++)&#123;</div><div class="line">            <span class="keyword">if</span>(nums[i] == nums[prev_index])&#123;</div><div class="line">                count ++;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                <span class="keyword">if</span>(count == <span class="number">1</span>)&#123;</div><div class="line">                    prev_index++;</div><div class="line">                    nums[prev_index] = nums[i];</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span>&#123;</div><div class="line">                    nums[prev_index + <span class="number">1</span>] = nums[prev_index];</div><div class="line">                    prev_index += <span class="number">2</span>;</div><div class="line">                    nums[prev_index] = nums[i];</div><div class="line">                &#125;</div><div class="line">                count = <span class="number">1</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(count == <span class="number">1</span>)</div><div class="line">            nums.resize(prev_index + <span class="number">1</span>);</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            nums[prev_index + <span class="number">1</span>] = nums[prev_index];</div><div class="line">            prev_index++;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> prev_index + <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
       
     </div>
 
@@ -446,9 +428,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/deep-learning/" rel="tag"># deep learning</a>
+            <a href="/tags/array/" rel="tag"># array</a>
           
-            <a href="/tags/introduction/" rel="tag"># introduction</a>
+            <a href="/tags/cpp/" rel="tag"># cpp</a>
+          
+            <a href="/tags/two-pointer/" rel="tag"># two pointer</a>
           
         </div>
       
@@ -457,8 +441,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/22/Leetcode-060/" rel="next" title="060 Permutation Sequence">
-                <i class="fa fa-chevron-left"></i> 060 Permutation Sequence
+              <a href="/2017/03/03/Leetcode-079/" rel="next" title="079 Word Search">
+                <i class="fa fa-chevron-left"></i> 079 Word Search
               </a>
             
           </div>
@@ -466,10 +450,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/23/Leetcode-061/" rel="prev" title="061 Rotate List">
-                061 Rotate List <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -518,8 +498,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/02/22/Deep-learning-Chapter-1/"
-           data-title="Deep learning Chapter 1" data-url="http://tianyuh.com/2017/02/22/Deep-learning-Chapter-1/">
+      <div class="ds-thread" data-thread-key="2017/03/04/Leetcode-080/"
+           data-title="080 Remove Duplicates from Sorted Array II" data-url="http://tianyuh.com/2017/03/04/Leetcode-080/">
       </div>
     
   </div>
@@ -636,7 +616,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#What-is-Deep-Learning？"><span class="nav-number">1.</span> <span class="nav-text">What is Deep Learning？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Brief-Introduction-about-the-History"><span class="nav-number">2.</span> <span class="nav-text">Brief Introduction about the History</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目"><span class="nav-number">1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解题思路"><span class="nav-number">2.</span> <span class="nav-text">解题思路</span></a></li></ol></div>
             
 
           </div>
