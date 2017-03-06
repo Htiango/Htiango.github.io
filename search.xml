@@ -3,6 +3,20 @@
   
     
     <entry>
+      <title><![CDATA[Leetcode-082]]></title>
+      <url>%2F2017%2F03%2F06%2FLeetcode-082%2F</url>
+      <content type="text"><![CDATA[Leetcode 082，去除一个链表中所有重复的节点（不保留）。 题目Given a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list. For example,Given 1-&gt;2-&gt;3-&gt;3-&gt;4-&gt;4-&gt;5, return 1-&gt;2-&gt;5.Given 1-&gt;1-&gt;1-&gt;2-&gt;3, return 2-&gt;3. 解题思路本题比较简单，在遍历链表的过程中加上判断即可。 需要注意的一点是，如果最后的几个节点是重复的，即我们需要去除最后的几个节点，一定要进行 result-&gt;next = NULL 的处理，否则最后的节点仍然保留在那里。 代码见下，运行时间为9ms 1234567891011121314151617181920212223242526272829303132333435363738/** * Definition for singly-linked list. * struct ListNode &#123; * int val; * ListNode *next; * ListNode(int x) : val(x), next(NULL) &#123;&#125; * &#125;; */class Solution &#123;public: ListNode* deleteDuplicates(ListNode* head) &#123; if(head == NULL) return head; ListNode* temp = new ListNode(0); ListNode* result = temp; bool flag = true; ListNode* prev_node = head; head = head-&gt;next; while(head != NULL)&#123; if(prev_node-&gt;val == head-&gt;val) flag = false; else&#123; if(flag)&#123; temp-&gt;next = prev_node; temp = temp-&gt;next; &#125; flag = true; &#125; prev_node = head; head = head-&gt;next; &#125; if(flag) temp-&gt;next = prev_node; else temp-&gt;next = NULL; return result-&gt;next; &#125;&#125;;]]></content>
+    </entry>
+
+    
+    <entry>
+      <title><![CDATA[Leetcode-081]]></title>
+      <url>%2F2017%2F03%2F06%2FLeetcode-081%2F</url>
+      <content type="text"><![CDATA[Leetcode 081，判断一个含重复元素的折叠数组中是否含有某一元素。 题目Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand. (i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2). Write a function to determine if a given target is in the array. The array may contain duplicates. 解题思路本题采用二分法进行迭代来解题，找到数组的中点，判断是否和目标数相等。不等则首先判断是数组是如何折叠的，然后再根据中点的比较进一步迭代求解。 代码见下，运行时间为6ms 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455class Solution &#123;public: bool search(vector&lt;int&gt;&amp; nums, int target) &#123; int size = nums.size(); if(size == 0) return false; int start = 0, end = size - 1; return getResult(nums, target, start, end); &#125; bool getResult(vector&lt;int&gt;&amp; nums, int target, int start, int end)&#123; int mid = (start + end) / 2; if(nums[mid] == target || nums[start] == target || nums[end] == target) return true; if(end - start &lt;= 2) return false; if(nums[mid] &lt; nums[start])&#123; if(nums[mid] &gt; target) return getResult(nums, target, start, mid); else&#123; if(nums[end] &gt; target) start = mid; else end = mid; return getResult(nums, target, start, end); &#125; &#125; if(nums[mid] &gt; nums[end])&#123; if(nums[mid] &lt; target) return getResult(nums, target, mid, end); else&#123; if(nums[end] &gt; target) start = mid; else end = mid; return getResult(nums, target, start, end); &#125; &#125; if(nums[mid] &lt; nums[end] &amp;&amp; nums[mid] &gt; nums[start])&#123; if(nums[mid] &lt; target) return getResult(nums, target, mid, end); else return getResult(nums, target, start, mid); &#125; if(nums[mid] == nums[start])&#123; if(nums[mid] == nums[end]) return getResult(nums, target, mid, end) || getResult(nums, target, start, mid); else return getResult(nums, target, mid, end); &#125; if(nums[mid] == nums[end]) return getResult(nums, target, start, mid); &#125; &#125;;]]></content>
+    </entry>
+
+    
+    <entry>
       <title><![CDATA[080 Remove Duplicates from Sorted Array II]]></title>
       <url>%2F2017%2F03%2F04%2FLeetcode-080%2F</url>
       <content type="text"><![CDATA[Leetcode 080，除去顺序数组中重复超过两个的元素。 题目Follow up for “Remove Duplicates”:What if duplicates are allowed at most twice? For example,Given sorted array nums = [1,1,1,2,2,3], Your function should return length = 5, with the first five elements of nums being 1, 1, 2, 2 and 3. It doesn’t matter what you leave beyond the new length. 解题思路本题可以参考第26题，用一个index表示相同元素的起始位置，另一个index对数组进行遍历。 与26题不同的是，本题可以最多保留2个相同的元素，因此我们引入一个计数器进行计数。需要注意的一点是，结束后如果计数器不为1，表明最后有多的重复元素，则还要进一步进行处理才可。 代码见下，运行时间为12ms： 123456789101112131415161718192021222324252627282930313233class Solution &#123;public: int removeDuplicates(vector&lt;int&gt;&amp; nums) &#123; int size = nums.size(); if(size &lt;= 2) return size; int prev_index = 0, count = 1; for(int i = 1; i &lt; size; i++)&#123; if(nums[i] == nums[prev_index])&#123; count ++; &#125; else&#123; if(count == 1)&#123; prev_index++; nums[prev_index] = nums[i]; &#125; else&#123; nums[prev_index + 1] = nums[prev_index]; prev_index += 2; nums[prev_index] = nums[i]; &#125; count = 1; &#125; &#125; if(count == 1) nums.resize(prev_index + 1); else&#123; nums[prev_index + 1] = nums[prev_index]; prev_index++; &#125; return prev_index + 1; &#125;&#125;;]]></content>
@@ -24,7 +38,7 @@
 
     
     <entry>
-      <title><![CDATA[Leetcode-077]]></title>
+      <title><![CDATA[077 Combinations]]></title>
       <url>%2F2017%2F02%2F28%2FLeetcode-077%2F</url>
       <content type="text"><![CDATA[Leetcode 077，找出从1到n的数的数量为k的所有排列。 题目Given two integers n and k, return all possible combinations of k numbers out of 1 … n. For example,If n = 4 and k = 2, a solution is: 12345678[ [2,4], [3,4], [2,3], [1,2], [1,3], [1,4],] 解题思路本题采用backtracing的方法来解题，先确定数组开头的数字，然后对后面的采用递归的方式即可完成。 代码见下，运行时间为126ms 123456789101112131415161718192021222324class Solution &#123;public: vector&lt;vector&lt;int&gt;&gt; result; vector&lt;vector&lt;int&gt;&gt; combine(int n, int k) &#123; if(k &lt;= 0 || n &lt;= 0) return result; vector&lt;int&gt; prev; recursive(prev, 0, n , k); return result; &#125; void recursive(vector&lt;int&gt;&amp; prev, int index, int n, int k)&#123; if(k == 0)&#123; result.push_back(prev); return; &#125; for(int i = index; i &lt; n - k + 1; i++)&#123; vector&lt;int&gt; temp = prev; temp.push_back(i + 1); recursive(temp, i + 1, n, k - 1); &#125; &#125; &#125;;]]></content>
     </entry>
@@ -38,7 +52,7 @@
 
     
     <entry>
-      <title><![CDATA[Leetcode-075]]></title>
+      <title><![CDATA[075 Sort Colors]]></title>
       <url>%2F2017%2F02%2F27%2FLeetcode-075%2F</url>
       <content type="text"><![CDATA[Leetcode 075，将数组中的颜色相同的归在一起。 题目Given an array with n objects colored red, white or blue, sort them so that objects of the same color are adjacent, with the colors in the order red, white and blue. Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively. Note:You are not suppose to use the library’s sort function for this problem. 解题思路算出各种颜色的数目，最后再通过一个遍历调整数组。 代码见下，运行时间为9ms 12345678910111213141516171819202122232425262728class Solution &#123;public: void sortColors(vector&lt;int&gt;&amp; nums) &#123; int size = nums.size(); int count0 = 0, count1 = 0, count2 = 0; for(int i = 0; i &lt; size; i++)&#123; if(nums[i] == 0) count0++; else if(nums[i] == 1) count1++; else count2++; &#125; int index = 0; for(int i = 0;i &lt; count0; i++)&#123; nums[index] = 0; index++; &#125; for(int i = 0;i &lt; count1; i++)&#123; nums[index] = 1; index ++; &#125; for(int i = 0; i &lt; count2; i++)&#123; nums[index] = 2; index++; &#125; &#125;&#125;;]]></content>
     </entry>
