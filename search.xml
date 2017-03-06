@@ -3,7 +3,14 @@
   
     
     <entry>
-      <title><![CDATA[Leetcode-082]]></title>
+      <title><![CDATA[083 Remove Duplicates from Sorted List]]></title>
+      <url>%2F2017%2F03%2F06%2FLeetcode-083%2F</url>
+      <content type="text"><![CDATA[Leetcode 083，去除一个链表中所有重复的节点（保留）。 题目Given a sorted linked list, delete all duplicates such that each element appear only once. For example,Given 1-&gt;1-&gt;2, return 1-&gt;2.Given 1-&gt;1-&gt;2-&gt;3-&gt;3, return 1-&gt;2-&gt;3. 解题思路参照上题，在遍历过程中进行判断，前后相等时改变next指针即可 代码见下，运行时间为12ms 123456789101112131415161718192021222324/** * Definition for singly-linked list. * struct ListNode &#123; * int val; * ListNode *next; * ListNode(int x) : val(x), next(NULL) &#123;&#125; * &#125;; */class Solution &#123;public: ListNode* deleteDuplicates(ListNode* head) &#123; ListNode* node = head; ListNode* pre = NULL; while(node != NULL)&#123; if(pre != NULL &amp;&amp; pre-&gt;val == node-&gt;val)&#123; pre-&gt;next = node-&gt;next; &#125; else pre = node; node = node-&gt;next; &#125; return head; &#125;&#125;;]]></content>
+    </entry>
+
+    
+    <entry>
+      <title><![CDATA[082 Remove Duplicates from Sorted List II]]></title>
       <url>%2F2017%2F03%2F06%2FLeetcode-082%2F</url>
       <content type="text"><![CDATA[Leetcode 082，去除一个链表中所有重复的节点（不保留）。 题目Given a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list. For example,Given 1-&gt;2-&gt;3-&gt;3-&gt;4-&gt;4-&gt;5, return 1-&gt;2-&gt;5.Given 1-&gt;1-&gt;1-&gt;2-&gt;3, return 2-&gt;3. 解题思路本题比较简单，在遍历链表的过程中加上判断即可。 需要注意的一点是，如果最后的几个节点是重复的，即我们需要去除最后的几个节点，一定要进行 result-&gt;next = NULL 的处理，否则最后的节点仍然保留在那里。 代码见下，运行时间为9ms 1234567891011121314151617181920212223242526272829303132333435363738/** * Definition for singly-linked list. * struct ListNode &#123; * int val; * ListNode *next; * ListNode(int x) : val(x), next(NULL) &#123;&#125; * &#125;; */class Solution &#123;public: ListNode* deleteDuplicates(ListNode* head) &#123; if(head == NULL) return head; ListNode* temp = new ListNode(0); ListNode* result = temp; bool flag = true; ListNode* prev_node = head; head = head-&gt;next; while(head != NULL)&#123; if(prev_node-&gt;val == head-&gt;val) flag = false; else&#123; if(flag)&#123; temp-&gt;next = prev_node; temp = temp-&gt;next; &#125; flag = true; &#125; prev_node = head; head = head-&gt;next; &#125; if(flag) temp-&gt;next = prev_node; else temp-&gt;next = NULL; return result-&gt;next; &#125;&#125;;]]></content>
     </entry>
