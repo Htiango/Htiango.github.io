@@ -3,7 +3,21 @@
   
     
     <entry>
-      <title><![CDATA[Leetcode-088]]></title>
+      <title><![CDATA[090 Subsets II]]></title>
+      <url>%2F2017%2F03%2F08%2FLeetcode-090%2F</url>
+      <content type="text"><![CDATA[Leetcode 090，找出有重复元素的数组的所有子集。 题目Given a collection of integers that might contain duplicates, nums, return all possible subsets. Note: The solution set must not contain duplicate subsets. For example,If nums = [1,2,2], a solution is: 12345678[ [2], [1], [1,2,2], [2,2], [1,2], []] 解题思路本题采用backtracing的方法来解。具体思路可以参考第78题 所不同的是，在本题中我们还要考虑前一个元素与该元素相等的问题。一旦出现这种情况，我们需要找出之前子集中是否已经有这个新的子集，若有则不更新结果。（即一个剪枝的过程） 代码见下，运行时间为12ms 12345678910111213141516171819202122232425262728293031323334353637class Solution &#123;public: vector&lt;vector&lt;int&gt;&gt; subsetsWithDup(vector&lt;int&gt;&amp; nums) &#123; sort(nums.begin(), nums.end()); return getResult(nums); &#125; vector&lt;vector&lt;int&gt;&gt; getResult(vector&lt;int&gt;&amp; nums)&#123; vector&lt;vector&lt;int&gt;&gt; result, resultPre; vector&lt;int&gt; nul; int size = nums.size(); if(size == 0)&#123; result.push_back(nul); return result; &#125; bool flag = false; int num = nums[size - 1]; nums.pop_back(); size = nums.size(); if(size != 0 &amp;&amp; nums[size - 1] == num) flag = true; resultPre = getResult(nums); result = resultPre; for(int i = 0; i &lt; resultPre.size(); i++)&#123; vector&lt;int&gt; temp = resultPre[i]; temp.push_back(num); if(flag)&#123; vector&lt;vector&lt;int&gt;&gt;::iterator it; it = find (resultPre.begin(), resultPre.end(), temp); if(it != resultPre.end()) continue; &#125; result.push_back(temp); &#125; return result; &#125;&#125;;]]></content>
+    </entry>
+
+    
+    <entry>
+      <title><![CDATA[089 Gray Code]]></title>
+      <url>%2F2017%2F03%2F08%2FLeetcode-089%2F</url>
+      <content type="text"><![CDATA[Leetcode 089，按照要求输出前后二进制只有一位不同的vector。 题目The gray code is a binary numeral system where two successive values differ in only one bit. Given a non-negative integer n representing the total number of bits in the code, print the sequence of gray code. A gray code sequence must begin with 0. For example, given n = 2, return [0,1,3,2]. Its gray code sequence is: 123400 - 001 - 111 - 310 - 2 Note:For a given n, a gray code sequence is not uniquely defined. For example, [0,2,3,1] is also a valid gray code sequence according to the above definition. For now, the judge is able to judge based on one instance of gray code sequence. Sorry about that. 解题思路本题采用backtracing的方法来做，找到 n-1 的 grayCode，逆序对每个加上 2^(n-1) （即最高位前一位置为1）（逆序的原因是因为要符合前后每个只相差1位） 代码见下，运行时间为6ms class Solution { public: vector&lt;int&gt; grayCode(int n) { vector&lt;int&gt; zero (1, 0); if(n == 0){ return zero; } vector&lt;int&gt; result = grayCode(n - 1); vector&lt;int&gt; temp = result; for(int i = temp.size() - 1; i &gt;= 0; i--){ int newNum = temp[i] + pow(2, n - 1); result.push_back(newNum); } return result; } };]]></content>
+    </entry>
+
+    
+    <entry>
+      <title><![CDATA[088 Merge Sorted Array]]></title>
       <url>%2F2017%2F03%2F08%2FLeetcode-088%2F</url>
       <content type="text"><![CDATA[Leetcode 088，将两个sorted array整合到第一个array中。 题目Given two sorted integer arrays nums1 and nums2, merge nums2 into nums1 as one sorted array. Note:You may assume that nums1 has enough space (size that is greater or equal to m + n) to hold additional elements from nums2. The number of elements initialized in nums1 and nums2 are m and n respectively. 解题思路本题需采用从后往前的two pointer方法来做。本质上是采用三个pointer：一个pointer表示放置元素的最末端，另两个分别表示两个array有效元素的最末端。比较大小，改变指针即可 代码见下，运行时间为6ms 12345678910111213141516171819202122232425262728class Solution &#123;public: void merge(vector&lt;int&gt;&amp; nums1, int m, vector&lt;int&gt;&amp; nums2, int n) &#123; int pointer1 = m - 1, pointer2 = n - 1, end = m + n - 1; while(end &gt;= 0)&#123; if(pointer1 &lt; 0)&#123; nums1[end] = nums2[pointer2]; pointer2--; &#125; else if(pointer2 &lt; 0)&#123; nums1[end] = nums1[pointer1]; pointer1--; &#125; else&#123; if(nums1[pointer1] &gt; nums2[pointer2])&#123; nums1[end] = nums1[pointer1]; pointer1--; &#125; else&#123; nums1[end] = nums2[pointer2]; pointer2--; &#125; &#125; end--; &#125; return; &#125;&#125;;]]></content>
     </entry>
