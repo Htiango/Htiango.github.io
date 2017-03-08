@@ -90,7 +90,7 @@
 <meta property="og:url" content="http://tianyuh.com/2017/03/08/从EM算法到GMM模型/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
 <meta property="og:description" content="最近温习了下机器学习经典算法之一的EM算法，顺便对GMM模型有了更加深入的理解，本文将对这两个概念进行简要介绍。">
-<meta property="og:updated_time" content="2017-03-08T13:14:45.000Z">
+<meta property="og:updated_time" content="2017-03-08T13:19:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从EM算法到GMM模型">
 <meta name="twitter:description" content="最近温习了下机器学习经典算法之一的EM算法，顺便对GMM模型有了更加深入的理解，本文将对这两个概念进行简要介绍。">
@@ -400,7 +400,7 @@
       
         <p>最近温习了下机器学习经典算法之一的EM算法，顺便对GMM模型有了更加深入的理解，本文将对这两个概念进行简要介绍。<br><a id="more"></a></p>
 <h2 id="最大似然估计"><a href="#最大似然估计" class="headerlink" title="最大似然估计"></a>最大似然估计</h2><p>在介绍EM算法之前，不得不提最大似然估计。最大似然估计一般用于求分布参数 $\theta $ : 给定一个概率分布，我们从概率分布中抽n个值的采样，通过这些采样数据来估计概率分布的参数 $\theta $，定义似然函数如下所示：</p>
-<p>$$<br>lik(\theta ) = f<em>{D}(x</em>{1},x<em>{2},…,x</em>{n} | \theta)<br>$$</p>
+<p>$$<br>lik(\theta ) = f_{D}(x_{1},x_{2},…,x_{n} | \theta )<br>$$</p>
 <p>在 $\theta $ 的所以取值上令一阶导数等于0，使得这个函数取到最大值，这个使可能性最大的 $ \theta ‘ $ 值即为 $\theta $ 的最大似然估计</p>
 <h2 id="EM算法"><a href="#EM算法" class="headerlink" title="EM算法"></a>EM算法</h2><p>一般用于在概率模型中找最大似然估计，主要针对含有潜在变量的，将不完全的数据补成完全的。</p>
 <p>用辅助函数来解</p>
