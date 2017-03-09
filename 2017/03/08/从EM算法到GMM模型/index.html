@@ -91,7 +91,7 @@
 <meta property="og:site_name" content="塞外麾下炙">
 <meta property="og:description" content="最近温习了下机器学习经典算法之一的EM算法，顺便对GMM模型有了更加深入的理解，本文将对这两个概念进行简要介绍。">
 <meta property="og:image" content="https://oh1ulkf4j.qnssl.com/Screen%20Shot%202017-03-09%20at%207.21.41%20PM.png">
-<meta property="og:updated_time" content="2017-03-09T12:00:04.000Z">
+<meta property="og:updated_time" content="2017-03-09T12:09:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从EM算法到GMM模型">
 <meta name="twitter:description" content="最近温习了下机器学习经典算法之一的EM算法，顺便对GMM模型有了更加深入的理解，本文将对这两个概念进行简要介绍。">
@@ -412,7 +412,7 @@
 </ol>
 <p>我们也可以通俗地解释为：</p>
 <p>最大似然估计一般用于求分布参数 $\theta $ : 给定一个概率分布，我们从概率分布中抽n个值的采样，通过这些采样数据来估计概率分布的参数 $\theta $，定义似然函数如下所示：</p>
-<p>$$<br>\begin{eqnarray<em>}<br>lik(\theta ) &amp; = &amp; f_{D}(x_{1},x_{2},…,x_{n} | \theta ) \\<br>&amp; = &amp; \prod_{k = 1}^{N}p(x_k| \theta ))<br>\end{eqnarray</em>}<br>$$</p>
+<p>$$<br>\begin{eqnarray}<br>lik(\theta ) &amp; = &amp; f_{D}(x_{1},x_{2},…,x_{n} | \theta ) \\<br>&amp; = &amp; \prod_{k = 1}^{N}p(x_k| \theta ))<br>\end{eqnarray}<br>$$</p>
 <p>$$<br>\theta’ = \arg \max_{\theta }\{p(Data|\theta )\}<br>$$</p>
 <p>在 $\theta $ 的所以取值上令一阶导数等于0，使得这个函数取到最大值，这个使可能性最大的 $ \theta ‘ $ 值即为 $\theta $ 的最大似然估计。</p>
 <p>最大似然估计是建立在这样的思想上：已知某个参数能使这个样本出现的概率最大，我们就把这个参数作为估计的真实值。</p>
@@ -421,10 +421,7 @@
 <li>我们先设 $\mathbf{\theta }$ 为一个p元素的向量 $\mathbf{\theta } = [\theta_1,\theta_2,…,\theta_p]^T$</li>
 <li>让其成为梯度算子 $ \bigtriangledown_\theta =[\frac{\partial }{\partial \theta_1}, \frac{\partial }{\partial \theta_2},…, \frac{\partial }{\partial \theta_p} ] $</li>
 <li>已有：$ p (x | \mathbf{\theta}) = \prod_{k=1}^{n}p(x_k | \theta)) $</li>
-<li>我们定义 $ l(\mathbf{\theta})$ 为最大似然函数：<br>$$<br>l(\mathbf{\theta}) = log(p(D |\mathbf{\theta})) = \sum_{k = 1}^{n}log(p(x_k | \mathbf{\theta}))<br>$$</li>
-</ol>
-<p>以及梯度算子：<br>$$<br>\bigtriangledown_\theta l(\mathbf{\theta}) =\bigtriangledown_\theta log(p(D |\mathbf{\theta})) = \sum_{k = 1}^{n}\bigtriangledown_\theta log(p(x_k | \mathbf{\theta}))<br>$$</p>
-<ol>
+<li>我们定义 $ l(\mathbf{\theta})$ 为最大似然函数,以及对应的梯度算子：<br>$$<br>l(\mathbf{\theta}) = log(p(D |\mathbf{\theta})) = \sum_{k = 1}^{n}log(p(x_k | \mathbf{\theta}))<br>$$<br>$$<br>\bigtriangledown_\theta l(\mathbf{\theta}) =\bigtriangledown_\theta log(p(D |\mathbf{\theta})) = \sum_{k = 1}^{n}\bigtriangledown_\theta log(p(x_k | \mathbf{\theta}))<br>$$</li>
 <li>我们通过算子为0得到最大似然估计：<br>$$<br>\bigtriangledown_\theta l(\mathbf{\theta}) = 0<br>$$ </li>
 </ol>
 <p>ML主要应用于单高斯和多高斯中。</p>
@@ -438,7 +435,7 @@
 <p>根据Jensen不等式，我们可以得到，如果f是凸函数，x是随机变量，则：<br>$$<br>E[f(x)] \geq f(E[x])<br>$$</p>
 <p>如果是凹函数则反之</p>
 <p>因此我们可以推导得出一个辅助函数：(将潜在变量引入其中，log函数是凹函数)</p>
-<p>$$<br>\begin{eqnarray<em>}<br>\log{p(\mathbf{X} | \Theta)} &amp; = &amp; \log{\sum_y{p(\mathbf{x},y | \Theta)}} \\<br>&amp; = &amp; \log{q(y)\frac{\sum_y{p(\mathbf{x},y | \Theta)}}{q(y)}} \\<br>&amp; \geq &amp; \sum_y q(y) \log(\frac{p(\mathbf{x},y | \Theta)}{q(y)})<br>\end{eqnarray</em>}<br>$$</p>
+<p>$$<br>\begin{eqnarray}<br>\log{p(\mathbf{X} | \Theta)} &amp; = &amp; \log{\sum_y{p(\mathbf{x},y | \Theta)}} \\<br>&amp; = &amp; \log{q(y)\frac{\sum_y{p(\mathbf{x},y | \Theta)}}{q(y)}} \\<br>&amp; \geq &amp; \sum_y q(y) \log(\frac{p(\mathbf{x},y | \Theta)}{q(y)})<br>\end{eqnarray}<br>$$</p>
 <p>因此，EM算法具体可以分为以下四个步骤：</p>
 <ol>
 <li>对参数进行初始化设置，为 $\Theta^{old}$</li>
