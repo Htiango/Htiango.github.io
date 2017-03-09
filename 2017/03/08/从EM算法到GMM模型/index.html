@@ -90,7 +90,7 @@
 <meta property="og:url" content="http://tianyuh.com/2017/03/08/从EM算法到GMM模型/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
 <meta property="og:description" content="最近温习了下机器学习经典算法之一的EM算法，顺便对GMM模型有了更加深入的理解，本文将对这两个概念进行简要介绍。">
-<meta property="og:updated_time" content="2017-03-08T13:19:18.000Z">
+<meta property="og:updated_time" content="2017-03-08T14:39:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从EM算法到GMM模型">
 <meta name="twitter:description" content="最近温习了下机器学习经典算法之一的EM算法，顺便对GMM模型有了更加深入的理解，本文将对这两个概念进行简要介绍。">
@@ -399,10 +399,29 @@
 
       
         <p>最近温习了下机器学习经典算法之一的EM算法，顺便对GMM模型有了更加深入的理解，本文将对这两个概念进行简要介绍。<br><a id="more"></a></p>
-<h2 id="最大似然估计"><a href="#最大似然估计" class="headerlink" title="最大似然估计"></a>最大似然估计</h2><p>在介绍EM算法之前，不得不提最大似然估计。最大似然估计一般用于求分布参数 $\theta $ : 给定一个概率分布，我们从概率分布中抽n个值的采样，通过这些采样数据来估计概率分布的参数 $\theta $，定义似然函数如下所示：</p>
-<p>$$<br>lik(\theta ) = f_{D}(x_{1},x_{2},…,x_{n} | \theta )<br>$$</p>
-<p>在 $\theta $ 的所以取值上令一阶导数等于0，使得这个函数取到最大值，这个使可能性最大的 $ \theta ‘ $ 值即为 $\theta $ 的最大似然估计</p>
-<h2 id="EM算法"><a href="#EM算法" class="headerlink" title="EM算法"></a>EM算法</h2><p>一般用于在概率模型中找最大似然估计，主要针对含有潜在变量的，将不完全的数据补成完全的。</p>
+<h2 id="最大似然估计（MLE）"><a href="#最大似然估计（MLE）" class="headerlink" title="最大似然估计（MLE）"></a>最大似然估计（MLE）</h2><p>Maximum Likelihood Estimation</p>
+<p>在介绍EM算法之前，不得不提最大似然估计。</p>
+<p>最大似然估计可以解释为：</p>
+<ol>
+<li>假设 $ p (x | \omega) $ 是一个有参数向量 $\theta $ 唯一确定的概率分布</li>
+<li>参数 $\theta $ 是固定但是未知的。</li>
+<li>假设我们有一个按照概率分布 $ p (x | \omega) $ 的数据集 D，D 中的样本彼此独立。</li>
+<li>MLE 就是 $\theta $ 的一个最能解释描述该数据集的值。</li>
+</ol>
+<p>我们也可以通俗地解释为：</p>
+<p>最大似然估计一般用于求分布参数 $\theta $ : 给定一个概率分布，我们从概率分布中抽n个值的采样，通过这些采样数据来估计概率分布的参数 $\theta $，定义似然函数如下所示：</p>
+<p>$$<br>\begin{eqnarray<em>}<br>lik(\theta ) &amp; = &amp; f_{D}(x_{1},x_{2},…,x_{n} | \theta ) \\<br>&amp; = &amp; \prod_{k = 1}^{N}p(x_k| \theta ))<br>\end{eqnarray</em>}<br>$$</p>
+<p>$$<br>\theta’ = \arg \max_{\theta }\{p(Data|\theta )\}<br>$$</p>
+<p>在 $\theta $ 的所以取值上令一阶导数等于0，使得这个函数取到最大值，这个使可能性最大的 $ \theta ‘ $ 值即为 $\theta $ 的最大似然估计。</p>
+<p>最大似然估计是建立在这样的思想上：已知某个参数能使这个样本出现的概率最大，我们就把这个参数作为估计的真实值。</p>
+<p>那么我们要如何来解决ML estimate的问题呢？</p>
+<ol>
+<li>我们先设 $\mathbf{\theta }$ 为一个p元素的向量 $\mathbf{\theta } = [\theta_1,\theta_2,…,\theta_p]^T$</li>
+<li>让其成为  </li>
+</ol>
+<p>ML主要应用于多高斯中。</p>
+<h2 id="EM算法"><a href="#EM算法" class="headerlink" title="EM算法"></a>EM算法</h2><p>Expectation-Maximum Algorithm</p>
+<p>EM算法一般用于在概率模型中找最大似然估计，主要针对含有潜在变量的，将不完全的数据补成完全的。</p>
 <p>用辅助函数来解</p>
 <h2 id="GMM模型"><a href="#GMM模型" class="headerlink" title="GMM模型"></a>GMM模型</h2>
       
@@ -449,6 +468,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/09/Leetcode-091/" rel="prev" title="091 Decode Ways">
+                091 Decode Ways <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -543,7 +566,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">98</span>
+              <span class="site-state-item-count">100</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -615,7 +638,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#最大似然估计"><span class="nav-number">1.</span> <span class="nav-text">最大似然估计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EM算法"><span class="nav-number">2.</span> <span class="nav-text">EM算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GMM模型"><span class="nav-number">3.</span> <span class="nav-text">GMM模型</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#最大似然估计（MLE）"><span class="nav-number">1.</span> <span class="nav-text">最大似然估计（MLE）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EM算法"><span class="nav-number">2.</span> <span class="nav-text">EM算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GMM模型"><span class="nav-number">3.</span> <span class="nav-text">GMM模型</span></a></li></ol></div>
             
 
           </div>
