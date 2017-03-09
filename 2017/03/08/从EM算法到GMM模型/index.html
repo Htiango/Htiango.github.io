@@ -90,10 +90,12 @@
 <meta property="og:url" content="http://tianyuh.com/2017/03/08/从EM算法到GMM模型/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
 <meta property="og:description" content="最近温习了下机器学习经典算法之一的EM算法，顺便对GMM模型有了更加深入的理解，本文将对这两个概念进行简要介绍。">
-<meta property="og:updated_time" content="2017-03-08T14:39:20.000Z">
+<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/Screen%20Shot%202017-03-09%20at%207.21.41%20PM.png">
+<meta property="og:updated_time" content="2017-03-09T12:00:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从EM算法到GMM模型">
 <meta name="twitter:description" content="最近温习了下机器学习经典算法之一的EM算法，顺便对GMM模型有了更加深入的理解，本文将对这两个概念进行简要介绍。">
+<meta name="twitter:image" content="https://oh1ulkf4j.qnssl.com/Screen%20Shot%202017-03-09%20at%207.21.41%20PM.png">
 
 
 
@@ -417,12 +419,33 @@
 <p>那么我们要如何来解决ML estimate的问题呢？</p>
 <ol>
 <li>我们先设 $\mathbf{\theta }$ 为一个p元素的向量 $\mathbf{\theta } = [\theta_1,\theta_2,…,\theta_p]^T$</li>
-<li>让其成为  </li>
+<li>让其成为梯度算子 $ \bigtriangledown_\theta =[\frac{\partial }{\partial \theta_1}, \frac{\partial }{\partial \theta_2},…, \frac{\partial }{\partial \theta_p} ] $</li>
+<li>已有：$ p (x | \mathbf{\theta}) = \prod_{k=1}^{n}p(x_k | \theta)) $</li>
+<li>我们定义 $ l(\mathbf{\theta})$ 为最大似然函数：<br>$$<br>l(\mathbf{\theta}) = log(p(D |\mathbf{\theta})) = \sum_{k = 1}^{n}log(p(x_k | \mathbf{\theta}))<br>$$</li>
 </ol>
-<p>ML主要应用于多高斯中。</p>
+<p>以及梯度算子：<br>$$<br>\bigtriangledown_\theta l(\mathbf{\theta}) =\bigtriangledown_\theta log(p(D |\mathbf{\theta})) = \sum_{k = 1}^{n}\bigtriangledown_\theta log(p(x_k | \mathbf{\theta}))<br>$$</p>
+<ol>
+<li>我们通过算子为0得到最大似然估计：<br>$$<br>\bigtriangledown_\theta l(\mathbf{\theta}) = 0<br>$$ </li>
+</ol>
+<p>ML主要应用于单高斯和多高斯中。</p>
 <h2 id="EM算法"><a href="#EM算法" class="headerlink" title="EM算法"></a>EM算法</h2><p>Expectation-Maximum Algorithm</p>
 <p>EM算法一般用于在概率模型中找最大似然估计，主要针对含有潜在变量的，将不完全的数据补成完全的。</p>
-<p>用辅助函数来解</p>
+<p>对于含有潜在变量的，如果我们还是按照求最大似然估计的方法来解决的话（分别求偏导），会出现“和的对数”这种难以解决的情况。对于这种情况，我们要用辅助函数来帮助解决。</p>
+<p><img src="https://oh1ulkf4j.qnssl.com/Screen%20Shot%202017-03-09%20at%207.21.41%20PM.png" alt=""></p>
+<p>我们定义一个辅助函数 $ A(x,x^t)$ 与 f(x) 在 $x^t$ 处相等，且满足 $f(x) \geq A(x,x^t) $</p>
+<p>我们只要将辅助函数的最大值设为新的 $\theta$ ，通过多次迭代逐渐逼近 f(x) 的最大值。</p>
+<p>我们可以利用Jensen不等式来推导：</p>
+<p>根据Jensen不等式，我们可以得到，如果f是凸函数，x是随机变量，则：<br>$$<br>E[f(x)] \geq f(E[x])<br>$$</p>
+<p>如果是凹函数则反之</p>
+<p>因此我们可以推导得出一个辅助函数：(将潜在变量引入其中，log函数是凹函数)</p>
+<p>$$<br>\begin{eqnarray<em>}<br>\log{p(\mathbf{X} | \Theta)} &amp; = &amp; \log{\sum_y{p(\mathbf{x},y | \Theta)}} \\<br>&amp; = &amp; \log{q(y)\frac{\sum_y{p(\mathbf{x},y | \Theta)}}{q(y)}} \\<br>&amp; \geq &amp; \sum_y q(y) \log(\frac{p(\mathbf{x},y | \Theta)}{q(y)})<br>\end{eqnarray</em>}<br>$$</p>
+<p>因此，EM算法具体可以分为以下四个步骤：</p>
+<ol>
+<li>对参数进行初始化设置，为 $\Theta^{old}$</li>
+<li>E-step: 估计出 $p(y | x, \Theta^{old})$<br>$$<br>Q(\Theta, \Theta^{old}) = \sum_y{p(y | x, \Theta^{old}) \log(p(\mathbf{x},y|\Theta))}<br>$$</li>
+<li>M-step: 用最大似然估计来估计$ \Theta^{new}$<br>$$<br>\Theta^{new} = \arg \max_\Theta Q(\Theta, \Theta^{old})<br>$$</li>
+<li>检查是否收敛，如果不是$\Theta^{new} \rightarrow \Theta^{old}$ 并返回步骤2</li>
+</ol>
 <h2 id="GMM模型"><a href="#GMM模型" class="headerlink" title="GMM模型"></a>GMM模型</h2>
       
     </div>
