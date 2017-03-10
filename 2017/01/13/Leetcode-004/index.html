@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="cpp,array," />
+  <meta name="keywords" content="array,cpp," />
 
 
 
@@ -90,7 +90,7 @@
 <meta property="og:url" content="http://tianyuh.com/2017/01/13/Leetcode-004/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
 <meta property="og:description" content="Leetcode 004，关于array相关处理。">
-<meta property="og:updated_time" content="2017-01-13T08:47:39.000Z">
+<meta property="og:updated_time" content="2017-03-10T11:14:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="004 Median of Two Sorted Arrays">
 <meta name="twitter:description" content="Leetcode 004，关于array相关处理。">
@@ -405,6 +405,7 @@
 <h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>由于两个数组都是按好大小排列好的sorted array，所以我的思路是每次pop出两个数组中最大的那个，最终得到想要的中位数。</p>
 <p>具体代码见下，最后的运行时间为32ms，高于85%的答案，比较满意。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">double</span> <span class="title">findMedianSortedArrays</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums1, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums2)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> size1 = nums1.size(), size2 = nums2.size();</div><div class="line">        <span class="keyword">bool</span> odd  = (<span class="keyword">bool</span>)((size1 + size2) % <span class="number">2</span>);</div><div class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> tempNum = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> lastTempNum = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> countLimit = (size1 + size2) / <span class="number">2</span> + <span class="number">1</span>;</div><div class="line">        <span class="keyword">while</span>(count &lt; countLimit)&#123;</div><div class="line">        	lastTempNum = tempNum;</div><div class="line">        	count ++;</div><div class="line">        	<span class="keyword">if</span> (size1 == <span class="number">0</span>)&#123;</div><div class="line">        		<span class="keyword">if</span>(size2 == <span class="number">0</span>)&#123;</div><div class="line">        			<span class="keyword">return</span> <span class="literal">NULL</span>;</div><div class="line">        		&#125;</div><div class="line">        		size2--;</div><div class="line">        		tempNum = nums2.back();</div><div class="line">        		nums2.pop_back();</div><div class="line">        		<span class="keyword">continue</span>;</div><div class="line">        	&#125;</div><div class="line">        	<span class="keyword">else</span> <span class="keyword">if</span>(size2 == <span class="number">0</span>)&#123;</div><div class="line">        		size1--;</div><div class="line">        		tempNum = nums1.back();</div><div class="line">        		nums1.pop_back();</div><div class="line">        		<span class="keyword">continue</span>;</div><div class="line">        	&#125;</div><div class="line">        	<span class="keyword">if</span>(nums1[size1 - <span class="number">1</span>] &gt; nums2[size2 - <span class="number">1</span>])&#123;</div><div class="line">        		size1--;</div><div class="line">        		tempNum = nums1.back();</div><div class="line">        		nums1.pop_back();</div><div class="line">        	&#125;</div><div class="line">        	<span class="keyword">else</span>&#123;</div><div class="line">        		size2--;</div><div class="line">        		tempNum = nums2.back();</div><div class="line">        		nums2.pop_back();</div><div class="line">        	&#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (odd)&#123;</div><div class="line">        	<span class="keyword">return</span> tempNum;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">        	<span class="keyword">return</span> <span class="number">0.5</span> * (tempNum + lastTempNum);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -427,9 +428,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/cpp/" rel="tag"># cpp</a>
-          
             <a href="/tags/array/" rel="tag"># array</a>
+          
+            <a href="/tags/cpp/" rel="tag"># cpp</a>
           
         </div>
       
