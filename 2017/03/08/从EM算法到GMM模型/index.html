@@ -91,7 +91,7 @@
 <meta property="og:site_name" content="塞外麾下炙">
 <meta property="og:description" content="最近温习了下机器学习经典算法之一的EM算法，顺便对GMM模型有了更加深入的理解，本文将对这两个概念进行简要介绍。">
 <meta property="og:image" content="https://oh1ulkf4j.qnssl.com/Screen%20Shot%202017-03-09%20at%207.21.41%20PM.png">
-<meta property="og:updated_time" content="2017-03-09T12:17:58.000Z">
+<meta property="og:updated_time" content="2017-03-13T16:18:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从EM算法到GMM模型">
 <meta name="twitter:description" content="最近温习了下机器学习经典算法之一的EM算法，顺便对GMM模型有了更加深入的理解，本文将对这两个概念进行简要介绍。">
@@ -432,7 +432,8 @@
 <p>我们定义一个辅助函数 $ A(x,x^t)$ 与 f(x) 在 $x^t$ 处相等，且满足 $f(x) \geq A(x,x^t) $</p>
 <p>我们只要将辅助函数的最大值设为新的 $\theta$ ，通过多次迭代逐渐逼近 f(x) 的最大值。</p>
 <p>我们可以利用Jensen不等式来推导：</p>
-<p>根据Jensen不等式，我们可以得到，如果f是凸函数，x是随机变量，则：<br>$$<br>E[f(x)] \geq f(E[x])<br>$$</p>
+<p>根据Jensen不等式，我们可以得到，如果f是凸函数，x是随机变量，则：</p>
+<p>$$<br>E[f(x)] \geq f(E[x])<br>$$</p>
 <p>如果是凹函数则反之</p>
 <p>因此我们可以推导得出一个辅助函数：(将潜在变量引入其中，log函数是凹函数)</p>
 <p>$$<br>\begin{eqnarray}<br>\log{p(\mathbf{X} | \Theta)} &amp; = &amp; \log{\sum_y{p(\mathbf{x},y | \Theta)}} \\<br>&amp; = &amp; \log{q(y)\frac{\sum_y{p(\mathbf{x},y | \Theta)}}{q(y)}} \\<br>&amp; \geq &amp; \sum_y q(y) \log(\frac{p(\mathbf{x},y | \Theta)}{q(y)})<br>\end{eqnarray}<br>$$</p>
@@ -444,7 +445,13 @@
 <li>检查是否收敛，如果不是$\Theta^{new} \rightarrow \Theta^{old}$ 并返回步骤2</li>
 </ol>
 <p>EM 模型主要用于高斯混合模型 GMM 中。</p>
-<h2 id="GMM模型"><a href="#GMM模型" class="headerlink" title="GMM模型"></a>GMM模型</h2><h3 id="Mixture-Model"><a href="#Mixture-Model" class="headerlink" title="Mixture Model"></a>Mixture Model</h3><h3 id="Gaussian-Mixture-Model"><a href="#Gaussian-Mixture-Model" class="headerlink" title="Gaussian Mixture Model"></a>Gaussian Mixture Model</h3>
+<h2 id="GMM模型"><a href="#GMM模型" class="headerlink" title="GMM模型"></a>GMM模型</h2><p>在一个多高斯混合模型中，数据是从多个单高斯中生成出来的，即：<br>$$<br>P(x) = \sum_{k=1}^{K} \pi_k N(x;u_k,\Sigma_k)<br>$$<br>其中，$\pi_k$ 是权重值，总的和为1.</p>
+<p>对于一个GMM模型，如果K的值足够大的话，混合模型就可以逼近任意的连续概率分布。</p>
+<p>GMM模型本质上是一种聚类算法，每个高斯分布就是一个聚类中心。和K-means不同的在于，GMM是采用概率模型来表达聚类原型，因此可以给出一个样本属于某类的概率大小。</p>
+<p>在每个样本的分类确定的情况下，GMM的参数可以直接用MLE的方法来确定。但是在只知道样本点而不知道其分类情况下，我们会得到一个这样的log-likehood的函数：<br>$$<br>\sum_{i = 1}^N \log(\sum_{k = 1}^K \pi_k N(x;u_k,\Sigma_k))<br>$$<br>在这个似然函数中，由于每个样本$x_i$所属的类别$z_k$是属于隐含变量的未知值，所以我们需要用EM算法来计算出模型的参数（使得上式的期望最大），然后可以用这些算好的参数来对样本进行分类。</p>
+<p>E-step: 假设模型参数已知，求隐含变量分类Z的期望，即个个高斯分布的概率</p>
+<p>M-step: 根据E-step中求得的分类，用MLE的方法求得参数。</p>
+
       
     </div>
 
@@ -587,7 +594,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">102</span>
+              <span class="site-state-item-count">103</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -659,7 +666,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#最大似然估计（MLE）"><span class="nav-number">1.</span> <span class="nav-text">最大似然估计（MLE）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EM算法"><span class="nav-number">2.</span> <span class="nav-text">EM算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GMM模型"><span class="nav-number">3.</span> <span class="nav-text">GMM模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mixture-Model"><span class="nav-number">3.1.</span> <span class="nav-text">Mixture Model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gaussian-Mixture-Model"><span class="nav-number">3.2.</span> <span class="nav-text">Gaussian Mixture Model</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#最大似然估计（MLE）"><span class="nav-number">1.</span> <span class="nav-text">最大似然估计（MLE）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EM算法"><span class="nav-number">2.</span> <span class="nav-text">EM算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GMM模型"><span class="nav-number">3.</span> <span class="nav-text">GMM模型</span></a></li></ol></div>
             
 
           </div>
