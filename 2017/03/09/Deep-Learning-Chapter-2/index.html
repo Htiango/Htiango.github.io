@@ -90,10 +90,12 @@
 <meta property="og:url" content="http://tianyuh.com/2017/03/09/Deep-Learning-Chapter-2/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
 <meta property="og:description" content="在Deep Learning一书的第二章，主要介绍了线性代数的基本思想。">
-<meta property="og:updated_time" content="2017-03-10T06:54:00.000Z">
+<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/Screen Shot 2017-03-14 at 12.54.28 AM.png">
+<meta property="og:updated_time" content="2017-03-13T16:59:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Deep Learning Chapter 2">
 <meta name="twitter:description" content="在Deep Learning一书的第二章，主要介绍了线性代数的基本思想。">
+<meta name="twitter:image" content="https://oh1ulkf4j.qnssl.com/Screen Shot 2017-03-14 at 12.54.28 AM.png">
 
 
 
@@ -420,7 +422,12 @@
 <p>但是有时我们仍然会遇到在原点附近增长缓慢的情况，对于一些区分零和非零小值的机器学习应用而言是十分致命的。因此很多时候会采用$L^1$范数，每当x中的某一元素增加了一个小量时，对应的防暑也会增加这个小量。</p>
 <p>深度学习中，我们有时为了衡量矩阵的大小，使用类似$L^2$范数的Frobenius范数：</p>
 <p>$$<br>\left | \mathbf{A} \right |_F = \sqrt{\sum_i{A_{i,j}^2}}<br>$$</p>
-<h2 id="正交矩阵"><a href="#正交矩阵" class="headerlink" title="正交矩阵"></a>正交矩阵</h2><h2 id="特征分解"><a href="#特征分解" class="headerlink" title="特征分解"></a>特征分解</h2><h2 id="奇异值分解-SVD"><a href="#奇异值分解-SVD" class="headerlink" title="奇异值分解 SVD"></a>奇异值分解 SVD</h2><h2 id="PCA-应用"><a href="#PCA-应用" class="headerlink" title="PCA 应用"></a>PCA 应用</h2>
+<h2 id="正交矩阵"><a href="#正交矩阵" class="headerlink" title="正交矩阵"></a>正交矩阵</h2><p>正交矩阵是指行向量和列向量都是<strong>标准正交</strong>的方阵：<br>$$<br>\mathbf{A}^T \mathbf{A} = \mathbf{A} \mathbf{A}^T = \mathbf{I}<br>$$<br>即：<br>$$<br>\mathbf{A}^{-1} = \mathbf{A}^T<br>$$</p>
+<p>由于正交矩阵的求逆计算代价很小，所以在机器学习中经常得到运用</p>
+<h2 id="特征分解"><a href="#特征分解" class="headerlink" title="特征分解"></a>特征分解</h2><p>所谓特征分解就是讲矩阵分解为一组特征向量和特征值。<br>方阵<strong>A</strong>的特征向量是指与<strong>A</strong>相乘后等于对该向量进行缩放的非零向量<strong>v</strong>：（我们一般只考虑单位特征向量）<br>$$<br>\mathbf{A v} = \lambda \mathbf{v}<br>$$<br>其中的标量λ被称为这个特征向量对应的特征值。</p>
+<p>假设矩阵<strong>A</strong>有n个线性无关的特征向量$\{\mathbf{v^1},…,\mathbf{v^n}\}$，对应着特征值$\{\lambda_1,…\lambda_n\}$，我们将特征向量连接为一个矩阵，使得每一列是一个特征向量：$\mathbf{V} = \{\mathbf{v^1},…,\mathbf{v^n}\}$，将特征向量连接成一个向量$\mathbf{\lambda} = \{\lambda_1,…\lambda_n\}^T$<br>A的特征分解：<br>$$<br>\mathbf{A} = \mathbf{V} diag(\mathbf{\lambda})\mathbf{V}^{-1}<br>$$</p>
+<p>但是，不是每一个矩阵都可以分解为特征值和特征向量的。只有实对称矩阵才可以分解为实特征向量和实特征值，但是分解结果可能不唯一。如果两个或多个特征向量拥有相同的特征值，那么这组特征向量生成子空间中，任意一组正交向量都是该特征值对应的特征向量。<br>$$<br>\mathbf{A} = \mathbf{Q} \Lambda \mathbf{Q}^{T}<br>$$<br>上式中Q是A的特征向量组成的正交矩阵，$\Lambda$是对角矩阵。因为Q是正交矩阵，我们可以将A看作是沿方向$\mathbf{v}^{i}$延展$\lambda_i$倍的空间<br><img src="https://oh1ulkf4j.qnssl.com/Screen Shot 2017-03-14 at 12.54.28 AM.png" alt="Screen Shot 2017-03-14 at 12.54.28 A"></p>
+<h2 id="奇异值分解-SVD"><a href="#奇异值分解-SVD" class="headerlink" title="奇异值分解 SVD"></a>奇异值分解 SVD</h2><h2 id="PCA-应用"><a href="#PCA-应用" class="headerlink" title="PCA 应用"></a>PCA 应用</h2>
       
     </div>
 
