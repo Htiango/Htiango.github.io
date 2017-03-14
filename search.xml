@@ -3,9 +3,23 @@
   
     
     <entry>
-      <title><![CDATA[Leetcode-094]]></title>
+      <title><![CDATA[096 Unique Binary Search Trees]]></title>
+      <url>%2F2017%2F03%2F14%2FLeetcode-096%2F</url>
+      <content type="text"><![CDATA[Leetcode 096，给定一个数n，给出能生成所有可能的BST（二叉搜索树）的数目。 题目Given n, how many structurally unique BST’s (binary search trees) that store values 1…n? For example,Given n = 3, there are a total of 5 unique BST’s. 123451 3 3 2 1 \ / / / \ \ 3 2 1 1 3 2 / / \ \2 1 2 3 解题思路本题采用dp的方法来解题，dp[n] = dp[0] dp[n - 2] + dp[1] dp[n -3] + … + dp[i] dp[n - i - 2] + 2 dp[n - 1] 代码见下，运行时间为0ms 1234567891011121314151617class Solution &#123;public: int numTrees(int n) &#123; if(n &lt;= 2) return n; vector&lt;int&gt; dp(n , 0); dp[0] = 1; dp[1] = 2; for(int i = 2; i &lt; n; i++)&#123; for(int j = 1; j &lt; i; j++)&#123; dp[i] += dp[j - 1] * dp[i - j - 1]; &#125; dp[i] += 2 * dp[i - 1]; &#125; return dp[n - 1]; &#125;&#125;;]]></content>
+    </entry>
+
+    
+    <entry>
+      <title><![CDATA[095 Unique Binary Search Trees II]]></title>
+      <url>%2F2017%2F03%2F14%2FLeetcode-095%2F</url>
+      <content type="text"><![CDATA[Leetcode 095，给定一个数n，生成所有可能的BST（二叉搜索树）。 题目Given an integer n, generate all structurally unique BST’s (binary search trees) that store values 1…n. For example,Given n = 3, your program should return all 5 unique BST’s shown below. 123451 3 3 2 1 \ / / / \ \ 3 2 1 1 3 2 / / \ \2 1 2 3 解题思路在[1,n]间取一个值x，则[1,x)为左子树，(x,n]为右子树，通过递归即可得到。 需要注意的一点是：最好在每个循环里声明节点指针，否则会报错或者混淆。 代码见下，运行时间为16ms 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657/** * Definition for a binary tree node. * struct TreeNode &#123; * int val; * TreeNode *left; * TreeNode *right; * TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125; * &#125;; */class Solution &#123;public: vector&lt;TreeNode*&gt; generateTrees(int n) &#123; return getTrees(0, n); &#125; vector&lt;TreeNode*&gt; getTrees(int start, int end)&#123; vector&lt;TreeNode*&gt; result, left_vec, right_vec; for(int i = start + 1; i &lt;= end; i++)&#123; left_vec = getTrees(start, i - 1); right_vec = getTrees(i, end); if(left_vec.size() == 0)&#123; if(right_vec.size() == 0)&#123; TreeNode* root = new TreeNode(i); result.push_back(root); &#125; else&#123; // cout &lt;&lt;"here!"&lt;&lt;endl; for(int j = 0; j &lt; right_vec.size(); j++)&#123; TreeNode* root = new TreeNode(i); root-&gt;right = right_vec[j]; // cout &lt;&lt; right_vec[j]-&gt;val &lt;&lt;endl; result.push_back(root); &#125; &#125; &#125; else if(right_vec.size() == 0)&#123; for(int j = 0; j &lt; left_vec.size(); j++)&#123; TreeNode* root = new TreeNode(i); root-&gt;left = left_vec[j]; result.push_back(root); &#125; &#125; else&#123; for(int j = 0; j &lt; left_vec.size(); j++)&#123; for(int k = 0; k &lt; right_vec.size(); k++)&#123; TreeNode* root = new TreeNode(i); root-&gt;left = left_vec[j]; root-&gt;right = right_vec[k]; result.push_back(root); &#125; &#125; &#125; &#125; return result; &#125;&#125;;]]></content>
+    </entry>
+
+    
+    <entry>
+      <title><![CDATA[094 Binary Tree Inorder Traversal]]></title>
       <url>%2F2017%2F03%2F10%2FLeetcode-094%2F</url>
-      <content type="text"></content>
+      <content type="text"><![CDATA[Leetcode 094，二叉树的中序遍历。 题目Given a binary tree, return the inorder traversal of its nodes’ values. For example:Given binary tree [1,null,2,3], 123456 1 \ 2 / 3return [1,3,2]. 解题思路采用二叉树的中序遍历方法，在处理左子树和右子树之间处理root 代码加下，运行时间为0ms 123456789101112131415161718192021222324252627/** * Definition for a binary tree node. * struct TreeNode &#123; * int val; * TreeNode *left; * TreeNode *right; * TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125; * &#125;; */class Solution &#123;public: vector&lt;int&gt; result; vector&lt;int&gt; inorderTraversal(TreeNode* root) &#123; if(root == NULL) return result; getVal(root); return result; &#125; void getVal(TreeNode* root)&#123; if(root-&gt;left != NULL) getVal(root-&gt;left); result.push_back(root-&gt;val); if(root-&gt;right != NULL) getVal(root-&gt;right); &#125;&#125;;]]></content>
     </entry>
 
     

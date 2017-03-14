@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="tianyuh, Navie" />
+  <meta name="keywords" content="cpp,tree," />
 
 
 
@@ -84,16 +84,16 @@
 
 
 
-<meta name="description" content="Why so serious!">
+<meta name="description" content="Leetcode 094，二叉树的中序遍历。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Leetcode-094">
+<meta property="og:title" content="094 Binary Tree Inorder Traversal">
 <meta property="og:url" content="http://tianyuh.com/2017/03/10/Leetcode-094/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
-<meta property="og:description" content="Why so serious!">
-<meta property="og:updated_time" content="2017-03-10T11:52:24.000Z">
+<meta property="og:description" content="Leetcode 094，二叉树的中序遍历。">
+<meta property="og:updated_time" content="2017-03-14T02:52:47.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Leetcode-094">
-<meta name="twitter:description" content="Why so serious!">
+<meta name="twitter:title" content="094 Binary Tree Inorder Traversal">
+<meta name="twitter:description" content="Leetcode 094，二叉树的中序遍历。">
 
 
 
@@ -127,7 +127,7 @@
 
 
 
-  <title> Leetcode-094 | 塞外麾下炙 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> 094 Binary Tree Inorder Traversal | 塞外麾下炙 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -324,7 +324,7 @@
             
             
               
-                Leetcode-094
+                094 Binary Tree Inorder Traversal
               
             
           </h1>
@@ -347,6 +347,24 @@
             
           </span>
 
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">Leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -380,7 +398,14 @@
       
 
       
-        
+        <p>Leetcode 094，二叉树的中序遍历。<br><a id="more"></a></p>
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>Given a binary tree, return the inorder traversal of its nodes’ values.</p>
+<p>For example:<br>Given binary tree [1,null,2,3],</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">   1</div><div class="line">    \</div><div class="line">     2</div><div class="line">    /</div><div class="line">   3</div><div class="line">return [1,3,2].</div></pre></td></tr></table></figure>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>采用二叉树的中序遍历方法，在处理左子树和右子树之间处理root</p>
+<p>代码加下，运行时间为0ms</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Definition for a binary tree node.</div><div class="line"> * struct TreeNode &#123;</div><div class="line"> *     int val;</div><div class="line"> *     TreeNode *left;</div><div class="line"> *     TreeNode *right;</div><div class="line"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</div><div class="line"> * &#125;;</div><div class="line"> */</div><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; result;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; inorderTraversal(TreeNode* root) &#123;</div><div class="line">        <span class="keyword">if</span>(root == <span class="literal">NULL</span>)</div><div class="line">            <span class="keyword">return</span> result;</div><div class="line">        getVal(root);</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">getVal</span><span class="params">(TreeNode* root)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(root-&gt;left != <span class="literal">NULL</span>)</div><div class="line">            getVal(root-&gt;left);</div><div class="line">        result.push_back(root-&gt;val);</div><div class="line">        <span class="keyword">if</span>(root-&gt;right != <span class="literal">NULL</span>)</div><div class="line">            getVal(root-&gt;right);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -401,6 +426,14 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/cpp/" rel="tag"># cpp</a>
+          
+            <a href="/tags/tree/" rel="tag"># tree</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
@@ -415,6 +448,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/14/Leetcode-095/" rel="prev" title="095 Unique Binary Search Trees II">
+                095 Unique Binary Search Trees II <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -464,7 +501,7 @@
   <div class="comments" id="comments">
     
       <div class="ds-thread" data-thread-key="2017/03/10/Leetcode-094/"
-           data-title="Leetcode-094" data-url="http://tianyuh.com/2017/03/10/Leetcode-094/">
+           data-title="094 Binary Tree Inorder Traversal" data-url="http://tianyuh.com/2017/03/10/Leetcode-094/">
       </div>
     
   </div>
@@ -488,8 +525,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://oh1ulkf4j.qnssl.com/gravatar2.jpg"
@@ -500,7 +546,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">103</span>
+              <span class="site-state-item-count">105</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -517,7 +563,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">40</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
@@ -562,6 +608,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目"><span class="nav-number">1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解题思路"><span class="nav-number">2.</span> <span class="nav-text">解题思路</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>
