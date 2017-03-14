@@ -91,7 +91,7 @@
 <meta property="og:site_name" content="塞外麾下炙">
 <meta property="og:description" content="在Deep Learning一书的第二章，主要介绍了线性代数的基本思想。">
 <meta property="og:image" content="https://oh1ulkf4j.qnssl.com/Screen Shot 2017-03-14 at 12.54.28 AM.png">
-<meta property="og:updated_time" content="2017-03-13T16:59:14.000Z">
+<meta property="og:updated_time" content="2017-03-14T16:22:33.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Deep Learning Chapter 2">
 <meta name="twitter:description" content="在Deep Learning一书的第二章，主要介绍了线性代数的基本思想。">
@@ -426,8 +426,22 @@
 <p>由于正交矩阵的求逆计算代价很小，所以在机器学习中经常得到运用</p>
 <h2 id="特征分解"><a href="#特征分解" class="headerlink" title="特征分解"></a>特征分解</h2><p>所谓特征分解就是讲矩阵分解为一组特征向量和特征值。<br>方阵<strong>A</strong>的特征向量是指与<strong>A</strong>相乘后等于对该向量进行缩放的非零向量<strong>v</strong>：（我们一般只考虑单位特征向量）<br>$$<br>\mathbf{A v} = \lambda \mathbf{v}<br>$$<br>其中的标量λ被称为这个特征向量对应的特征值。</p>
 <p>假设矩阵<strong>A</strong>有n个线性无关的特征向量$\{\mathbf{v^1},…,\mathbf{v^n}\}$，对应着特征值$\{\lambda_1,…\lambda_n\}$，我们将特征向量连接为一个矩阵，使得每一列是一个特征向量：$\mathbf{V} = \{\mathbf{v^1},…,\mathbf{v^n}\}$，将特征向量连接成一个向量$\mathbf{\lambda} = \{\lambda_1,…\lambda_n\}^T$<br>A的特征分解：<br>$$<br>\mathbf{A} = \mathbf{V} diag(\mathbf{\lambda})\mathbf{V}^{-1}<br>$$</p>
-<p>但是，不是每一个矩阵都可以分解为特征值和特征向量的。只有实对称矩阵才可以分解为实特征向量和实特征值，但是分解结果可能不唯一。如果两个或多个特征向量拥有相同的特征值，那么这组特征向量生成子空间中，任意一组正交向量都是该特征值对应的特征向量。<br>$$<br>\mathbf{A} = \mathbf{Q} \Lambda \mathbf{Q}^{T}<br>$$<br>上式中Q是A的特征向量组成的正交矩阵，$\Lambda$是对角矩阵。因为Q是正交矩阵，我们可以将A看作是沿方向$\mathbf{v}^{i}$延展$\lambda_i$倍的空间<br><img src="https://oh1ulkf4j.qnssl.com/Screen Shot 2017-03-14 at 12.54.28 AM.png" alt="Screen Shot 2017-03-14 at 12.54.28 A"></p>
-<h2 id="奇异值分解-SVD"><a href="#奇异值分解-SVD" class="headerlink" title="奇异值分解 SVD"></a>奇异值分解 SVD</h2><h2 id="PCA-应用"><a href="#PCA-应用" class="headerlink" title="PCA 应用"></a>PCA 应用</h2>
+<p>但是，不是每一个矩阵都可以分解为特征值和特征向量的。只有实对称矩阵才可以分解为实特征向量和实特征值，但是分解结果可能不唯一。如果两个或多个特征向量拥有相同的特征值，那么这组特征向量生成子空间中，任意一组正交向量都是该特征值对应的特征向量。<br>$$<br>\mathbf{A} = \mathbf{Q} \Lambda \mathbf{Q}^{T}<br>$$<br>上式中Q是A的特征向量组成的正交矩阵，$\Lambda$是对角矩阵。因为Q是正交矩阵，我们可以将A看作是沿方向$\mathbf{v}^{i}$延展$\lambda_i$倍的空间</p>
+<p><img src="https://oh1ulkf4j.qnssl.com/Screen Shot 2017-03-14 at 12.54.28 AM.png" alt="Screen Shot 2017-03-14 at 12.54.28 A"></p>
+<h2 id="奇异值分解-SVD"><a href="#奇异值分解-SVD" class="headerlink" title="奇异值分解 SVD"></a>奇异值分解 SVD</h2><p>奇异值分解也是一种分解矩阵的方法，将矩阵分解为奇异向量和奇异值，可以得到一些类似特征分解的信息。</p>
+<p>SVD的应用更广，对于没有特征分解的非方阵矩阵，只能使用奇异值分解。</p>
+<p>$$<br>\mathbf{A} = \mathbf{U D V}^T<br>$$</p>
+<p>U和V都是正交矩阵，D是对角矩阵。</p>
+<p>矩阵U的列向量是左奇异向量，是$\mathbf{A} \mathbf{A}^T$的特征向量<br>矩阵V的列向量是右奇异向量，是$\mathbf{A}^T \mathbf{A}$的特征向量</p>
+<p>SVD主要用于拓展矩阵求逆到非方矩阵上。</p>
+<h2 id="Moore-Penrose-伪逆"><a href="#Moore-Penrose-伪逆" class="headerlink" title="Moore-Penrose 伪逆"></a>Moore-Penrose 伪逆</h2><p>非方矩阵的逆矩阵没有定义，对于下列的问题我们希望可以用矩阵A的左逆B来求解线性方程。</p>
+<p>$$<br>\mathbf{A x} = \mathbf{y}<br>$$</p>
+<p>$$<br>\mathbf{x} = \mathbf{B y}<br>$$</p>
+<p>如果矩阵A的行数大于列数，那么上述方程可能没有解。如果矩阵A的行数小于列数，那么上述矩阵可能有多个解。</p>
+<p>Moore-Penrose 伪逆定义：<br>$$<br>\mathbf{A}^+ = \lim_{a \rightarrow 0}(\mathbf{A}^T \mathbf{A} + \alpha \mathbf{I})^{-1} \mathbf{A}^T<br>$$</p>
+<p>$$<br>\mathbf{A}^+ = \mathbf{V} \mathbf{D}^+ \mathbf{U}^T<br>$$</p>
+<p>其中矩阵U、D、V是由A奇异值分解后得到的矩阵，对角矩阵D的伪逆$\mathbf{D}^+$是其所有非零元素取导数之后再转置得到的。</p>
+<h2 id="PCA-应用"><a href="#PCA-应用" class="headerlink" title="PCA 应用"></a>PCA 应用</h2>
       
     </div>
 
@@ -640,7 +654,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本概念"><span class="nav-number">1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#范数"><span class="nav-number">2.</span> <span class="nav-text">范数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正交矩阵"><span class="nav-number">3.</span> <span class="nav-text">正交矩阵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特征分解"><span class="nav-number">4.</span> <span class="nav-text">特征分解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#奇异值分解-SVD"><span class="nav-number">5.</span> <span class="nav-text">奇异值分解 SVD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PCA-应用"><span class="nav-number">6.</span> <span class="nav-text">PCA 应用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本概念"><span class="nav-number">1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#范数"><span class="nav-number">2.</span> <span class="nav-text">范数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正交矩阵"><span class="nav-number">3.</span> <span class="nav-text">正交矩阵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特征分解"><span class="nav-number">4.</span> <span class="nav-text">特征分解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#奇异值分解-SVD"><span class="nav-number">5.</span> <span class="nav-text">奇异值分解 SVD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Moore-Penrose-伪逆"><span class="nav-number">6.</span> <span class="nav-text">Moore-Penrose 伪逆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PCA-应用"><span class="nav-number">7.</span> <span class="nav-text">PCA 应用</span></a></li></ol></div>
             
 
           </div>
