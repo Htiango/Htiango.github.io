@@ -3,6 +3,13 @@
   
     
     <entry>
+      <title><![CDATA[Leetcode-097]]></title>
+      <url>%2F2017%2F03%2F14%2FLeetcode-097%2F</url>
+      <content type="text"><![CDATA[Leetcode 097，判断一个字符串是否是由两个字符串插值形成。 题目Given s1, s2, s3, find whether s3 is formed by the interleaving of s1 and s2. For example,Given:s1 = “aabcc”,s2 = “dbbca”, When s3 = “aadbbcbcac”, return true.When s3 = “aadbbbaccc”, return false. 解题思路本题采用dp的方法来做。构建一个(l2+1) * (l1+1) 长的一个dp矩阵，dp[i][j]只能从dp[i-1][j]和dp[i][j-1]处得来，不同的是在于字符串插入的顺序不同，但对于本题而言，不需要知道插入顺序是如何的，所以可以直接用这种方法来解题。 代码见下，运行时间为3ms 123456789101112131415161718192021222324252627282930313233343536class Solution &#123;public: bool isInterleave(string s1, string s2, string s3) &#123; int l1 = s1.length(), l2 = s2.length(), l3 = s3.length(); if(l1 + l2 != l3) return false; vector&lt;vector&lt;int&gt;&gt; dp(l2 + 1, vector&lt;int&gt;(l1 + 1, 0)); for(int i = 1; i &lt;= l1; i++)&#123; if(s3[i - 1] == s1[i - 1])&#123; dp[0][i] = dp[0][i - 1]; &#125; else&#123; dp[0][i] = dp[0][i - 1] + 1; &#125; &#125; for(int i = 1; i &lt;= l2; i++)&#123; if(s3[i - 1] == s2[i - 1])&#123; dp[i][0] = dp[i - 1][0]; &#125; else&#123; dp[i][0] = dp[i - 1][0] + 1; &#125; &#125; for(int i = 1; i &lt;= l2; i++)&#123; for(int j = 1; j &lt;= l1; j++)&#123; int v1 = (s1[j - 1] == s3[i + j - 1] ? 0 : 1); int v2 = (s2[i - 1] == s3[i + j - 1] ? 0 : 1); dp[i][j] = min((dp[i][j - 1] + v1), (dp[i - 1][j] + v2)); &#125; &#125; if(dp[l2][l1] == 0) return true; else return false; &#125;&#125;;]]></content>
+    </entry>
+
+    
+    <entry>
       <title><![CDATA[096 Unique Binary Search Trees]]></title>
       <url>%2F2017%2F03%2F14%2FLeetcode-096%2F</url>
       <content type="text"><![CDATA[Leetcode 096，给定一个数n，给出能生成所有可能的BST（二叉搜索树）的数目。 题目Given n, how many structurally unique BST’s (binary search trees) that store values 1…n? For example,Given n = 3, there are a total of 5 unique BST’s. 123451 3 3 2 1 \ / / / \ \ 3 2 1 1 3 2 / / \ \2 1 2 3 解题思路本题采用dp的方法来解题，dp[n] = dp[0] dp[n - 2] + dp[1] dp[n -3] + … + dp[i] dp[n - i - 2] + 2 dp[n - 1] 代码见下，运行时间为0ms 1234567891011121314151617class Solution &#123;public: int numTrees(int n) &#123; if(n &lt;= 2) return n; vector&lt;int&gt; dp(n , 0); dp[0] = 1; dp[1] = 2; for(int i = 2; i &lt; n; i++)&#123; for(int j = 1; j &lt; i; j++)&#123; dp[i] += dp[j - 1] * dp[i - j - 1]; &#125; dp[i] += 2 * dp[i - 1]; &#125; return dp[n - 1]; &#125;&#125;;]]></content>
