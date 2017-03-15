@@ -3,6 +3,20 @@
   
     
     <entry>
+      <title><![CDATA[101 Symmetric Tree]]></title>
+      <url>%2F2017%2F03%2F15%2FLeetcode-101%2F</url>
+      <content type="text"><![CDATA[Leetcode 101，判断二叉树是否是对称的。 题目Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center). For example, this binary tree [1,2,2,3,4,4,3] is symmetric: 12345 1 / \ 2 2 / \ / \3 4 4 3 But the following [1,2,2,null,3,null,3] is not: 12345 1 / \2 2 \ \ 3 3 Note:Bonus points if you could solve it both recursively and iteratively. 解题思路本题用递归的思路来解题，构建一个判断两颗数是否对称的函数，分别带入左右子树即可 代码见下 1234567891011121314151617181920212223242526272829303132/** * Definition for a binary tree node. * struct TreeNode &#123; * int val; * TreeNode *left; * TreeNode *right; * TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125; * &#125;; */class Solution &#123;public: bool isSymmetric(TreeNode* root) &#123; if(root == NULL) return true; return isSymmetricTree(root-&gt;left, root-&gt;right); &#125; bool isSymmetricTree(TreeNode* t1, TreeNode* t2)&#123; if(t1 == NULL)&#123; if(t2 == NULL) return true; return false; &#125; if(t2 == NULL) return false; if(t1-&gt;val != t2-&gt;val) return false; if(isSymmetricTree(t1-&gt;left, t2-&gt;right) &amp;&amp; isSymmetricTree(t1-&gt;right, t2-&gt;left)) return true; return false; &#125;&#125;;]]></content>
+    </entry>
+
+    
+    <entry>
+      <title><![CDATA[浅谈主题模型]]></title>
+      <url>%2F2017%2F03%2F15%2F%E6%B5%85%E8%B0%88%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B%2F</url>
+      <content type="text"><![CDATA[本科阶段，我用NLP的方法处理从网上健康社区爬取下来的问答数据，通过主题模型的构建实现了对患者提问的答案以及专家的智能化匹配过程。本文主要谈谈主题模型，同时也对自己曾经的项目做一个总结概括。 主题模型进化史 Why Topic Model？主题模型简介 What is Topic Model?LDA模型浅述 Introduction to LDA项目一瞥 About the Project]]></content>
+    </entry>
+
+    
+    <entry>
       <title><![CDATA[100 Same Tree]]></title>
       <url>%2F2017%2F03%2F14%2FLeetcode-100%2F</url>
       <content type="text"><![CDATA[Leetcode 100，判断两棵二叉树是否相等。 题目Given two binary trees, write a function to check if they are equal or not. Two binary trees are considered equal if they are structurally identical and the nodes have the same value. 解题思路用深度优先的递归的思想来解题，判断节点的值是否相等，左子树和右子树是否相等即可。 代码见下，运行时间为3ms 123456789101112131415161718192021222324252627282930/** * Definition for a binary tree node. * struct TreeNode &#123; * int val; * TreeNode *left; * TreeNode *right; * TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125; * &#125;; */class Solution &#123;public: bool isSameTree(TreeNode* p, TreeNode* q) &#123; if(p != NULL)&#123; if(q != NULL)&#123; if(p-&gt;val != q-&gt;val) return false; else return isSameTree(p-&gt;left, q-&gt;left) &amp;&amp; isSameTree(p-&gt;right,q-&gt;right); &#125; else return false; &#125; else&#123; if(q != NULL) return false; else return true; &#125; &#125;&#125;;]]></content>
