@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="array,cpp,math," />
+  <meta name="keywords" content="cpp,recursive,tree," />
 
 
 
@@ -84,16 +84,16 @@
 
 
 
-<meta name="description" content="Leetcode 060，求出n个数字排列的第k个排列。">
+<meta name="description" content="Leetcode 107，遍历二叉树，反向逐层输出。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="060 Permutation Sequence">
-<meta property="og:url" content="http://tianyuh.com/2017/02/22/Leetcode-060/index.html">
+<meta property="og:title" content="107 Binary Tree Level Order Traversal II">
+<meta property="og:url" content="http://tianyuh.com/2017/03/16/Leetcode-107/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
-<meta property="og:description" content="Leetcode 060，求出n个数字排列的第k个排列。">
-<meta property="og:updated_time" content="2017-02-22T06:30:27.000Z">
+<meta property="og:description" content="Leetcode 107，遍历二叉树，反向逐层输出。">
+<meta property="og:updated_time" content="2017-03-16T06:22:11.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="060 Permutation Sequence">
-<meta name="twitter:description" content="Leetcode 060，求出n个数字排列的第k个排列。">
+<meta name="twitter:title" content="107 Binary Tree Level Order Traversal II">
+<meta name="twitter:description" content="Leetcode 107，遍历二叉树，反向逐层输出。">
 
 
 
@@ -121,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://tianyuh.com/2017/02/22/Leetcode-060/"/>
+  <link rel="canonical" href="http://tianyuh.com/2017/03/16/Leetcode-107/"/>
 
 
 
 
 
-  <title> 060 Permutation Sequence | 塞外麾下炙 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> 107 Binary Tree Level Order Traversal II | 塞外麾下炙 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -300,7 +300,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/02/22/Leetcode-060/">
+  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/03/16/Leetcode-107/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Tianyu Hong">
@@ -324,7 +324,7 @@
             
             
               
-                060 Permutation Sequence
+                107 Binary Tree Level Order Traversal II
               
             
           </h1>
@@ -337,8 +337,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-22T14:24:09+08:00">
-                2017-02-22
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-16T14:18:41+08:00">
+                2017-03-16
               </time>
             
 
@@ -371,8 +371,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2017/02/22/Leetcode-060/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/22/Leetcode-060/" itemprop="commentCount"></span>
+                <a href="/2017/03/16/Leetcode-107/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/16/Leetcode-107/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -398,22 +398,16 @@
       
 
       
-        <p>Leetcode 060，求出n个数字排列的第k个排列。<br><a id="more"></a></p>
-<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>The set [1,2,3,…,n] contains a total of n! unique permutations.</p>
-<p>By listing and labeling all of the permutations in order.<br>We get the following sequence (ie, for n = 3):</p>
-<ol>
-<li>“123”</li>
-<li>“132”</li>
-<li>“213”</li>
-<li>“231”</li>
-<li>“312”</li>
-<li>“321”</li>
-</ol>
-<p>Given n and k, return the kth permutation sequence.</p>
-<p>Note: Given n will be between 1 and 9 inclusive.</p>
-<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>本题采用的方法是先将所有的数字（1-9）存入一个数组中，然后根据阶乘数的性质，算出最前面的数字，将其从数组中去除(这里采用vector的erase函数)，重复操作直至只剩下最后一个数为止。</p>
-<p>代码如下所示，运行时间为3ms</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="built_in">string</span> <span class="title">getPermutation</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> k)</span> </span>&#123;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vec_store;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</div><div class="line">            vec_store.push_back(i + <span class="number">1</span>);</div><div class="line">        n--;</div><div class="line">        k--;</div><div class="line">        <span class="keyword">int</span> factorial, index;</div><div class="line">        <span class="built_in">string</span> result = <span class="string">""</span>;</div><div class="line">        <span class="keyword">while</span>(n &gt; <span class="number">0</span>)&#123;</div><div class="line">            factorial = getFactorial(n);</div><div class="line">            index = k / factorial;</div><div class="line">            result += <span class="string">'0'</span> + vec_store[index];</div><div class="line">            vec_store.erase(vec_store.begin() + index);</div><div class="line">            k %= factorial;</div><div class="line">            n--;</div><div class="line">        &#125;</div><div class="line">        result += <span class="string">'0'</span> + vec_store[<span class="number">0</span>];</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getFactorial</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> result = <span class="number">1</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</div><div class="line">            result *= i;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+        <p>Leetcode 107，遍历二叉树，反向逐层输出。<br><a id="more"></a></p>
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>Given a binary tree, return the bottom-up level order traversal of its nodes’ values. (ie, from left to right, level by level from leaf to root).</p>
+<p>For example:<br>Given binary tree [3,9,20,null,null,15,7],</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">  3</div><div class="line"> / \</div><div class="line">9  20</div><div class="line">  /  \</div><div class="line"> 15   7</div></pre></td></tr></table></figure>
+<p>return its bottom-up level order traversal as:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  [15,7],</div><div class="line">  [9,20],</div><div class="line">  [3]</div><div class="line">]</div></pre></td></tr></table></figure>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>本题可以参考<a href="http://tianyuh.com/2017/03/15/Leetcode-102/">第102题</a>的方法，得到正向的逐层数组，最后再swap进行交换即可</p>
+<p>代码见下，运行时间为6ms</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Definition for a binary tree node.</div><div class="line"> * struct TreeNode &#123;</div><div class="line"> *     int val;</div><div class="line"> *     TreeNode *left;</div><div class="line"> *     TreeNode *right;</div><div class="line"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</div><div class="line"> * &#125;;</div><div class="line"> */</div><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; result;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; levelOrderBottom(TreeNode* root) &#123;</div><div class="line">        buildVec(root, <span class="number">1</span>);</div><div class="line">        <span class="keyword">int</span> size = result.size();</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size / <span class="number">2</span>; i++)&#123;</div><div class="line">            swap(result[i], result[size - <span class="number">1</span> - i]);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">buildVec</span><span class="params">(TreeNode* node, <span class="keyword">int</span> level)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(node == <span class="literal">NULL</span>)</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        <span class="keyword">if</span>(result.size() &lt; level)&#123;</div><div class="line">            <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; temp;</div><div class="line">            temp.push_back(node-&gt;val);</div><div class="line">            result.push_back(temp);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            result[level - <span class="number">1</span>].push_back(node-&gt;val);</div><div class="line">        &#125;</div><div class="line">        buildVec(node-&gt;left, level + <span class="number">1</span>);</div><div class="line">        buildVec(node-&gt;right, level + <span class="number">1</span>);</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125; </div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -436,11 +430,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/array/" rel="tag"># array</a>
-          
             <a href="/tags/cpp/" rel="tag"># cpp</a>
           
-            <a href="/tags/math/" rel="tag"># math</a>
+            <a href="/tags/recursive/" rel="tag"># recursive</a>
+          
+            <a href="/tags/tree/" rel="tag"># tree</a>
           
         </div>
       
@@ -449,8 +443,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/22/Leetcode-059/" rel="next" title="059 Spiral Matrix II">
-                <i class="fa fa-chevron-left"></i> 059 Spiral Matrix II
+              <a href="/2017/03/16/Leetcode-106/" rel="next" title="106 Construct Binary Tree from Inorder and Postorder Traversal">
+                <i class="fa fa-chevron-left"></i> 106 Construct Binary Tree from Inorder and Postorder Traversal
               </a>
             
           </div>
@@ -458,10 +452,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/22/Deep-learning-Chapter-1/" rel="prev" title="Deep Learning Chapter 1">
-                Deep Learning Chapter 1 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -510,8 +500,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/02/22/Leetcode-060/"
-           data-title="060 Permutation Sequence" data-url="http://tianyuh.com/2017/02/22/Leetcode-060/">
+      <div class="ds-thread" data-thread-key="2017/03/16/Leetcode-107/"
+           data-title="107 Binary Tree Level Order Traversal II" data-url="http://tianyuh.com/2017/03/16/Leetcode-107/">
       </div>
     
   </div>
