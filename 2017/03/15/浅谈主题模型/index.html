@@ -90,7 +90,7 @@
 <meta property="og:url" content="http://tianyuh.com/2017/03/15/浅谈主题模型/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
 <meta property="og:description" content="本科阶段，我用NLP的方法处理从网上健康社区爬取下来的问答数据，通过主题模型的构建实现了对患者提问的答案以及专家的智能化匹配过程。本文主要谈谈主题模型，同时也对自己曾经的项目做一个总结概括。">
-<meta property="og:updated_time" content="2017-03-15T17:28:24.000Z">
+<meta property="og:updated_time" content="2017-03-16T13:56:39.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅谈主题模型">
 <meta name="twitter:description" content="本科阶段，我用NLP的方法处理从网上健康社区爬取下来的问答数据，通过主题模型的构建实现了对患者提问的答案以及专家的智能化匹配过程。本文主要谈谈主题模型，同时也对自己曾经的项目做一个总结概括。">
@@ -399,7 +399,7 @@
 
       
         <p>本科阶段，我用NLP的方法处理从网上健康社区爬取下来的问答数据，通过主题模型的构建实现了对患者提问的答案以及专家的智能化匹配过程。本文主要谈谈主题模型，同时也对自己曾经的项目做一个总结概括。<br><a id="more"></a></p>
-<h2 id="主题模型进化史-Why-Topic-Model？"><a href="#主题模型进化史-Why-Topic-Model？" class="headerlink" title="主题模型进化史 Why Topic Model？"></a>主题模型进化史 Why Topic Model？</h2><p>在自然语言处理中，一个非常重要的步骤就是word embedding，即将词转为向量的过程。而主题模型在本质上也是一种将词转为向量的word2vec的方法。本块主要介绍主题模型的发展历程并分析各个模型的优劣之处。</p>
+<h2 id="主题模型进化史-Why-Topic-Model？"><a href="#主题模型进化史-Why-Topic-Model？" class="headerlink" title="主题模型进化史 Why Topic Model？"></a>主题模型进化史 Why Topic Model？</h2><p>在自然语言处理中，一个非常重要的步骤就是word embedding，即将词转为向量的过程。而主题模型在本质上也是一种将词转为向量的方法。本块主要介绍主题模型的发展历程并分析各个模型的优劣之处。</p>
 <h3 id="TF-IDF"><a href="#TF-IDF" class="headerlink" title="TF-IDF"></a>TF-IDF</h3><p>早在上世纪 80 年代，研究者们常常使用 TF-IDF 法来进行文档的检索和信息的提取。</p>
 <p>在 TF-IDF 方法中，先选择一个基于词或者词组的基本词汇，然后对于语料库中的每个文档，分别统计其中每个单词的出现次数。经过合适的正则化后，再将词的频率计数和反向文档频率计数相比较，得到一个词数乘以文档数的向量 X。向量的每个行中都包含着语料库中每个文档的 TF-IDF 值。</p>
 <p>IF 和 IDF 的概念见下：<br>$$<br>tf_{i,j}=\frac {n_{i,j}}{\sum_k n_{k,j}}<br>$$<br>其中$if_{i,j}$是该词在文件$d_j$中出现的次数，分母表示文件$d_j$中所有字词的出现次数之和。</p>
@@ -553,7 +553,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">117</span>
+              <span class="site-state-item-count">119</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
