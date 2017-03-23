@@ -3,6 +3,20 @@
   
     
     <entry>
+      <title><![CDATA[122 Best Time to Buy and Sell Stock II]]></title>
+      <url>%2F2017%2F03%2F23%2FLeetcode-122%2F</url>
+      <content type="text"><![CDATA[Leetcode 122，找出交易收益最大的值（可以多次交易）。 题目Say you have an array for which the ith element is the price of a given stock on day i. Design an algorithm to find the maximum profit. You may complete as many transactions as you like (ie, buy one and sell one share of the stock multiple times). However, you may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again). 解题思路由于在同一天可以先卖出再买入，所以本题应该采用贪心法来做（不用考虑贪心带来的错误，因为这里同一天的卖出买入可以避免错误） 代码见下，运行时间为6ms 123456789101112131415161718class Solution &#123;public: int maxProfit(vector&lt;int&gt;&amp; prices) &#123; int size = prices.size(); if(size == 0) return 0; int min = prices[0], max = 0; for(int i = 1; i &lt; size; i ++)&#123; if(prices[i] &lt; min) min = prices[i]; else&#123; max += prices[i] - min; min = prices[i]; &#125; &#125; return max; &#125;&#125;;]]></content>
+    </entry>
+
+    
+    <entry>
+      <title><![CDATA[121 Best Time to Buy and Sell Stock]]></title>
+      <url>%2F2017%2F03%2F23%2FLeetcode-121%2F</url>
+      <content type="text"><![CDATA[Leetcode 121，找出交易收益最大的值。 题目Say you have an array for which the ith element is the price of a given stock on day i. If you were only permitted to complete at most one transaction (ie, buy one and sell one share of the stock), design an algorithm to find the maximum profit. Example 1: 12345Input: [7, 1, 5, 3, 6, 4]Output: 5max. difference = 6-1 = 5 (not 7-1 = 6, as selling price needs to be larger than buying price) Example 2: 1234Input: [7, 6, 4, 3, 1]Output: 0In this case, no transaction is done, i.e. max profit = 0. 解题思路仅用一遍遍历，在遍历过程中找出最小值以及交易收益最大值。 代码见下，运行时间为6ms 12345678910111213141516class Solution &#123;public: int maxProfit(vector&lt;int&gt;&amp; prices) &#123; int size = prices.size(); if(size == 0) return 0; int min = prices[0], max = 0; for(int i = 1; i &lt; size; i++)&#123; if(prices[i] &lt; min) min = prices[i]; else if(prices[i] - min &gt; max) max = prices[i] - min; &#125; return max; &#125;&#125;;]]></content>
+    </entry>
+
+    
+    <entry>
       <title><![CDATA[120 Triangle]]></title>
       <url>%2F2017%2F03%2F23%2FLeetcode-120%2F</url>
       <content type="text"><![CDATA[Leetcode 120，确定三角形从上到下的最小和。 题目Given a triangle, find the minimum path sum from top to bottom. Each step you may move to adjacent numbers on the row below. For example, given the following triangle 123456[ [2], [3,4], [6,5,7], [4,1,8,3]] The minimum path sum from top to bottom is 11 (i.e., 2 + 3 + 5 + 1 = 11). Note:Bonus point if you are able to do this using only O(n) extra space, where n is the total number of rows in the triangle. 解题思路本题采用dp法来解题，dp[i][j]表示从顶点到第j行的第i列的最短路径和，取dp[i - 1][j - 1]和dp[i][j - 1]中的最小值加上该位置的值。 代码如下，运行时间为6ms 123456789101112131415161718192021222324class Solution &#123;public: int minimumTotal(vector&lt;vector&lt;int&gt;&gt;&amp; triangle) &#123; int size = triangle.size(); vector&lt;vector&lt;int&gt;&gt; dp(size, vector&lt;int&gt;(size, 0)); dp[0][0] = triangle[0][0]; for(int i = 1; i &lt; size; i++)&#123; dp[0][i] = dp[0][i - 1] + triangle[i][0]; &#125; for(int i = 1; i &lt; size; i++)&#123; dp[i][i] = dp[i - 1][i - 1] + triangle[i][i]; for(int j = i + 1; j &lt; size; j++)&#123; dp[i][j] = min(dp[i - 1][j - 1], dp[i][j - 1]) + triangle[j][i]; &#125; &#125; int min_value = dp[0][size - 1]; for(int i = 1; i &lt; size; i++)&#123; if(dp[i][size - 1] &lt; min_value) min_value = dp[i][size - 1]; &#125; return min_value; &#125;&#125;;]]></content>
