@@ -90,14 +90,14 @@
 <meta property="og:url" content="http://tianyuh.com/2017/03/15/浅谈主题模型/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
 <meta property="og:description" content="本科阶段，我用NLP的方法处理从网上健康社区爬取下来的问答数据，通过主题模型的构建实现了对患者提问的答案以及专家的智能化匹配过程。本文主要谈谈主题模型，同时也对自己曾经的项目做一个总结概括。">
-<meta property="og:image" content="http://tianyuh.com/media/14902797703583.jpg">
-<meta property="og:image" content="http://tianyuh.com/media/14902799008348.jpg">
-<meta property="og:image" content="http://tianyuh.com/media/14902803695129.jpg">
-<meta property="og:updated_time" content="2017-03-23T15:04:32.000Z">
+<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/14902797703583.jpg">
+<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/14902799008348.jpg">
+<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/14902803695129.jpg">
+<meta property="og:updated_time" content="2017-03-23T15:08:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅谈主题模型">
 <meta name="twitter:description" content="本科阶段，我用NLP的方法处理从网上健康社区爬取下来的问答数据，通过主题模型的构建实现了对患者提问的答案以及专家的智能化匹配过程。本文主要谈谈主题模型，同时也对自己曾经的项目做一个总结概括。">
-<meta name="twitter:image" content="http://tianyuh.com/media/14902797703583.jpg">
+<meta name="twitter:image" content="https://oh1ulkf4j.qnssl.com/14902797703583.jpg">
 
 
 
@@ -417,11 +417,11 @@
 <p>而LSA的方法就减轻了类似的问题。LSA使用矩阵的奇异值分解来确定一个在 TF-IDF 特征空间中的线性子空间，实现大幅压缩以及对同义和一词多义等基本语言概念的捕捉。</p>
 <p>通过SVD分解，我们可以构造一个原始向量矩阵的一个低秩逼近矩阵，具体的做法是将词项文档矩阵做SVD分解：<br>$$<br>C = U\Sigma V^T<br>$$<br>其中C是以词为行，文档为列的矩阵，设一共有t行d列,  矩阵的元素为词项的TF-IDF值。然后把 $\Sigma$ 的r个对角元素的前k个保留（最大的k个保留）, 后面最小的r-k个奇异值置0, 得到 $\Sigma_k$ ；最后计算一个近似的分解矩阵<br>$$<br>C_k = U\Sigma_kV^T<br>$$</p>
 <p>$C_k$ 在最小二乘意义下是C的最佳逼近。由于 $\Sigma_k$ 最多包含k个非零元素，所以 $C_k$ 的秩不超过k。通过在SVD分解近似，我们将原始的向量转化成一个低维隐含语义空间，起到了特征降维的作用。每个奇异值对应的是每个“语义”维度的权重，将不太重要的权重置为0，只保留最重要的维度信息，去掉一些信息 “nosie”，因而可以得到文档的一种更优表示形式。</p>
-<p><img src="media/14902797703583.jpg" alt=""></p>
-<p><img src="media/14902799008348.jpg" alt=""></p>
+<p><img src="https://oh1ulkf4j.qnssl.com/14902797703583.jpg" alt=""></p>
+<p><img src="https://oh1ulkf4j.qnssl.com/14902799008348.jpg" alt=""></p>
 <p>上图是原始矩阵的SVD分解，下图是只保留权重最大2维，将原始矩阵降到2维后的情况。</p>
 <h3 id="pLSA-潜在语义索引概率模型"><a href="#pLSA-潜在语义索引概率模型" class="headerlink" title="pLSA 潜在语义索引概率模型"></a>pLSA 潜在语义索引概率模型</h3><p>尽管基于SVD的LSA取得了一定的成功，但是其缺乏严谨的数理统计基础，而且SVD分解非常耗时。Hofmann在SIGIR’99上提出了基于概率统计的PLSA模型，并且用EM算法学习模型参数。PLSA的概率图模型如下</p>
-<p><img src="media/14902803695129.jpg" alt=""></p>
+<p><img src="https://oh1ulkf4j.qnssl.com/14902803695129.jpg" alt=""></p>
 <p>其中D代表文档，Z代表隐含类别或者主题，W为观察到的单词，$P(d_i)$表示单词出现在文档的概率，$P(z_k|d_i) $表示文档$d_i$中出现主题$z_k$下的单词的概率，$P(w_j|z_k)$给定主题$z_k$出现单词$w_j$的概率。并且每个主题在所有词项上服从Multinomial分布，每个文档在所有主题上服从Multinomial 分布。整个文档的生成过程是这样的：<br>(1) 以$P(d_i)$的概率选中文档$d_i$；<br>(2) 以$P(z_k|d_i)$的概率选中主题$z_k$；<br>(3) 以$P(w_j|z_k)$的概率产生一个单词$w_j$。<br>我们可以观察到的数据就是$(d_i, w_j)$对，而$z_k$是隐含变量。$(d_i, w_j)$的联合分布为:</p>
 <p>$$<br>P(d_i,w_j) = P(d_i)P(w_j|d_i), P(w_j|d_i) = \sum_{k = 1}^{K}P(w_j|z_k)P(z_k|d_i)<br>$$</p>
 <p>而$P(z_k|d_i)$和 $P(w_j|z_k)$分别对应了两组Multinomial分布，我们需要估计这两组分布的参数，一般是用EM算法来估算出pLSA的参数。关于EM算法可以详见<a href="http://tianyuh.com/2017/03/08/%E4%BB%8EEM%E7%AE%97%E6%B3%95%E5%88%B0GMM%E6%A8%A1%E5%9E%8B/">从EM算法到GMM模型</a>一文。在此不做推导证明，只列出最终答案：<br>$$<br>P(w_j|z_k) = \frac{\sum_{i = 1}^{N}n(d_i,w_j)P(z_k|d_i,wj)}{\sum_{m = 1}^{M}{\sum_{i = 1}^{N}n(d_i,w_j)P(z_k|d_i,w_m)}}<br>$$</p>
