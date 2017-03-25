@@ -90,7 +90,7 @@
 <meta property="og:url" content="http://tianyuh.com/2017/03/25/浅谈主题模型（二）/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
 <meta property="og:description" content="承接“浅谈主题模型（一）”中的主题模型的历史，本文着重介绍LDA模型，同时也对自己曾经的项目做一个总结概括。">
-<meta property="og:updated_time" content="2017-03-25T17:14:33.000Z">
+<meta property="og:updated_time" content="2017-03-25T17:22:55.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅谈主题模型（二）">
 <meta name="twitter:description" content="承接“浅谈主题模型（一）”中的主题模型的历史，本文着重介绍LDA模型，同时也对自己曾经的项目做一个总结概括。">
@@ -442,12 +442,12 @@
 </ol>
 <p>如何确定？</p>
 <p>通过计算$X_{k}$落在一个区间$[x, x + \Delta x]$的概率，其中$[0,x)$有 k-1 个数， ${x,1]$有n-k 个数</p>
-<p>$$<br>\begin{eqnarray<em>}<br>P(E) &amp; = &amp; \prod_{i = 1}^{n} P(X_i) \\<br>&amp; = &amp; x^{k-1} (1 - x - \Delta x)^{n - k} \Delta x \\<br>&amp; = &amp; x^{k - 1}(1 - x)^{n - k}\Delta x + o(\Delta x)<br>\end{eqnarray</em>}<br>$$</p>
-<p>$$<br>\begin{eqnarray*}<br>P(x \leq X_{k} \leq x + \Delta x) &amp; = &amp; n \begin{pmatrix}n - 1 \\ k -1 \end{pmatrix} P(E) + o(\Delta x) \\<br>&amp; = &amp; n \begin{pmatrix}n - 1 \\ k -1 \end{pmatrix} x^{k - 1} (1-x)^{n - k}\Delta x</p>
+<p>$$<br>\begin{eqnarray} \nonumber<br>P(E) &amp; = &amp; \prod_{i = 1}^{n} P(X_i) \\ \nonumber<br>&amp; = &amp; x^{k-1} (1 - x - \Delta x)^{n - k} \Delta x \\<br>&amp; = &amp; x^{k - 1}(1 - x)^{n - k}\Delta x + o(\Delta x) \nonumber<br>\end{eqnarray}<br>$$</p>
+<p>$$<br>\begin{eqnarray} \nonumber<br>P(x \leq X_{k} \leq x + \Delta x) &amp; = &amp; n \begin{pmatrix}n - 1 \\ k -1 \end{pmatrix} P(E) + o(\Delta x) \\ \nonumber<br>&amp; = &amp; n \begin{pmatrix}n - 1 \\ k -1 \end{pmatrix} x^{k - 1} (1-x)^{n - k}\Delta x</p>
 <ul>
-<li>o(\Delta x)  \end{eqnarray*}<br>$$</li>
+<li>o(\Delta x) \nonumber<br>\end{eqnarray}<br>$$</li>
 </ul>
-<p>$X_{k}$的概率密度函数为<br>$$<br>\begin{eqnarray<em>}<br>f(x) &amp; = &amp; \lim_{\Delta x \rightarrow 0}\frac{P(x \leq X_{k} \leq x + \Delta x)}{\Delta x} \\<br>&amp; = &amp; n \begin{pmatrix}n - 1 \\ k -1 \end{pmatrix} x^{k - 1} (1-x)^{n - k}\\<br>&amp; = &amp; \frac{n !}{(k-1)!(n-k)!} x^{k - 1} (1-x)^{n - k}<br>\end{eqnarray</em>}<br>$$</p>
+<p>$X_{k}$的概率密度函数为<br>$$<br>\begin{eqnarray} \nonumber<br>f(x) &amp; = &amp; \lim_{\Delta x \rightarrow 0}\frac{P(x \leq X_{k} \leq x + \Delta x)}{\Delta x} \\ \nonumber<br>&amp; = &amp; n \begin{pmatrix}n - 1 \\ k -1 \end{pmatrix} x^{k - 1} (1-x)^{n - k}\\<br>&amp; = &amp; \frac{n !}{(k-1)!(n-k)!} x^{k - 1} (1-x)^{n - k} \nonumber<br>\end{eqnarray}<br>$$</p>
 <p>利用gamma函数，可以表示为</p>
 <p>$$<br>f(x) =\frac{\Gamma(n+1)}{\Gamma(k)\Gamma(n-k+1)} x^{k - 1} (1-x)^{n - k}<br>$$</p>
 <p>取$\alpha = k$, $\beta = n - k + 1$</p>
