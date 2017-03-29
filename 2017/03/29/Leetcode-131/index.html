@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="cpp,array,backtracing," />
+  <meta name="keywords" content="cpp,backtracing," />
 
 
 
@@ -84,16 +84,16 @@
 
 
 
-<meta name="description" content="Leetcode 118，构建杨辉三角。">
+<meta name="description" content="Leetcode 131，找出字符串中回文数的部分。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="118 Pascal's Triangle">
-<meta property="og:url" content="http://tianyuh.com/2017/03/23/Leetcode-118/index.html">
+<meta property="og:title" content="131 Palindrome Partitioning">
+<meta property="og:url" content="http://tianyuh.com/2017/03/29/Leetcode-131/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
-<meta property="og:description" content="Leetcode 118，构建杨辉三角。">
-<meta property="og:updated_time" content="2017-03-23T02:19:23.000Z">
+<meta property="og:description" content="Leetcode 131，找出字符串中回文数的部分。">
+<meta property="og:updated_time" content="2017-03-29T05:23:06.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="118 Pascal's Triangle">
-<meta name="twitter:description" content="Leetcode 118，构建杨辉三角。">
+<meta name="twitter:title" content="131 Palindrome Partitioning">
+<meta name="twitter:description" content="Leetcode 131，找出字符串中回文数的部分。">
 
 
 
@@ -121,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://tianyuh.com/2017/03/23/Leetcode-118/"/>
+  <link rel="canonical" href="http://tianyuh.com/2017/03/29/Leetcode-131/"/>
 
 
 
 
 
-  <title> 118 Pascal's Triangle | 塞外麾下炙 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> 131 Palindrome Partitioning | 塞外麾下炙 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -300,7 +300,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/03/23/Leetcode-118/">
+  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/03/29/Leetcode-131/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Tianyu Hong">
@@ -324,7 +324,7 @@
             
             
               
-                118 Pascal's Triangle
+                131 Palindrome Partitioning
               
             
           </h1>
@@ -337,8 +337,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-23T10:16:57+08:00">
-                2017-03-23
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-29T13:13:42+08:00">
+                2017-03-29
               </time>
             
 
@@ -371,8 +371,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2017/03/23/Leetcode-118/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/23/Leetcode-118/" itemprop="commentCount"></span>
+                <a href="/2017/03/29/Leetcode-131/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/29/Leetcode-131/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -398,13 +398,15 @@
       
 
       
-        <p>Leetcode 118，构建杨辉三角。<br><a id="more"></a></p>
-<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>Given numRows, generate the first numRows of Pascal’s triangle.</p>
-<p>For example, given numRows = 5,<br>Return</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">     [1],</div><div class="line">    [1,1],</div><div class="line">   [1,2,1],</div><div class="line">  [1,3,3,1],</div><div class="line"> [1,4,6,4,1]</div><div class="line">]</div></pre></td></tr></table></figure>
-<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>本题采用backtracing的方法来解题，构建出杨辉三角</p>
-<p>代码见下，运行时间为3ms</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; generate(<span class="keyword">int</span> numRows) &#123;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; result;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; temp;</div><div class="line">        <span class="keyword">if</span>(numRows &lt;= <span class="number">0</span>)</div><div class="line">            <span class="keyword">return</span> result;</div><div class="line">        <span class="keyword">if</span>(numRows == <span class="number">1</span>)&#123;</div><div class="line">             temp.push_back(<span class="number">1</span>);</div><div class="line">             result.push_back(temp);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            result = generate(numRows - <span class="number">1</span>);</div><div class="line">            temp.push_back(result[numRows - <span class="number">2</span>][<span class="number">0</span>]);</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; numRows - <span class="number">1</span>; i++)&#123;</div><div class="line">                temp.push_back(result[numRows - <span class="number">2</span>][i - <span class="number">1</span>] + result[numRows - <span class="number">2</span>][i]);</div><div class="line">            &#125;</div><div class="line">            temp.push_back(result[numRows - <span class="number">2</span>][numRows - <span class="number">2</span>]);</div><div class="line">            result.push_back(temp);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+        <p>Leetcode 131，找出字符串中回文数的部分。<br><a id="more"></a></p>
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>Given a string s, partition s such that every substring of the partition is a palindrome.</p>
+<p>Return all possible palindrome partitioning of s.</p>
+<p>For example, given s = “aab”,<br>Return</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  [&quot;aa&quot;,&quot;b&quot;],</div><div class="line">  [&quot;a&quot;,&quot;a&quot;,&quot;b&quot;]</div><div class="line">]</div></pre></td></tr></table></figure>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>本题采用backtracing的方法来做，先确定该字符串是否是回文，是的话入数组。</p>
+<p>然后再取子字符串，要求子字符串的起始位置和字符串相同，若子字符串是回文，则对后半部分的子字符串用递归的方法确定答案。</p>
+<p>代码见下，运行时间为53ms</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt; partition(<span class="built_in">string</span> s) &#123;</div><div class="line">        <span class="keyword">int</span> length = s.length();</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt; result;</div><div class="line">        <span class="keyword">if</span>(length == <span class="number">0</span>)</div><div class="line">            <span class="keyword">return</span> result;</div><div class="line">        </div><div class="line">        <span class="keyword">if</span>(ifPalindrome(s))&#123;</div><div class="line">            <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; temp;</div><div class="line">            temp.push_back(s);</div><div class="line">            result.push_back(temp);</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length - <span class="number">1</span>; i++)&#123;</div><div class="line">            <span class="built_in">string</span> sub = s.substr(<span class="number">0</span>, i + <span class="number">1</span>);</div><div class="line">            <span class="keyword">if</span>(ifPalindrome(sub))&#123;</div><div class="line">                <span class="built_in">string</span> sub2 = s.substr(i + <span class="number">1</span>, length - i - <span class="number">1</span>);</div><div class="line">                <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt; result_next = partition(sub2);</div><div class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; result_next.size(); j++)&#123;</div><div class="line">                    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; temp = result_next[j];</div><div class="line">                    temp.insert(temp.begin(), sub);</div><div class="line">                    result.push_back(temp);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">ifPalindrome</span><span class="params">(<span class="built_in">string</span> s)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> length = s.length();</div><div class="line">        <span class="keyword">if</span>(length == <span class="number">1</span>)</div><div class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length / <span class="number">2</span>; i++)&#123;</div><div class="line">            <span class="keyword">if</span>(s[i] != s[length - <span class="number">1</span> - i])</div><div class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -430,8 +432,6 @@
           
             <a href="/tags/cpp/" rel="tag"># cpp</a>
           
-            <a href="/tags/array/" rel="tag"># array</a>
-          
             <a href="/tags/backtracing/" rel="tag"># backtracing</a>
           
         </div>
@@ -441,8 +441,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/22/Bag-of-Words-for-Image-Classification/" rel="next" title="Bag of Words for Image Classification">
-                <i class="fa fa-chevron-left"></i> Bag of Words for Image Classification
+              <a href="/2017/03/28/Leetcode-130/" rel="next" title="130 Surrounded Regions">
+                <i class="fa fa-chevron-left"></i> 130 Surrounded Regions
               </a>
             
           </div>
@@ -450,10 +450,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/03/23/Leetcode-119/" rel="prev" title="119 Pascal's Triangle II">
-                119 Pascal's Triangle II <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -502,8 +498,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/03/23/Leetcode-118/"
-           data-title="118 Pascal's Triangle" data-url="http://tianyuh.com/2017/03/23/Leetcode-118/">
+      <div class="ds-thread" data-thread-key="2017/03/29/Leetcode-131/"
+           data-title="131 Palindrome Partitioning" data-url="http://tianyuh.com/2017/03/29/Leetcode-131/">
       </div>
     
   </div>
