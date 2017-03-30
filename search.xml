@@ -10,9 +10,9 @@
 
     
     <entry>
-      <title></title>
+      <title><![CDATA[浅谈主题模型（三）—— LDA模型简介]]></title>
       <url>%2F2017%2F03%2F29%2F%E6%B5%85%E8%B0%88%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B%EF%BC%88%E4%B8%89%EF%BC%89%2F</url>
-      <content type="text"><![CDATA[title: 浅谈主题模型（三）—— LDA模型简介date: 2017-03-29 20:00:27tags: [NLP,LDA,主题模型,贝叶斯]categories: [机器学习] 承接“浅谈主题模型（二）”中的LDA的概率知识，本文着重介绍LDA模型。 LDA ModelLDA模型的本质是一个unigram模型，模型中每个词的生成都与上下文无关。unigram模型中假设文本中的词服从multinomial分布，同时multinomial分布的先验分布为Dirichlet分布。 LDA 模型作为一个关于语料库的概率发生模型。它的基本思想是文档被表示为基于潜在主题的随机混合，其中每个主题由于基于词的分布不同而与众不同]]></content>
+      <content type="text"><![CDATA[承接“浅谈主题模型（二）”中的LDA的概率知识，本文着重介绍LDA模型。 LDA ModelLDA模型的本质是一个unigram模型，模型中每个词的生成都与上下文无关。unigram模型中假设文本中的词服从multinomial分布，同时multinomial分布的先验分布为Dirichlet分布。 LDA 模型作为一个关于语料库的概率发生模型。它的基本思想是文档被表示为基于潜在主题的随机混合，其中每个主题由于基于词的分布不同而与众不同]]></content>
     </entry>
 
     
