@@ -90,7 +90,7 @@
 <meta property="og:url" content="http://tianyuh.com/2017/03/25/浅谈主题模型（二）/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
 <meta property="og:description" content="承接“浅谈主题模型（一）”中的主题模型的历史，本文着重介绍LDA模型的相关概率知识，为接下来介绍LDA模型打下基础。">
-<meta property="og:updated_time" content="2017-03-29T12:40:19.000Z">
+<meta property="og:updated_time" content="2017-03-30T13:03:39.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅谈主题模型（二）—— 相关概率知识">
 <meta name="twitter:description" content="承接“浅谈主题模型（一）”中的主题模型的历史，本文着重介绍LDA模型的相关概率知识，为接下来介绍LDA模型打下基础。">
@@ -491,21 +491,6 @@
 <p>$$<br>Dir(p^{\rightarrow} | k^{\rightarrow}) + MultCount(m^{\rightarrow }) = Dir(p^{\rightarrow} | k^{\rightarrow} + m^{\rightarrow})<br>$$</p>
 <p>描述的就是Dirichlet - Multinomial 共轭</p>
 <p>下一节将开始介绍LDA模型</p>
-<h3 id="Unigram-Model"><a href="#Unigram-Model" class="headerlink" title="Unigram Model"></a>Unigram Model</h3><h3 id="Gibbs-Sampling-训练"><a href="#Gibbs-Sampling-训练" class="headerlink" title="Gibbs Sampling 训练"></a>Gibbs Sampling 训练</h3><h3 id="贝叶斯定理及贝叶斯文本建模"><a href="#贝叶斯定理及贝叶斯文本建模" class="headerlink" title="贝叶斯定理及贝叶斯文本建模"></a>贝叶斯定理及贝叶斯文本建模</h3><h3 id="LDA模型及文本建模"><a href="#LDA模型及文本建模" class="headerlink" title="LDA模型及文本建模"></a>LDA模型及文本建模</h3><h2 id="项目一瞥-A-Glance-About-the-Project"><a href="#项目一瞥-A-Glance-About-the-Project" class="headerlink" title="项目一瞥 A Glance About the Project"></a>项目一瞥 A Glance About the Project</h2><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>LDA模型作为我毕设和省创的一个base，花了我相当多的时间来学习和理解，期间也查阅了许多的文献和博文，最终的代码实现也是一个坑一个坑踩出来的。</p>
-<p>所以我在此将有用的资料一一列举出来，同时也将自己所有的代码开源化，希望大家能少走些弯路。</p>
-<p>项目的相关代码详见我Github中的<a href="https://github.com/Htiango/Advanced-LDA-Program" target="_blank" rel="external">Advanced-LDA-Program</a></p>
-<p>LDA的相关代码详见我Github中的<a href="https://github.com/Htiango/Chinese-LDA-v1.0" target="_blank" rel="external">Chinese-LDA-v1.0</a></p>
-<p>如果想学习FudanNLP的中文分词的使用，可以参见我Github中的<a href="https://github.com/Htiango/FudanNLP-Example" target="_blank" rel="external">FudanNLP-Example</a></p>
-<ol>
-<li>Hofmann T. Probabilistic latent semantic indexing[C]//Proceedings of the 22nd annual international ACM SIGIR conference on Research and development in information retrieval. ACM, 1999: 50-57.</li>
-<li>Blei D M, Ng A Y, Jordan M I. Latent dirichlet allocation[J]. the Journal of machine Learning research, 2003, 3: 993-1022.</li>
-<li>Zhang K, Wu W, Wu H, et al. Question retrieval with high quality answers in community question answering[C]//Proceedings of the 23rd ACM International Conference on Conference on Information and Knowledge Management. ACM, 2014: 371-380.</li>
-<li>Yang L, Qiu M, Gottipati S, et al. Cqarank: jointly model topics and expertise in community question answering[C]//Proceedings of the 22nd ACM international conference on Conference on information &amp; knowledge management. ACM, 2013: 99-108.</li>
-<li><a href="http://blog.csdn.net/yangliuy/article/details/8330640" target="_blank" rel="external">概率语言模型及其变形系列</a></li>
-<li><a href="http://www.52nlp.cn/lda-math-%E6%B1%87%E6%80%BB-lda%E6%95%B0%E5%AD%A6%E5%85%AB%E5%8D%A6" target="_blank" rel="external">LDA数学八卦</a></li>
-<li><a href="http://blog.csdn.net/v_july_v/article/details/40984699" target="_blank" rel="external">从贝叶斯方法谈到贝叶斯网络</a></li>
-<li><a href="http://www.jianshu.com/p/50295398d802" target="_blank" rel="external">LDA话题模型与推荐系统</a></li>
-</ol>
 
       
     </div>
@@ -546,8 +531,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/25/浅谈主题模型（一）/" rel="next" title="浅谈主题模型(一) —— 主题模型进化史">
-                <i class="fa fa-chevron-left"></i> 浅谈主题模型(一) —— 主题模型进化史
+              <a href="/2017/03/25/浅谈主题模型（一）/" rel="next" title="浅谈主题模型（一） —— 主题模型进化史">
+                <i class="fa fa-chevron-left"></i> 浅谈主题模型（一） —— 主题模型进化史
               </a>
             
           </div>
@@ -556,8 +541,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/03/26/Leetcode-124/" rel="prev" title="124 Binary Tree Maximum Path Sum">
-                124 Binary Tree Maximum Path Sum <i class="fa fa-chevron-right"></i>
+              <a href="/2017/03/25/浅谈主题模型（三）/" rel="prev" title="浅谈主题模型（三）—— LDA模型简介">
+                浅谈主题模型（三）—— LDA模型简介 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -653,7 +638,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">146</span>
+              <span class="site-state-item-count">148</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -725,7 +710,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Gamma-函数"><span class="nav-number">1.</span> <span class="nav-text">Gamma 函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#求函数的分数阶导数"><span class="nav-number">1.1.</span> <span class="nav-text">求函数的分数阶导数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bohr-Mullerup-定理"><span class="nav-number">1.2.</span> <span class="nav-text">Bohr-Mullerup 定理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Digamma-函数"><span class="nav-number">1.3.</span> <span class="nav-text">Digamma 函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gamma-分布"><span class="nav-number">1.4.</span> <span class="nav-text">Gamma 分布</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dirichlet-分布"><span class="nav-number">2.</span> <span class="nav-text">Dirichlet 分布</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Beta-分布"><span class="nav-number">2.1.</span> <span class="nav-text">Beta 分布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Beta-Binomial-共轭"><span class="nav-number">2.2.</span> <span class="nav-text">Beta-Binomial 共轭</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dirichlet-Multinomial-共轭"><span class="nav-number">2.3.</span> <span class="nav-text">Dirichlet - Multinomial 共轭</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Unigram-Model"><span class="nav-number">2.4.</span> <span class="nav-text">Unigram Model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gibbs-Sampling-训练"><span class="nav-number">2.5.</span> <span class="nav-text">Gibbs Sampling 训练</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#贝叶斯定理及贝叶斯文本建模"><span class="nav-number">2.6.</span> <span class="nav-text">贝叶斯定理及贝叶斯文本建模</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LDA模型及文本建模"><span class="nav-number">2.7.</span> <span class="nav-text">LDA模型及文本建模</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目一瞥-A-Glance-About-the-Project"><span class="nav-number">3.</span> <span class="nav-text">项目一瞥 A Glance About the Project</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Gamma-函数"><span class="nav-number">1.</span> <span class="nav-text">Gamma 函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#求函数的分数阶导数"><span class="nav-number">1.1.</span> <span class="nav-text">求函数的分数阶导数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bohr-Mullerup-定理"><span class="nav-number">1.2.</span> <span class="nav-text">Bohr-Mullerup 定理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Digamma-函数"><span class="nav-number">1.3.</span> <span class="nav-text">Digamma 函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gamma-分布"><span class="nav-number">1.4.</span> <span class="nav-text">Gamma 分布</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dirichlet-分布"><span class="nav-number">2.</span> <span class="nav-text">Dirichlet 分布</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Beta-分布"><span class="nav-number">2.1.</span> <span class="nav-text">Beta 分布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Beta-Binomial-共轭"><span class="nav-number">2.2.</span> <span class="nav-text">Beta-Binomial 共轭</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dirichlet-Multinomial-共轭"><span class="nav-number">2.3.</span> <span class="nav-text">Dirichlet - Multinomial 共轭</span></a></li></ol></li></ol></div>
             
 
           </div>
