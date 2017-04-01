@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="cpp,array,dp," />
+  <meta name="keywords" content="NLP,主题模型,贝叶斯,LDA," />
 
 
 
@@ -84,16 +84,21 @@
 
 
 
-<meta name="description" content="Leetcode 120，确定三角形从上到下的最小和。">
+<meta name="description" content="承接“浅谈主题模型（三）”中的LDA模型的介绍，本文主要介绍我基于LDA模型的毕设和省创项目——UQA模型。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="120 Triangle">
-<meta property="og:url" content="http://tianyuh.com/2017/03/23/Leetcode-120/index.html">
+<meta property="og:title" content="浅谈主题模型（四）—— 项目简介">
+<meta property="og:url" content="http://tianyuh.com/2017/03/28/浅谈主题模型（四）/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
-<meta property="og:description" content="Leetcode 120，确定三角形从上到下的最小和。">
-<meta property="og:updated_time" content="2017-03-23T03:29:28.000Z">
+<meta property="og:description" content="承接“浅谈主题模型（三）”中的LDA模型的介绍，本文主要介绍我基于LDA模型的毕设和省创项目——UQA模型。">
+<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/model 2.png">
+<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/14908813671256.jpg">
+<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/14908813307811.jpg">
+<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/14908814051430.jpg">
+<meta property="og:updated_time" content="2017-04-01T05:18:23.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="120 Triangle">
-<meta name="twitter:description" content="Leetcode 120，确定三角形从上到下的最小和。">
+<meta name="twitter:title" content="浅谈主题模型（四）—— 项目简介">
+<meta name="twitter:description" content="承接“浅谈主题模型（三）”中的LDA模型的介绍，本文主要介绍我基于LDA模型的毕设和省创项目——UQA模型。">
+<meta name="twitter:image" content="https://oh1ulkf4j.qnssl.com/model 2.png">
 
 
 
@@ -121,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://tianyuh.com/2017/03/23/Leetcode-120/"/>
+  <link rel="canonical" href="http://tianyuh.com/2017/03/28/浅谈主题模型（四）/"/>
 
 
 
 
 
-  <title> 120 Triangle | 塞外麾下炙 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> 浅谈主题模型（四）—— 项目简介 | 塞外麾下炙 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -300,7 +305,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/03/23/Leetcode-120/">
+  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/03/28/浅谈主题模型（四）/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Tianyu Hong">
@@ -324,7 +329,7 @@
             
             
               
-                120 Triangle
+                浅谈主题模型（四）—— 项目简介
               
             
           </h1>
@@ -337,8 +342,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-23T11:07:42+08:00">
-                2017-03-23
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-28T23:07:57+08:00">
+                2017-03-28
               </time>
             
 
@@ -356,8 +361,8 @@
               <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">Leetcode</span>
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
                   </a>
                 </span>
 
@@ -371,8 +376,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2017/03/23/Leetcode-120/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/23/Leetcode-120/" itemprop="commentCount"></span>
+                <a href="/2017/03/28/浅谈主题模型（四）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/28/浅谈主题模型（四）/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -398,15 +403,37 @@
       
 
       
-        <p>Leetcode 120，确定三角形从上到下的最小和。<br><a id="more"></a></p>
-<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>Given a triangle, find the minimum path sum from top to bottom. Each step you may move to adjacent numbers on the row below.</p>
-<p>For example, given the following triangle</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">     [2],</div><div class="line">    [3,4],</div><div class="line">   [6,5,7],</div><div class="line">  [4,1,8,3]</div><div class="line">]</div></pre></td></tr></table></figure>
-<p>The minimum path sum from top to bottom is 11 (i.e., 2 + 3 + 5 + 1 = 11).</p>
-<p>Note:<br>Bonus point if you are able to do this using only O(n) extra space, where n is the total number of rows in the triangle.</p>
-<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>本题采用dp法来解题，dp[i][j]表示从顶点到第j行的第i列的最短路径和，取dp[i - 1][j - 1]和dp[i][j - 1]中的最小值加上该位置的值。</p>
-<p>代码如下，运行时间为6ms</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minimumTotal</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; triangle)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> size = triangle.size();</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; dp(size, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(size, <span class="number">0</span>));</div><div class="line">        dp[<span class="number">0</span>][<span class="number">0</span>] = triangle[<span class="number">0</span>][<span class="number">0</span>];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; size; i++)&#123;</div><div class="line">            dp[<span class="number">0</span>][i] = dp[<span class="number">0</span>][i - <span class="number">1</span>] + triangle[i][<span class="number">0</span>]; </div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; size; i++)&#123;</div><div class="line">            dp[i][i] = dp[i - <span class="number">1</span>][i - <span class="number">1</span>] + triangle[i][i];</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; size; j++)&#123;</div><div class="line">                dp[i][j] = min(dp[i - <span class="number">1</span>][j - <span class="number">1</span>], dp[i][j - <span class="number">1</span>]) + triangle[j][i];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> min_value = dp[<span class="number">0</span>][size - <span class="number">1</span>];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; size; i++)&#123;</div><div class="line">            <span class="keyword">if</span>(dp[i][size - <span class="number">1</span>] &lt; min_value)</div><div class="line">                min_value = dp[i][size - <span class="number">1</span>];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> min_value;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+        <p>承接“浅谈主题模型（三）”中的LDA模型的介绍，本文主要介绍我基于LDA模型的毕设和省创项目——UQA模型。<br><a id="more"></a></p>
+<h2 id="项目背景"><a href="#项目背景" class="headerlink" title="项目背景"></a>项目背景</h2><p>在当今的互联网时代，医疗服务不再仅仅是停留在线下的医院诊所里，我们还可以通过互联网获取各式各样的医疗服务，而这其中以网络社区的问答系统最为流行。</p>
+<p>为了充分发挥网络问答社区的优势，我本次毕设项目的研究目的就是实现网络问答社区的智能推荐。通过问答社区中的海量问答信息，利用主题模型进行分析处理，实现对新输入问题的最佳答案以及最佳专家的智能推荐。不仅仅保证了推荐专家和推荐答案的准确性，同时还保证用户能够在第一时间内获取答案，不必再耗费大量的时间等待专家来进行回答。</p>
+<h2 id="UQA模型简介"><a href="#UQA模型简介" class="headerlink" title="UQA模型简介"></a>UQA模型简介</h2><p>在 LDA 模型中，我们将文档视为一系列主题的分布，通过文档-主题以及主题-词这两个多项式分布实现了对文档中潜在主题的挖掘与分析。然而，结合我们的实验数据 (用户提问)，我们得出结论:专家进行问题回答时是有一定的偏向性的，每位专家有着他们各自偏好的东西，不仅仅是他们擅长的话题领域，还可以包括用户的提问方式等等。因此，我们假定除了主题之外，文档 D 中还有着吸引着专家对用户提问进行回答的东西，在本文中我们将其称之为专家专长(expertise)。因此，我们将专家和专家专长这两个概念引入原有的 LDA 模型中，构建一个基于 LDA 模型的 UQA(USER- QUESTION-ANSWER)模型，利用这个模型，我们不仅仅可以实现对新问题的最佳答案智能推荐，同时还可以实现对新问题的最佳专家推荐。</p>
+<p>如下图所示的 UQA 模型中，我们在 LDA 的基础上补充如下定义:</p>
+<ol>
+<li>专家集U是所有回答专家的集合，表示为$U = {u_1, u_2, … , u_n}$</li>
+<li>x表示专家转成，专长数为E个</li>
+</ol>
+<p>UQA模型为语料库D中的每个文档 w 假定以下生成过程:</p>
+<ol>
+<li>$\alpha, \beta, \gamma$分布为Dirichlet分布的先验参数： $\theta \sim Dir(\alpha) , \phi \sim Dir(\beta) , \psi \sim Dir(\gamma)$</li>
+<li>θ为文档-主题的多项式分布，ψ为文档-专长的多项式分布，φ为主题/专长-词的联合多项式分布。</li>
+<li>对于某一文档 d 中的词 w，取主题 $z \sim Multi(θ_d) $，专长$ x \sim Multi(\psi_d)$ ，生成对应词 $w~Multi(\phi_{z,x})$ （联合分布）</li>
+</ol>
+<p><img src="https://oh1ulkf4j.qnssl.com/model 2.png" alt="model 2"></p>
+<p>UQA模型中的文档-主题的多项式分布θ，文档-专长的多项式分布ψ，主题/专长-词的联合多项式分布φ都是通过Gibbs Sampling的方法得到，推导过程在论文中有详述。在这里只给出伪代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">// zero all count variable NWZX, NZM, NXU, NS</div><div class="line">// Initialize</div><div class="line">foreach document m ∈ [1,D] do</div><div class="line"> get the author u of the this document m;</div><div class="line"> foreach word n ∈ [1, Nm] in document m do</div><div class="line">  sample topic index zm,n ~ Mult(1/K) for word wm,n;</div><div class="line">  sample expertise index xu,e ~ Mult(1/X) for word wm,n; </div><div class="line">// Here m also refers to the author u</div><div class="line">increment doc-topic count: NZM[zm,n][m]++;</div><div class="line">increment user-expertise count: NXU[xu,e][u]++;</div><div class="line">increment [topic,expertise]-word count: NWZX[wm,n][zm,n][xu,e]++;</div><div class="line">increment [topic,expertise]-word sum: NS[zm,n][xu,e]++;</div><div class="line"> end</div><div class="line">end</div><div class="line">// Gibbs Sampling</div><div class="line">while not finished do</div><div class="line"> foreach document m ∈ [1,D] do</div><div class="line">  get the author u of the this document m;</div><div class="line">  foreach word n ∈ [1, Nm] in document m do</div><div class="line">   NZM[zm,n][m]--;</div><div class="line">   NXU[xu,e][u]--;</div><div class="line">   NWZX[wm,n][zm,n][xu,e]--;</div><div class="line">   NS[zm,n][xu,e]--;</div><div class="line">   Sample topic and expertise index [z’m,n][x’u,e] according to Equ.32</div><div class="line">   // Because we have minused 1, so in Euq.32 we don’t need to -1</div><div class="line">   NZM[z’m,n][m]++;</div><div class="line">   NXU[x’u,e][u]++;</div><div class="line">   NWZX[wm,n][z’m,n][x’u,e]++;</div><div class="line">   NS[z’m,n][x’u,e]++;</div><div class="line">  end</div><div class="line">        if converged and L sampling iterations since last read out then </div><div class="line">            read out parameter set Θ, Φ, Ψ according to Equ.33, 34 and 35 in 2.2.2.3;</div><div class="line">        end</div><div class="line">    end</div><div class="line">end</div></pre></td></tr></table></figure>
+<p>利用 UQA 模型，我们可以获得文档潜在主题的分布与潜在专家专长分布，并利用这些信息实现对新问题的最佳答案智能推荐以及最佳专家的推荐。</p>
+<p>最终也是用朴素贝叶斯找到训练集中与新输入问题最匹配的问题，其对应的答案即是最佳推荐答案</p>
+<p>$$<br>\begin{eqnarray} \nonumber<br>P(d|d_{new}) \propto P(d) P(d_{new} | d) &amp; = &amp; P(d) \prod_{w \in d_{new}} P(w | d) \\ \nonumber<br>&amp; = &amp;  P(d) \prod_{w \in d_{new}} \sum_z \phi_{w|z} \theta_{z|d} \\ \nonumber<br>&amp; = &amp; P(d) \prod_{w \in d_{new}} \sum_z (\sum_x \phi_{w|z,x}) \theta_{z|d} \\ \nonumber<br>\end{eqnarray}<br>$$</p>
+<p>通过上述这两个公式，我们可以获得训练集中一条提问在新问题下的匹配概率，通过遍历获取最大匹配概率，可以从训练集中获取最相似的问题，该最相似问题的答案即推荐答案。</p>
+<p>对于 UQA 模型，我们可以利用贝叶斯定理得到新输入文档$d_{new}$与训练集中的 某一位专家 u 的匹配概率$P(u|d_{new})$(即在新文档发生的情况下，训练集中专家 u 的可能性)，具体公式推导见下：</p>
+<p>$$<br>\begin{eqnarray} \nonumber<br>P(u|d_{new}) \propto P(u) P(d_{new} | u) &amp; = &amp; P(u) \prod_{w \in d_{new}} P(w | u) \\ \nonumber<br>&amp; = &amp;  P(u) \prod_{w \in d_{new}} \sum_x \phi_{w,z|x} \psi_{x|u} \\ \nonumber<br>&amp; = &amp; P(u) \prod_{w \in d_{new}} \sum_x (\sum_z \phi_{w|x,z})\psi_{x|u}  \\ \nonumber<br>\end{eqnarray}<br>$$</p>
+<p>通过这个公式，我们可以获得训练集中一位专家在该新问题下的匹配概率，通过遍历获取最大匹配概率，可以从训练集答案中获取最匹配的推荐专家。</p>
+<h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><p>以下通过图表简要介绍下项目结果。</p>
+<p>下图是不同词典、不同主题数下，LDA模型得到的推荐答案的正确率：</p>
+<p><img src="https://oh1ulkf4j.qnssl.com/14908813671256.jpg" alt=""></p>
+<p>下图是不同词典、不同主题数、不同专家专长数下，UQA模型得到的推荐答案的正确率：<br><img src="https://oh1ulkf4j.qnssl.com/14908813307811.jpg" alt=""></p>
+<p>下图是不同词典、不同主题数、不同专家专长数下，UQA模型得到的推荐专家的正确率：<br><img src="https://oh1ulkf4j.qnssl.com/14908814051430.jpg" alt=""></p>
+<p>在下一节我会将项目的reference以及项目代码展示出来。</p>
 
       
     </div>
@@ -430,11 +457,13 @@
       
         <div class="post-tags">
           
-            <a href="/tags/cpp/" rel="tag"># cpp</a>
+            <a href="/tags/NLP/" rel="tag"># NLP</a>
           
-            <a href="/tags/array/" rel="tag"># array</a>
+            <a href="/tags/主题模型/" rel="tag"># 主题模型</a>
           
-            <a href="/tags/dp/" rel="tag"># dp</a>
+            <a href="/tags/贝叶斯/" rel="tag"># 贝叶斯</a>
+          
+            <a href="/tags/LDA/" rel="tag"># LDA</a>
           
         </div>
       
@@ -443,8 +472,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/23/Leetcode-119/" rel="next" title="119 Pascal's Triangle II">
-                <i class="fa fa-chevron-left"></i> 119 Pascal's Triangle II
+              <a href="/2017/03/28/浅谈主题模型（三）/" rel="next" title="浅谈主题模型（三）—— LDA模型简介">
+                <i class="fa fa-chevron-left"></i> 浅谈主题模型（三）—— LDA模型简介
               </a>
             
           </div>
@@ -453,8 +482,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/03/23/Leetcode-121/" rel="prev" title="121 Best Time to Buy and Sell Stock">
-                121 Best Time to Buy and Sell Stock <i class="fa fa-chevron-right"></i>
+              <a href="/2017/03/28/浅谈主题模型（五）/" rel="prev" title="浅谈主题模型（五）—— Reference">
+                浅谈主题模型（五）—— Reference <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -504,8 +533,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/03/23/Leetcode-120/"
-           data-title="120 Triangle" data-url="http://tianyuh.com/2017/03/23/Leetcode-120/">
+      <div class="ds-thread" data-thread-key="2017/03/28/浅谈主题模型（四）/"
+           data-title="浅谈主题模型（四）—— 项目简介" data-url="http://tianyuh.com/2017/03/28/浅谈主题模型（四）/">
       </div>
     
   </div>
@@ -622,7 +651,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目"><span class="nav-number">1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解题思路"><span class="nav-number">2.</span> <span class="nav-text">解题思路</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#项目背景"><span class="nav-number">1.</span> <span class="nav-text">项目背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UQA模型简介"><span class="nav-number">2.</span> <span class="nav-text">UQA模型简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结果"><span class="nav-number">3.</span> <span class="nav-text">结果</span></a></li></ol></div>
             
 
           </div>
