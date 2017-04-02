@@ -3,7 +3,28 @@
   
     
     <entry>
-      <title><![CDATA[Leetcode-134]]></title>
+      <title><![CDATA[138 Copy List with Random Pointer]]></title>
+      <url>%2F2017%2F04%2F02%2FLeetcode-138%2F</url>
+      <content type="text"><![CDATA[Leetcode 138，复制一个特殊的链表。 题目A linked list is given such that each node contains an additional random pointer which could point to any node in the list or null. Return a deep copy of the list. 解题思路采用深度优先的搜索方法先将除random的部分复制好，用hashtable的key存原始节点，value存复制后的节点，然后再从head开始找到random，将hashtable中存着的值放入即可。 代码见下，运行时间为49ms /** * Definition for singly-linked list with a random pointer. * struct RandomListNode { * int label; * RandomListNode *next, *random; * RandomListNode(int x) : label(x), next(NULL), random(NULL) {} * }; */ class Solution { public: RandomListNode *copyRandomList(RandomListNode *head) { if(head == NULL) return NULL; unordered_map&lt;RandomListNode *, RandomListNode *&gt; hashtable; RandomListNode * node = new RandomListNode(head-&gt;label); RandomListNode *node2 = node; RandomListNode *result = node; hashtable[head] = node; RandomListNode *head2 = head; head = head-&gt;next; while(head != NULL){ RandomListNode *temp = new RandomListNode(head-&gt;label); hashtable[head] = temp; head = head-&gt;next; node-&gt;next = temp; node = node-&gt;next; } while(head2 != NULL){ node2-&gt;random = hashtable[head2-&gt;random]; node2 = node2-&gt;next; head2 = head2-&gt;next; } return result; } };]]></content>
+    </entry>
+
+    
+    <entry>
+      <title><![CDATA[Leetcode-137]]></title>
+      <url>%2F2017%2F04%2F02%2FLeetcode-137%2F</url>
+      <content type="text"><![CDATA[Leetcode 137，找出数组中只出现一次的数。 题目Given an array of integers, every element appears three times except for one, which appears exactly once. Find that single one. Note:Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory? 解题思路先对数组进行排序，然后计算出现的次数，输出只出现一次的值 代码见下，运行时间为13ms 123456789101112131415161718192021class Solution &#123;public: int singleNumber(vector&lt;int&gt;&amp; nums) &#123; int size = nums.size(); sort(nums.begin(), nums.end()); int prev = nums[0], count = 1; for(int i = 1; i &lt; size; i++)&#123; if(nums[i] == prev)&#123; count ++; &#125; else&#123; if(count == 1) return prev; count = 1; prev = nums[i]; &#125; &#125; if(count == 1) return prev; &#125;&#125;;]]></content>
+    </entry>
+
+    
+    <entry>
+      <title><![CDATA[136 Single Number]]></title>
+      <url>%2F2017%2F04%2F02%2FLeetcode-136%2F</url>
+      <content type="text"><![CDATA[Leetcode 136，找出数组中只出现一次的数。 题目Given an array of integers, every element appears twice except for one. Find that single one. Note:Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory? 解题思路先对数组进行排序，然后判断是否只出现一次 代码见下，运行时间为19ms 12345678910111213141516class Solution &#123;public: int singleNumber(vector&lt;int&gt;&amp; nums) &#123; int size = nums.size(); if(size == 1) return nums[0]; sort(nums.begin(), nums.end()); for(int i = 1; i &lt; size - 1; i++)&#123; if(nums[i] != nums[i - 1] &amp;&amp; nums[i] != nums[i + 1]) return nums[i]; &#125; if(nums[0] == nums[1]) return nums[size - 1]; return nums[0]; &#125;&#125;;]]></content>
+    </entry>
+
+    
+    <entry>
+      <title><![CDATA[134 Gas Station]]></title>
       <url>%2F2017%2F03%2F31%2FLeetcode-134%2F</url>
       <content type="text"><![CDATA[Leetcode 134，找到能够让车回到起始位置的起始点。 题目There are N gas stations along a circular route, where the amount of gas at station i is gas[i]. You have a car with an unlimited gas tank and it costs cost[i] of gas to travel from station i to its next station (i+1). You begin the journey with an empty tank at one of the gas stations. Return the starting gas station’s index if you can travel around the circuit once, otherwise return -1. Note:The solution is guaranteed to be unique. 解题思路本题一开始我采用brute force的方法来找到起始位置，但是显示超时，毕竟用的时间复杂度为O(n)。 经过仔细研究，我发现如果起始位置到某一点后走不下去了，那么起始位置和该点间的所有点都走不到该点处，所有可以直接从该点后的点走起。 代码见下，运行时间为9ms 1234567891011121314151617181920212223242526272829303132class Solution &#123;public: int canCompleteCircuit(vector&lt;int&gt;&amp; gas, vector&lt;int&gt;&amp; cost) &#123; int size = gas.size(); if(size == 0) return -1; vector&lt;int&gt; remain(size, 0); for(int i = 0; i &lt; size; i++)&#123; remain[i] = gas[i] - cost[i]; &#125; for(int i = 0; i &lt; size; i++)&#123; int gas_in_tank = remain[i]; if(gas_in_tank &gt;= 0)&#123; bool flag = true; int step = 0; for(int j = 1; j &lt; size; j++)&#123; gas_in_tank += remain[(i + j) % size]; if(gas_in_tank &lt; 0)&#123; flag = false; step = j; break; &#125; &#125; i += step; if(flag) return i; &#125; &#125; return -1; &#125;&#125;;]]></content>
     </entry>
