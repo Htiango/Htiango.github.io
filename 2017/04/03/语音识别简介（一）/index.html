@@ -99,7 +99,7 @@
 <meta property="og:image" content="https://oh1ulkf4j.qnssl.com/14912230370183.jpg">
 <meta property="og:image" content="https://oh1ulkf4j.qnssl.com/14912266519571.jpg">
 <meta property="og:image" content="https://oh1ulkf4j.qnssl.com/14912270108453.jpg">
-<meta property="og:updated_time" content="2017-04-03T13:57:36.000Z">
+<meta property="og:updated_time" content="2017-04-03T14:17:09.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="语音识别简介（一）——特征提取">
 <meta name="twitter:description" content="上学期，我们学习了 “Design and Implementation of Speech Recognition System” 这门课 （CMU 18799）。通过这门课的学习，我们了解语音识别的基础知识并最终实现了连续语音的识别（采用HMM-GMM模型）。本文主要介绍下进行语音识别前的一些预处理工作，即是如何提取出特征的。">
@@ -443,6 +443,7 @@
 <p>在得到13维的特征向量之后，我们还想进一步得到一些关于频率变化的信息，于是我们对13维的每一维分别求一阶导和二阶导（由于一帧的时间很短，可以认为是$\Delta t$）最终得到的特征向量有39维度</p>
 <p>通过上述这些方法，我们就得到了进行语音识别的特征点。</p>
 <p>在下一节中我将介绍如何用DTW to HMM的方法进行简单的语音识别。</p>
+<h2 id="项目代码"><a href="#项目代码" class="headerlink" title="项目代码"></a>项目代码</h2><p>这一部分的相关代码可以详见我的github中的 <a href="https://github.com/Htiango/SpeechRecognition" target="_blank" rel="external">SpeechRecognition</a>项目</p>
 
       
     </div>
@@ -652,7 +653,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Sampling-采样（录制）"><span class="nav-number">1.</span> <span class="nav-text">Sampling 采样（录制）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分帧加窗"><span class="nav-number">2.</span> <span class="nav-text">分帧加窗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Endpointing"><span class="nav-number">3.</span> <span class="nav-text">Endpointing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MFCC"><span class="nav-number">4.</span> <span class="nav-text">MFCC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DCT变换"><span class="nav-number">5.</span> <span class="nav-text">DCT变换</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Sampling-采样（录制）"><span class="nav-number">1.</span> <span class="nav-text">Sampling 采样（录制）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分帧加窗"><span class="nav-number">2.</span> <span class="nav-text">分帧加窗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Endpointing"><span class="nav-number">3.</span> <span class="nav-text">Endpointing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MFCC"><span class="nav-number">4.</span> <span class="nav-text">MFCC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DCT变换"><span class="nav-number">5.</span> <span class="nav-text">DCT变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目代码"><span class="nav-number">6.</span> <span class="nav-text">项目代码</span></a></li></ol></div>
             
 
           </div>
