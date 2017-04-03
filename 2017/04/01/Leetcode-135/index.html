@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="image processing,BoW,algorithm,classification,NLP," />
+  <meta name="keywords" content="cpp,array," />
 
 
 
@@ -84,21 +84,16 @@
 
 
 
-<meta name="description" content="最近了解到了一种很有意思的关于图像分类的算法，用bag of words的思想来对图像进行处理，很巧妙地将原本是图像处理的问题变换成了自然语言处理的问题。本文将简要对这种方法进行介绍。">
+<meta name="description" content="Leetcode 135，根据条件确定最少给出的糖果数。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Bag of Words for Image Classification">
-<meta property="og:url" content="http://tianyuh.com/2017/03/22/Bag-of-Words-for-Image-Classification/index.html">
+<meta property="og:title" content="135 Candy">
+<meta property="og:url" content="http://tianyuh.com/2017/04/01/Leetcode-135/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
-<meta property="og:description" content="最近了解到了一种很有意思的关于图像分类的算法，用bag of words的思想来对图像进行处理，很巧妙地将原本是图像处理的问题变换成了自然语言处理的问题。本文将简要对这种方法进行介绍。">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/14901949601534.jpg">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/14901947887360.jpg">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/14901945203509.jpg">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/14901944615694.jpg">
-<meta property="og:updated_time" content="2017-03-22T15:04:20.000Z">
+<meta property="og:description" content="Leetcode 135，根据条件确定最少给出的糖果数。">
+<meta property="og:updated_time" content="2017-04-03T06:17:32.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Bag of Words for Image Classification">
-<meta name="twitter:description" content="最近了解到了一种很有意思的关于图像分类的算法，用bag of words的思想来对图像进行处理，很巧妙地将原本是图像处理的问题变换成了自然语言处理的问题。本文将简要对这种方法进行介绍。">
-<meta name="twitter:image" content="https://oh1ulkf4j.qnssl.com/14901949601534.jpg">
+<meta name="twitter:title" content="135 Candy">
+<meta name="twitter:description" content="Leetcode 135，根据条件确定最少给出的糖果数。">
 
 
 
@@ -126,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://tianyuh.com/2017/03/22/Bag-of-Words-for-Image-Classification/"/>
+  <link rel="canonical" href="http://tianyuh.com/2017/04/01/Leetcode-135/"/>
 
 
 
 
 
-  <title> Bag of Words for Image Classification | 塞外麾下炙 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> 135 Candy | 塞外麾下炙 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -305,7 +300,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/03/22/Bag-of-Words-for-Image-Classification/">
+  <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/04/01/Leetcode-135/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Tianyu Hong">
@@ -329,7 +324,7 @@
             
             
               
-                Bag of Words for Image Classification
+                135 Candy
               
             
           </h1>
@@ -342,8 +337,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-22T20:07:38+08:00">
-                2017-03-22
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-01T13:43:46+08:00">
+                2017-04-01
               </time>
             
 
@@ -361,8 +356,8 @@
               <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/机器学习/" itemprop="url" rel="index">
-                    <span itemprop="name">机器学习</span>
+                  <a href="/categories/Leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">Leetcode</span>
                   </a>
                 </span>
 
@@ -376,8 +371,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2017/03/22/Bag-of-Words-for-Image-Classification/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/22/Bag-of-Words-for-Image-Classification/" itemprop="commentCount"></span>
+                <a href="/2017/04/01/Leetcode-135/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/01/Leetcode-135/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -403,32 +398,17 @@
       
 
       
-        <p>最近了解到了一种很有意思的关于图像分类的算法，用bag of words的思想来对图像进行处理，很巧妙地将原本是图像处理的问题变换成了自然语言处理的问题。本文将简要对这种方法进行介绍。<br><a id="more"></a></p>
-<h2 id="Bag-of-Words-BoW-词袋模型原理"><a href="#Bag-of-Words-BoW-词袋模型原理" class="headerlink" title="Bag of Words (BoW) 词袋模型原理"></a>Bag of Words (BoW) 词袋模型原理</h2><p>Bag of words model (BoW model) 最早出现在NLP和IR领域。该模型将一段文字视为一系列无序的单词，忽略掉文本的语法和语序。近年来，BoW模型被广泛应用于计算机视觉中。与应用于文本的BoW类比，图像的特征被当作单词。</p>
-<p>在BoW中，我们统计的是一个词在一份文档中出现的次数，比如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(1) John likes to watch movies. Mary likes movies too.</div><div class="line">(2) John also likes to watch football games.</div></pre></td></tr></table></figure>
-<p>中有10个不同的词，分别可以被构建为一个如下的向量：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(1) [1, 2, 1, 1, 2, 0, 0, 0, 1, 1] </div><div class="line">(2) [1, 1, 1, 1, 0, 1, 1, 1, 0, 0]</div></pre></td></tr></table></figure>
-<p>在邮件过滤中，这种方法有着很好地应用。</p>
-<p>在<a href="http://tianyuh.com/2017/03/15/%E6%B5%85%E8%B0%88%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B/">浅谈主题模型</a>中，我所介绍的TF-IDF在本质上也是一种BoW模型，不同在于加上了Term Weighting。</p>
-<h2 id="提取图像特征"><a href="#提取图像特征" class="headerlink" title="提取图像特征"></a>提取图像特征</h2><p>机器学习的第一步也是最重要的一步就是提取特征，这关乎到随后一系列工作中数据的质量问题。在BoW处理图像的过程中，我们可以用Filter Bank或是SIFT等方法来提取</p>
-<h3 id="Filter-Bank"><a href="#Filter-Bank" class="headerlink" title="Filter Bank"></a>Filter Bank</h3><p>用不同的滤波器对图像进行滤波，得到一系列滤波处理后的图片，随机选取一些pixel，组成一列，然后将所有滤波后的图片一起组成一个矩阵。矩阵中每个元素的值是rgb三值。以此构成的矩阵中的每一行是一个特征向量。</p>
-<p>本文下述的相关操作都是基于filter bank的方法来做的。</p>
-<h3 id="SIFT"><a href="#SIFT" class="headerlink" title="SIFT"></a>SIFT</h3><p>SIFT特征虽然也能描述一幅图像，但是每个SIFT矢量都是128维的，而且一幅图像通常都包含成百上千个SIFT矢量，在进行相似度计算时，这个计算量是非常大的，通行的做法是用聚类算法对这些矢量数据进行聚类，然后用聚类中的一个簇代表BoW中的一个视觉词，将同一幅图像的SIFT矢量映射到视觉词序列生成码本，这样每一幅图像只用一个码本矢量来描述，这样计算相似度时效率就大大提高了。</p>
-<p>在BoW中我们对每一幅图像提取SIFT特征（每一幅图像提取多少个SIFT特征不定）。每一个SIFT特征用一个128维的描述子矢量表示。每一个SIFT特征即为特征向量。</p>
-<h2 id="构建词库"><a href="#构建词库" class="headerlink" title="构建词库"></a>构建词库</h2><p>创建完特征向量后，我们需要将特征向量和词对应起来（map to words）。</p>
-<p>我们可以用k-means的方法对特征向量进行聚类，用欧氏距离表示cluster和特征点之间的距离，通过多次迭代得到的每个cluster就是词。因此我们在进行k-mean的时候要仔细确定好词的数量，太多的词会导致过拟合而太少的词会出现欠拟合现象。</p>
-<p>完成这一步后，我们就构建完成了一个词库，接下来就要在图像中表现出这些词。</p>
-<p>下图为一些出现的高频“词”</p>
-<p><img src="https://oh1ulkf4j.qnssl.com/14901949601534.jpg" alt=""></p>
-<h2 id="图像中词的直方图分布（Visual-Words）"><a href="#图像中词的直方图分布（Visual-Words）" class="headerlink" title="图像中词的直方图分布（Visual Words）"></a>图像中词的直方图分布（Visual Words）</h2><p>对于图像中的每个点，用欧式距离法判断属于哪个词，从而得到图像中词的一个直方图分布。下图表示的是visual word的信息。</p>
-<p><img src="https://oh1ulkf4j.qnssl.com/14901947887360.jpg" alt=""></p>
-<p>为了不完全抛弃图中pixel的位置，我们还可以采用spacial pyramid matching的方法来保留一部分spacial information（表现在所取的每个patch中）</p>
-<p><img src="https://oh1ulkf4j.qnssl.com/14901945203509.jpg" alt=""></p>
-<p>此外，我们甚至可以将TF-IDF的思想引入其中，得到具体的值，在test的过程中通过内积来做相似性度量。</p>
-<h2 id="KNN进行图像分类（testing）"><a href="#KNN进行图像分类（testing）" class="headerlink" title="KNN进行图像分类（testing）"></a>KNN进行图像分类（testing）</h2><p>将training set中的每个直方图分布视为一个vector，先获取testing set中的一幅图的直方图分布，比较和training set中图的距离，找出最近的k个点中所对应training image的对应分类即是该图的分类结果。</p>
-<p><img src="https://oh1ulkf4j.qnssl.com/14901944615694.jpg" alt=""></p>
-<p>需要注意的一点是，k的取值不能太大，尤其是当某一类中的图片较少时更是如此。</p>
+        <p>Leetcode 135，根据条件确定最少给出的糖果数。<br><a id="more"></a></p>
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>There are N children standing in a line. Each child is assigned a rating value.</p>
+<p>You are giving candies to these children subjected to the following requirements:</p>
+<p>Each child must have at least one candy.<br>Children with a higher rating get more candies than their neighbors.<br>What is the minimum candies you must give?</p>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>对于本题而言，先确定小于等于左右两数的点，这些点给的糖果数为1.</p>
+<p>然后对于两点之间，找出最大值，从左边点到最大值依次加1，右边到最大值也依次加1.这里特别需要注意的一点是对于有相等的两个最大值的情况，我们要单独进行讨论。       </p>
+<p>如果相等的两个最大值中的后一个即是最右边的点，由于右边的点位1，所以前一个最大值的点应该给的糖数为前一个点加1.</p>
+<p>若前一个为最左边的点的后一个点，则直接为2</p>
+<p>其他情况，去上述两者情况中的最大值</p>
+<p>代码见下，运行时间为 29ms</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">candy</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; ratings)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> size = ratings.size();</div><div class="line">        <span class="keyword">if</span>(size == <span class="number">1</span>)</div><div class="line">            <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; candy_vec(size, <span class="number">0</span>);</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; index_vec;</div><div class="line">        <span class="keyword">if</span>(ratings[<span class="number">0</span>] &lt;= ratings[<span class="number">1</span>])&#123;</div><div class="line">            candy_vec[<span class="number">0</span>] = <span class="number">1</span>;</div><div class="line">            index_vec.push_back(<span class="number">0</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            index_vec.push_back(<span class="number">-1</span>);</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; size - <span class="number">1</span>; i++)&#123;</div><div class="line">            <span class="keyword">if</span>(ratings[i] &lt;= ratings[i + <span class="number">1</span>] &amp;&amp; ratings[i] &lt;= ratings[i - <span class="number">1</span>])&#123;</div><div class="line">                index_vec.push_back(i);</div><div class="line">                candy_vec[i] = <span class="number">1</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">if</span>(ratings[size - <span class="number">1</span>] &lt;= ratings[size - <span class="number">2</span>])&#123;</div><div class="line">            candy_vec[size - <span class="number">1</span>] = <span class="number">1</span>;</div><div class="line">            index_vec.push_back(size - <span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            index_vec.push_back(size);</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="comment">// print(index_vec);</span></div><div class="line">        <span class="comment">// print(candy_vec);</span></div><div class="line">        </div><div class="line">        </div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; index_vec.size() - <span class="number">1</span>; i++)&#123;</div><div class="line">            <span class="keyword">if</span>(index_vec[i] == (index_vec[i + <span class="number">1</span>] - <span class="number">1</span>))</div><div class="line">                <span class="keyword">continue</span>;</div><div class="line">            <span class="keyword">int</span> start = index_vec[i];</div><div class="line">            <span class="keyword">int</span> end = index_vec[i + <span class="number">1</span>];</div><div class="line">            getCandy(start, end, ratings, candy_vec);</div><div class="line">            <span class="comment">// print(candy_vec);</span></div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; candy_vec.size(); i++)&#123;</div><div class="line">            sum += candy_vec[i];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> sum;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; vec)</span></span>&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; vec.size(); i++)&#123;</div><div class="line">            <span class="built_in">cout</span> &lt;&lt; vec[i] &lt;&lt;<span class="string">"   "</span> ;</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">getCandy</span><span class="params">(<span class="keyword">int</span> start, <span class="keyword">int</span> end, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; ratings, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; candy_vec)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(start + <span class="number">2</span> == end)&#123;</div><div class="line">            candy_vec[start + <span class="number">1</span>] = <span class="number">2</span>;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> max_val = ratings[start + <span class="number">1</span>], index =  start + <span class="number">1</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = start + <span class="number">2</span>; i &lt; end; i++)&#123;</div><div class="line">            <span class="keyword">if</span>(ratings[i] &gt; max_val)&#123;</div><div class="line">                max_val = ratings[i];</div><div class="line">                index = i;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = start + <span class="number">1</span>; i &lt; index; i++)&#123;</div><div class="line">            candy_vec[i] = candy_vec[i - <span class="number">1</span>] + <span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(end == ratings.size())&#123;</div><div class="line">            candy_vec[index] = candy_vec[index - <span class="number">1</span>] + <span class="number">1</span>;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = end - <span class="number">1</span>; i &gt; index; i--)&#123;</div><div class="line">            candy_vec[i] = candy_vec[i + <span class="number">1</span>] + <span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(ratings[index] == ratings[index + <span class="number">1</span>])&#123;</div><div class="line">            <span class="keyword">if</span>(index + <span class="number">1</span> == end)</div><div class="line">                candy_vec[index] = candy_vec[index - <span class="number">1</span>] + <span class="number">1</span>;</div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(index - <span class="number">1</span> == start)</div><div class="line">                candy_vec[index] = <span class="number">2</span>;</div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                candy_vec[index] = max(candy_vec[index - <span class="number">1</span>] + <span class="number">1</span>, candy_vec[index + <span class="number">1</span>]);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span></div><div class="line">            candy_vec[index] = max(candy_vec[index - <span class="number">1</span>], candy_vec[index + <span class="number">1</span>]) + <span class="number">1</span>;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -452,15 +432,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/image-processing/" rel="tag"># image processing</a>
+            <a href="/tags/cpp/" rel="tag"># cpp</a>
           
-            <a href="/tags/BoW/" rel="tag"># BoW</a>
-          
-            <a href="/tags/algorithm/" rel="tag"># algorithm</a>
-          
-            <a href="/tags/classification/" rel="tag"># classification</a>
-          
-            <a href="/tags/NLP/" rel="tag"># NLP</a>
+            <a href="/tags/array/" rel="tag"># array</a>
           
         </div>
       
@@ -469,8 +443,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/22/Leetcode-117/" rel="next" title="117 Populating Next Right Pointers in Each Node II">
-                <i class="fa fa-chevron-left"></i> 117 Populating Next Right Pointers in Each Node II
+              <a href="/2017/03/31/Leetcode-134/" rel="next" title="134 Gas Station">
+                <i class="fa fa-chevron-left"></i> 134 Gas Station
               </a>
             
           </div>
@@ -479,8 +453,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/03/23/Leetcode-118/" rel="prev" title="118 Pascal's Triangle">
-                118 Pascal's Triangle <i class="fa fa-chevron-right"></i>
+              <a href="/2017/04/02/Leetcode-136/" rel="prev" title="136 Single Number">
+                136 Single Number <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -530,8 +504,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/03/22/Bag-of-Words-for-Image-Classification/"
-           data-title="Bag of Words for Image Classification" data-url="http://tianyuh.com/2017/03/22/Bag-of-Words-for-Image-Classification/">
+      <div class="ds-thread" data-thread-key="2017/04/01/Leetcode-135/"
+           data-title="135 Candy" data-url="http://tianyuh.com/2017/04/01/Leetcode-135/">
       </div>
     
   </div>
@@ -648,7 +622,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Bag-of-Words-BoW-词袋模型原理"><span class="nav-number">1.</span> <span class="nav-text">Bag of Words (BoW) 词袋模型原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提取图像特征"><span class="nav-number">2.</span> <span class="nav-text">提取图像特征</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Filter-Bank"><span class="nav-number">2.1.</span> <span class="nav-text">Filter Bank</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SIFT"><span class="nav-number">2.2.</span> <span class="nav-text">SIFT</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建词库"><span class="nav-number">3.</span> <span class="nav-text">构建词库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图像中词的直方图分布（Visual-Words）"><span class="nav-number">4.</span> <span class="nav-text">图像中词的直方图分布（Visual Words）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#KNN进行图像分类（testing）"><span class="nav-number">5.</span> <span class="nav-text">KNN进行图像分类（testing）</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目"><span class="nav-number">1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解题思路"><span class="nav-number">2.</span> <span class="nav-text">解题思路</span></a></li></ol></div>
             
 
           </div>
