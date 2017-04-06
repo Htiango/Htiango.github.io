@@ -3,6 +3,27 @@
   
     
     <entry>
+      <title><![CDATA[145 Binary Tree Postorder Traversal]]></title>
+      <url>%2F2017%2F04%2F06%2FLeetcode-145%2F</url>
+      <content type="text"><![CDATA[Leetcode 145，用后序遍历输出值。 题目Given a binary tree, return the postorder traversal of its nodes’ values. For example:Given binary tree {1,#,2,3}, 123451 \ 2 /3 return [3,2,1]. Note: Recursive solution is trivial, could you do it iteratively? 解题思路本题我采用recursive的方法来解题，通过一层层递归得到答案。 代码见下，运行时间为0ms 1234567891011121314151617181920212223/** * Definition for a binary tree node. * struct TreeNode &#123; * int val; * TreeNode *left; * TreeNode *right; * TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125; * &#125;; */class Solution &#123;public: vector&lt;int&gt; postorderTraversal(TreeNode* root) &#123; vector&lt;int&gt; result; if(root == NULL) return result; vector&lt;int&gt; left_result = postorderTraversal(root-&gt;left); vector&lt;int&gt; right_result = postorderTraversal(root-&gt;right); result.insert(result.end(), left_result.begin(), left_result.end()); result.insert(result.end(), right_result.begin(), right_result.end()); result.push_back(root-&gt;val); return result; &#125;&#125;;]]></content>
+    </entry>
+
+    
+    <entry>
+      <title><![CDATA[144 Binary Tree Preorder Traversal]]></title>
+      <url>%2F2017%2F04%2F06%2FLeetcode-144%2F</url>
+      <content type="text"><![CDATA[Leetcode 144，用前序遍历输出值。 题目Given a binary tree, return the preorder traversal of its nodes’ values. For example:Given binary tree {1,#,2,3}, 123451 \ 2 /3 return [1,2,3]. Note: Recursive solution is trivial, could you do it iteratively? 解题思路本题我采用recursive的方法来解题，通过一层层递归得到答案。 代码见下，运行时间为3ms 1234567891011121314151617181920212223/** * Definition for a binary tree node. * struct TreeNode &#123; * int val; * TreeNode *left; * TreeNode *right; * TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125; * &#125;; */class Solution &#123;public: vector&lt;int&gt; preorderTraversal(TreeNode* root) &#123; vector&lt;int&gt; result; if(root == NULL) return result; result.push_back(root-&gt;val); vector&lt;int&gt; left_result = preorderTraversal(root-&gt;left); vector&lt;int&gt; right_result = preorderTraversal(root-&gt;right); result.insert(result.end(), left_result.begin(), left_result.end()); result.insert(result.end(), right_result.begin(), right_result.end()); return result; &#125;&#125;;]]></content>
+    </entry>
+
+    
+    <entry>
+      <title><![CDATA[143 Reorder List]]></title>
+      <url>%2F2017%2F04%2F06%2FLeetcode-143%2F</url>
+      <content type="text"><![CDATA[Leetcode 143，将链表按照要求重新排列。 题目Given a singly linked list L: L0→L1→…→Ln-1→Ln,reorder it to: L0→Ln→L1→Ln-1→L2→Ln-2→… You must do this in-place without altering the nodes’ values. For example,Given {1,2,3,4}, reorder it to {1,4,2,3}. 解题思路本题中我先通过一遍遍历构建一个反向排列的链表，并记下链表的长度。然后再一起遍历正向反向链表，在一个正向后插入一个反向，并更新长度，等于链表长度时退出。 代码见下，运行时间为76ms 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647/** * Definition for singly-linked list. * struct ListNode &#123; * int val; * ListNode *next; * ListNode(int x) : val(x), next(NULL) &#123;&#125; * &#125;; */class Solution &#123;public: void reorderList(ListNode* head) &#123; if(head == NULL) return; ListNode *pre = new ListNode(head-&gt;val); ListNode *reverse = pre; ListNode *node = head; node = node-&gt;next; int count = 1; while(node != NULL)&#123; ListNode *temp = new ListNode(node-&gt;val); temp-&gt;next = pre; pre = temp; reverse = pre; node = node-&gt;next; count ++; &#125; node = head; int i = 1; while(i &lt; count)&#123; ListNode* temp = node-&gt;next; node-&gt;next = reverse; reverse = reverse-&gt;next; node = node-&gt;next; i++; if(i == count) break; node-&gt;next = temp; node = node-&gt;next; i++; &#125; node-&gt;next = NULL; return; &#125;&#125;;]]></content>
+    </entry>
+
+    
+    <entry>
       <title><![CDATA[142 Linked List Cycle II]]></title>
       <url>%2F2017%2F04%2F04%2FLeetcode-142%2F</url>
       <content type="text"><![CDATA[Leetcode 142，找出link list中环起始的位置。 题目Given a linked list, return the node where the cycle begins. If there is no cycle, return null. Note: Do not modify the linked list. Follow up:Can you solve it without using extra space? 解题思路hashtable代码见下，运行时间为16ms 123456789101112131415161718192021/** * Definition for singly-linked list. * struct ListNode &#123; * int val; * ListNode *next; * ListNode(int x) : val(x), next(NULL) &#123;&#125; * &#125;; */class Solution &#123;public: ListNode *detectCycle(ListNode *head) &#123; unordered_map&lt;ListNode*, int&gt; hashtable; while(head != NULL)&#123; if(hashtable.count(head) &gt; 0) return head; hashtable[head] = 1; head = head-&gt;next; &#125; return NULL; &#125;&#125;; two pointer (O(1) space)在不用额外空间的情况下，我们让一个指针每次移动1个，另一个指针每次移动2个，如果是环形的话两者肯定会有相等的情况。 如下图所示，M表示相遇的位置，我们发现从头到环起始位置与从相遇点到环起始位置的值是相等的。 123N - N - N - N - N - N - M - N | | | - - - - - - - - - | 故代码如下所示，运行时间为9ms 12345678910111213141516171819202122232425262728293031323334/** * Definition for singly-linked list. * struct ListNode &#123; * int val; * ListNode *next; * ListNode(int x) : val(x), next(NULL) &#123;&#125; * &#125;; */class Solution &#123;public: ListNode *detectCycle(ListNode *head) &#123; ListNode* step1 = head; ListNode* step2 = head; bool flag = false; while(step2 != NULL)&#123; step1 = step1-&gt;next; if(step2-&gt;next ==NULL) break; step2 = step2-&gt;next-&gt;next; if(step1 == step2)&#123; flag = true; break; &#125; &#125; if(!flag) return NULL; step1 = head; while(step1 != step2)&#123; step1 = step1-&gt;next; step2 = step2-&gt;next; &#125; return step1; &#125;&#125;;]]></content>
@@ -45,7 +66,7 @@
 
     
     <entry>
-      <title><![CDATA[Leetcode-137]]></title>
+      <title><![CDATA[137 Single Number II]]></title>
       <url>%2F2017%2F04%2F02%2FLeetcode-137%2F</url>
       <content type="text"><![CDATA[Leetcode 137，找出数组中只出现一次的数。 题目Given an array of integers, every element appears three times except for one, which appears exactly once. Find that single one. Note:Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory? 解题思路先对数组进行排序，然后计算出现的次数，输出只出现一次的值 代码见下，运行时间为13ms 123456789101112131415161718192021class Solution &#123;public: int singleNumber(vector&lt;int&gt;&amp; nums) &#123; int size = nums.size(); sort(nums.begin(), nums.end()); int prev = nums[0], count = 1; for(int i = 1; i &lt; size; i++)&#123; if(nums[i] == prev)&#123; count ++; &#125; else&#123; if(count == 1) return prev; count = 1; prev = nums[i]; &#125; &#125; if(count == 1) return prev; &#125;&#125;;]]></content>
     </entry>
