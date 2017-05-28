@@ -3,6 +3,13 @@
   
     
     <entry>
+      <title><![CDATA[Maven的配置(Mac)]]></title>
+      <url>%2F2017%2F05%2F28%2F%E9%85%8D%E7%BD%AEMaven%2F</url>
+      <content type="text"><![CDATA[最近在公司负责一款避孕智能咨询的聊天机器人，是嵌入手淘中的。上周刚刚基于Lucene为机器人添加了搜索引擎，在项目进行的过程中深深领略到了maven的过人之处。 maven作为一款Java项目的管理工具，在项目依赖管理上的优点简直完美！只需在pom中添加一小段描述以及配置信息，就可以在项目里调用外包中的函数，岂不美哉，下面简要介绍下Maven的配置和使用。 首先从官网下载最新的maven的binary并进行解压。然后我们需要确定在Mac上已经设置了JAVA_HOME并指向了你的jdk安装位置，没有的话在Terminal中进行如下操作： 1$ vi ~/.bash_profile 添加： 12345export JAVA_8_HOME=your_java8_homeexport JAVA_7_HOME=your_java7_homeexport JAVA_HOME=$JAVA_8_HOMEexport PATH=$&#123;PATH&#125;:$&#123;JAVA_HOME&#125;/binexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar 此时我们已经添加了JAVA_HOME，现在需要安装maven，同样也是在该文件下进行添加 12export MAVEN_HOME=your_maven_download_direxport PATH=$&#123;PATH&#125;:$&#123;MAVEN_HOME&#125;/bin 退出后更新 1$ source ~/.bash_profile 这时输入mvn -v应该可以看到Maven的相关信息 安装完成！ 至于maven的使用，墙裂推荐使用JetBrains系列下的IDEA，反正对教育邮箱都是免费的，很赞。我接下来会通过一个简单的项目介绍Lucene，届时也会进一步深入maven的使用。]]></content>
+    </entry>
+
+    
+    <entry>
       <title><![CDATA[153 Find Minimum in Rotated Sorted Array]]></title>
       <url>%2F2017%2F04%2F24%2FLeetcode-153%2F</url>
       <content type="text"><![CDATA[Leetcode 153，找到一某处转折的升序数列中的最小值。 题目Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand. (i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2). Find the minimum element. You may assume no duplicate exists in the array. 解题思路本题采用二分法来解题，直至找到转折点，转折点对应的就是最小值 代码见下，运行时间为9ms 12345678910111213141516171819class Solution &#123;public: int findMin(vector&lt;int&gt;&amp; nums) &#123; int size = nums.size(); if(size == 1) return nums[0]; int start = 0, end = size - 1, middle; if(nums[start] &lt; nums[end]) return nums[start]; while(start &lt; end - 1)&#123; middle = (start + end) / 2; if(nums[start] &lt; nums[middle]) start = middle; else end = middle; &#125; return min(nums[start], nums[end]); &#125;&#125;;]]></content>
