@@ -3,6 +3,13 @@
   
     
     <entry>
+      <title><![CDATA[再见多说，你好Disqus]]></title>
+      <url>%2F2017%2F05%2F29%2F%E5%86%8D%E8%A7%81%E5%A4%9A%E8%AF%B4%EF%BC%8C%E4%BD%A0%E5%A5%BDDisqus%2F</url>
+      <content type="text"><![CDATA[早在三个月前就知晓了多说将在6月1日后关闭的噩耗，然而懒癌晚期患者不到最后一刻是不会做出行动的。花了半小时的时间完成了Disqus的搭建，相信这款墙外产品一定会有着比多说更好的体验（前提是梯子要稳。。。） 由于我的hexo选用的主题的next，内置config就支持Disqus的使用，所以我们只需要在Disqus上注册生成一个site(通过首页上点击get started进入)，然后将shortname输入config文件中即可，如下： 1234disqus: enable: true shortname: your-shortname count: true Disqus的相关注册问题可以参考这篇文章 配置完成后，只要更新hexo即可启用Disqus评论，enjoy it！ （至于如何将原有的评论从多说导出到Disqus，github上的这篇文章已经说的很详细，按步骤做就行，很方便的）。]]></content>
+    </entry>
+
+    
+    <entry>
       <title><![CDATA[Maven的配置(Mac)]]></title>
       <url>%2F2017%2F05%2F28%2F%E9%85%8D%E7%BD%AEMaven%2F</url>
       <content type="text"><![CDATA[最近在公司负责一款避孕智能咨询的聊天机器人，是嵌入手淘中的。上周刚刚基于Lucene为机器人添加了搜索引擎，在项目进行的过程中深深领略到了maven的过人之处。 maven作为一款Java项目的管理工具，在项目依赖管理上的优点简直完美！只需在pom中添加一小段描述以及配置信息，就可以在项目里调用外包中的函数，岂不美哉，下面简要介绍下Maven的配置和使用。 首先从官网下载最新的maven的binary并进行解压。然后我们需要确定在Mac上已经设置了JAVA_HOME并指向了你的jdk安装位置，没有的话在Terminal中进行如下操作： 1$ vi ~/.bash_profile 添加： 12345export JAVA_8_HOME=your_java8_homeexport JAVA_7_HOME=your_java7_homeexport JAVA_HOME=$JAVA_8_HOMEexport PATH=$&#123;PATH&#125;:$&#123;JAVA_HOME&#125;/binexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar 此时我们已经添加了JAVA_HOME，现在需要安装maven，同样也是在该文件下进行添加 12export MAVEN_HOME=your_maven_download_direxport PATH=$&#123;PATH&#125;:$&#123;MAVEN_HOME&#125;/bin 退出后更新 1$ source ~/.bash_profile 这时输入mvn -v应该可以看到Maven的相关信息 安装完成！ 至于maven的使用，墙裂推荐使用JetBrains系列下的IDEA，反正对教育邮箱都是免费的，很赞。我接下来会通过一个简单的项目介绍Lucene，届时也会进一步深入maven的使用。]]></content>
