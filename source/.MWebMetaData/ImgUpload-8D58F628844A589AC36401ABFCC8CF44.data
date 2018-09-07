@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>4643A38C8717321A1452526D91D01074</key>
+	<array>
+		<dict>
+			<key>localURL</key>
+			<string>media/IMG_1567%202.jpg</string>
+			<key>remoteURL</key>
+			<string>https://oh1ulkf4j.qnssl.com/IMG_1567 2.jpg</string>
+		</dict>
+		<dict>
+			<key>localURL</key>
+			<string>media/IMG_1598%202.jpg</string>
+			<key>remoteURL</key>
+			<string>https://oh1ulkf4j.qnssl.com/IMG_1598 2.jpg</string>
+		</dict>
+		<dict>
+			<key>localURL</key>
+			<string>media/IMG_1569.jpg</string>
+			<key>remoteURL</key>
+			<string>https://oh1ulkf4j.qnssl.com/IMG_1569.jpg</string>
+		</dict>
+		<dict>
+			<key>localURL</key>
+			<string>media/IMG_1578.jpg</string>
+			<key>remoteURL</key>
+			<string>https://oh1ulkf4j.qnssl.com/IMG_1578.jpg</string>
+		</dict>
+		<dict>
+			<key>localURL</key>
+			<string>media/IMG_1626.jpg</string>
+			<key>remoteURL</key>
+			<string>https://oh1ulkf4j.qnssl.com/IMG_1626.jpg</string>
+		</dict>
+		<dict>
+			<key>localURL</key>
+			<string>media/IMG_1641.jpg</string>
+			<key>remoteURL</key>
+			<string>https://oh1ulkf4j.qnssl.com/IMG_1641.jpg</string>
+		</dict>
+		<dict>
+			<key>localURL</key>
+			<string>media/IMG_1642.jpg</string>
+			<key>remoteURL</key>
+			<string>https://oh1ulkf4j.qnssl.com/IMG_1642.jpg</string>
+		</dict>
+		<dict>
+			<key>localURL</key>
+			<string>media/IMG_1649.jpg</string>
+			<key>remoteURL</key>
+			<string>https://oh1ulkf4j.qnssl.com/IMG_1649.jpg</string>
+		</dict>
+		<dict>
+			<key>localURL</key>
+			<string>media/IMG_1647.jpg</string>
+			<key>remoteURL</key>
+			<string>https://oh1ulkf4j.qnssl.com/IMG_1647.jpg</string>
+		</dict>
+	</array>
+	<key>selectedItem</key>
+	<string>4643A38C8717321A1452526D91D01074</string>
+</dict>
+</plist>
