@@ -94,3 +94,13 @@ hexo deploy         # deploy (to github)
 如此，你的第一篇`hello world`就诞生了
 
 
+## Hexo 进阶
+
+如果你想更进一步的话，我想以下的这些链接或许会对你有用：
+
++ [绑定个人域名](http://gonghonglou.com/2016/02/03/firstblog/)
++ [next 主题](http://theme-next.iissnan.com/): 个人非常喜欢这种简洁风
++ [next 主题配置进阶](http://blog.junyu.io/posts/0010-hexo-learn-from-Never-yu.html)
++ [更多示例](https://github.com/iissnan/hexo-theme-next/issues/1282)
+
+
