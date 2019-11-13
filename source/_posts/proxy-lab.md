@@ -5,7 +5,7 @@ date: 2016-12-09 22:29:47
 tags: [CSAPP,Lab]
 
 categories: 
-- 计算机基础
+- CS Knowledge
 
 ---
 

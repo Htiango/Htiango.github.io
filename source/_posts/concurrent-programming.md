@@ -3,7 +3,7 @@ title: Concurrent Programming
 date: 2016-12-10 14:21:07
 tags: [CSAPP]
 categories: 
-- 计算机基础
+- CS Knowledge
 
 ---
 

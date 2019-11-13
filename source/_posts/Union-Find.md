@@ -2,7 +2,9 @@
 title: 并查集算法简介
 date: 2018-09-09 15:58:10
 tags: [union-find,algorithm]
-categories: [算法]
+categories: 
+- CS Knowledge
+
 ---
 
 
