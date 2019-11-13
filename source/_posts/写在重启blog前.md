@@ -16,7 +16,7 @@ categories: [随笔]
 Anyway，接下来我会写几篇blog，详细介绍一下以下这些这一年新学的知识：
 1. process real-time streaming data 在工业界的应用 （Kafka，Pulsar 以及两者的比较）
 2. Containerize 的应用 （docker，K8s）
-3. GraphQL 的使用以及如何基于Django部署
+3. [GraphQL 的使用以及如何基于Django部署](https://tianyuh.com/2019/11/12/GraphQL%E7%AE%80%E4%BB%8B/)
 4. Database的选择、优化及使用 （Postgres，SQLAlchemy）
 5. Production 环境下的一些注意事项
 6. Python 的一些总结整理
