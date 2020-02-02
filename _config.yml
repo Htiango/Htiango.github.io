@@ -3,7 +3,7 @@
 # =============================================================================
 
 avatar: http://oh1ulkf4j.qnssl.com/gravatar2.jpg
-#https://avatars1.githubusercontent.com/u/32269?v=3&s=460 
+#https://avatars1.githubusercontent.com/u/32269?v=3&s=460
 
 # Duoshuo
 # duoshuo_shortname: tianyuh
@@ -65,7 +65,7 @@ since: 2016
 
 # Site
 title: 塞外麾下炙
-subtitle: 
+subtitle:
 description: Why so serious!
 author: Tianyu Hong
 language: en
@@ -132,6 +132,6 @@ deploy:
   type: git
   # repository: https://github.com/Htiango/Htiango.github.io.git
   repository:
-      github: git@github.com:Htiango/Htiango.github.io.git
-      coding: git@git.coding.net:htiango/htiango.git
+    github: git@github.com:Htiango/Htiango.github.io.git
+    coding: git@git.coding.net:htiango/htiango.git
   branch: master
