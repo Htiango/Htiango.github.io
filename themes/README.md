@@ -1,26 +1,10 @@
 # 如何安装next主题
 
-我选用的主题是next，安装步骤见下，主要由于我自己定义了一些config，所以特地把config file放在这个folder下面，安装好后可以replace config file：
+我选用的主题是next，安装步骤见下，主要由于我自己定义了一些config，所以特地duplicate了当前 [hexo next theme](https://github.com/theme-next/hexo-theme-next) 至 [private repo](https://github.com/Htiango/hexo-theme-next-private) (毕竟一些私人的设置不想public)
 
 
 ## Installation
 
 1. Get it from GitHub
 
-        $ (from repo root) cd themes
-        $ git clone https://github.com/iissnan/hexo-theme-next themes/next
-
-2. Add it to hexo `_config.yml`
-
-        theme: next
-
-
-## Update
-
-```shell
-cd theme/next
-git pull
-```
-
-
-
+        $ git clone https://github.com/Htiango/hexo-theme-next-private themes/next
