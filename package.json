@@ -17,6 +17,7 @@
     "hexo-renderer-ejs": "^0.2.0",
     "hexo-renderer-kramed": "^0.1.4",
     "hexo-renderer-stylus": "^0.3.3",
-    "hexo-server": "^0.2.2"
+    "hexo-server": "^0.2.2",
+    "hexo-sliding-spoiler": "^1.2.1"
   }
 }
