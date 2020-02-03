@@ -4,7 +4,7 @@
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.9.0">
+<meta name="generator" content="Hexo 4.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
@@ -47,17 +47,18 @@
 </script>
 
   <meta name="description" content="本文将简要介绍并查集算法。">
-<meta name="keywords" content="algorithm,union-find">
 <meta property="og:type" content="article">
 <meta property="og:title" content="并查集算法简介">
 <meta property="og:url" content="http://tianyuh.com/2018/09/09/Union-Find/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
 <meta property="og:description" content="本文将简要介绍并查集算法。">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-02-02T06:10:54.415Z">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-09-09T22:58:10.000Z">
+<meta property="article:modified_time" content="2020-02-02T06:10:54.415Z">
+<meta property="article:author" content="Tianyu Hong">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="union-find">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="并查集算法简介">
-<meta name="twitter:description" content="本文将简要介绍并查集算法。">
 
 <link rel="canonical" href="http://tianyuh.com/2018/09/09/Union-Find/">
 
@@ -292,7 +293,6 @@
       
         <p>本文将简要介绍并查集算法。</p>
 <a id="more"></a>
-
 <h2 id="并查集算法"><a href="#并查集算法" class="headerlink" title="并查集算法"></a>并查集算法</h2><p>对于动态连通性的问题，一般都可以用并查集算法解决。</p>
 <p>假设给定一个有<code>n</code>个节点的<code>graph</code>，我们首先要构建两个大小为<code>n</code>的orders和rank的list。其中：orders表示的是与该节点联通的父节点（未联通时为-1），rank表示的是联通时的等级，每次联通时都并入等级高的part（如果等级相同时随机并入并更新并入后的节点的rank）。</p>
 <p>算法步骤如下：</p>
@@ -303,7 +303,6 @@
 </ul>
 <p>以下为python代码部分</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UnionFind</span>:</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, n)</span>:</span></span><br><span class="line">        self.orders = [<span class="number">-1</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(n)]</span><br><span class="line">        self.rank = [<span class="number">0</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(n)]</span><br><span class="line">        <span class="comment"># count stands for number of connected part</span></span><br><span class="line">        self.count = <span class="number">0</span></span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">setOrders</span><span class="params">(self, i)</span>:</span></span><br><span class="line">        self.orders[i] = i</span><br><span class="line">        self.count += <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isValid</span><span class="params">(self, i)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.orders[i] &gt;= <span class="number">0</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">find</span><span class="params">(self, i)</span>:</span></span><br><span class="line">        <span class="comment"># here use recursive way to update the orders.</span></span><br><span class="line">        <span class="keyword">if</span> self.orders[i] != i:</span><br><span class="line">            self.orders[i] = self.find(self.orders[i])</span><br><span class="line">        <span class="keyword">return</span> self.orders[i]</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">union</span><span class="params">(self, i, j)</span>:</span></span><br><span class="line">        x = self.find(i)</span><br><span class="line">        y = self.find(j)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> x != y:</span><br><span class="line">            <span class="keyword">if</span> self.rank[x] &gt; self.rank[y]:</span><br><span class="line">                self.orders[y] = self.orders[x]</span><br><span class="line">            <span class="keyword">elif</span> self.rank[x] &lt; self.rank[y]:</span><br><span class="line">                self.orders[x] = self.orders[y]</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                self.orders[y] = self.orders[x]</span><br><span class="line">                self.rank[x] += <span class="number">1</span></span><br><span class="line">            self.count -= <span class="number">1</span></span><br></pre></td></tr></table></figure>
-
 <h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><h3 id="Minimum-Spanning-Tree-最小生成树"><a href="#Minimum-Spanning-Tree-最小生成树" class="headerlink" title="Minimum Spanning Tree 最小生成树"></a>Minimum Spanning Tree 最小生成树</h3><p>最小生成树的定义： </p>
 <ol>
 <li>首先要有一个带权重值的无向图，也就是Edge不再仅仅是连接两个vertex，还具有一个权重值weight </li>
@@ -317,7 +316,7 @@
 <li>选取weight最小的edge，判断是否和已生成的树构成环，若无则选取该edge，反之则放弃该edge</li>
 <li>重复步骤2知道最小生成树中包含了v-1个edge</li>
 </ol>
-
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
     </div>
 
     
@@ -446,10 +445,10 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/Htiango" title="GitHub → https://github.com/Htiango" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/Htiango" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Htiango" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://www.linkedin.com/in/tianyu-hong/" title="Linkedin → https://www.linkedin.com/in/tianyu-hong/" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linkedin</a>
+        <a href="https://www.linkedin.com/in/tianyu-hong/" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;tianyu-hong&#x2F;" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linkedin</a>
       </span>
   </div>
 
@@ -478,10 +477,10 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Tianyu Hong</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
   </div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.1
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.1
   </div>
 
         
@@ -521,9 +520,19 @@
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/muse.js"></script>
-<script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
 
 
 
@@ -532,7 +541,9 @@
 
 
 
-  <script src="/js/local-search.js"></script>
+  
+<script src="/js/local-search.js"></script>
+
 
 
 

@@ -4,7 +4,7 @@
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.9.0">
+<meta name="generator" content="Hexo 4.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
@@ -47,21 +47,25 @@
 </script>
 
   <meta name="description" content="最近了解到了一种很有意思的关于图像分类的算法，用bag of words的思想来对图像进行处理，很巧妙地将原本是图像处理的问题变换成了自然语言处理的问题。本文将简要对这种方法进行介绍。">
-<meta name="keywords" content="image processing,BoW,algorithm,classification,NLP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Bag of Words for Image Classification">
 <meta property="og:url" content="http://tianyuh.com/2017/03/22/Bag-of-Words-for-Image-Classification/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
 <meta property="og:description" content="最近了解到了一种很有意思的关于图像分类的算法，用bag of words的思想来对图像进行处理，很巧妙地将原本是图像处理的问题变换成了自然语言处理的问题。本文将简要对这种方法进行介绍。">
-<meta property="og:locale" content="en">
+<meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://oh1ulkf4j.qnssl.com/14901949601534.jpg">
 <meta property="og:image" content="https://oh1ulkf4j.qnssl.com/14901947887360.jpg">
 <meta property="og:image" content="https://oh1ulkf4j.qnssl.com/14901945203509.jpg">
 <meta property="og:image" content="https://oh1ulkf4j.qnssl.com/14901944615694.jpg">
-<meta property="og:updated_time" content="2020-02-02T06:10:54.413Z">
+<meta property="article:published_time" content="2017-03-23T03:07:38.000Z">
+<meta property="article:modified_time" content="2020-02-02T06:10:54.413Z">
+<meta property="article:author" content="Tianyu Hong">
+<meta property="article:tag" content="image processing">
+<meta property="article:tag" content="BoW">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="classification">
+<meta property="article:tag" content="NLP">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Bag of Words for Image Classification">
-<meta name="twitter:description" content="最近了解到了一种很有意思的关于图像分类的算法，用bag of words的思想来对图像进行处理，很巧妙地将原本是图像处理的问题变换成了自然语言处理的问题。本文将简要对这种方法进行介绍。">
 <meta name="twitter:image" content="https://oh1ulkf4j.qnssl.com/14901949601534.jpg">
 
 <link rel="canonical" href="http://tianyuh.com/2017/03/22/Bag-of-Words-for-Image-Classification/">
@@ -301,16 +305,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>最近了解到了一种很有意思的关于图像分类的算法，用bag of words的思想来对图像进行处理，很巧妙地将原本是图像处理的问题变换成了自然语言处理的问题。本文将简要对这种方法进行介绍。</p>
-<a id="more"></a>
-
+        <p>最近了解到了一种很有意思的关于图像分类的算法，用bag of words的思想来对图像进行处理，很巧妙地将原本是图像处理的问题变换成了自然语言处理的问题。本文将简要对这种方法进行介绍。<br><a id="more"></a></p>
 <h2 id="Bag-of-Words-BoW-词袋模型原理"><a href="#Bag-of-Words-BoW-词袋模型原理" class="headerlink" title="Bag of Words (BoW) 词袋模型原理"></a>Bag of Words (BoW) 词袋模型原理</h2><p>Bag of words model (BoW model) 最早出现在NLP和IR领域。该模型将一段文字视为一系列无序的单词，忽略掉文本的语法和语序。近年来，BoW模型被广泛应用于计算机视觉中。与应用于文本的BoW类比，图像的特征被当作单词。</p>
 <p>在BoW中，我们统计的是一个词在一份文档中出现的次数，比如：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(1) John likes to watch movies. Mary likes movies too.</span><br><span class="line">(2) John also likes to watch football games.</span><br></pre></td></tr></table></figure>
-
 <p>中有10个不同的词，分别可以被构建为一个如下的向量：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(1) [1, 2, 1, 1, 2, 0, 0, 0, 1, 1] </span><br><span class="line">(2) [1, 1, 1, 1, 0, 1, 1, 1, 0, 0]</span><br></pre></td></tr></table></figure>
-
 <p>在邮件过滤中，这种方法有着很好地应用。</p>
 <p>在<a href="http://tianyuh.com/2017/03/15/%E6%B5%85%E8%B0%88%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B/">浅谈主题模型</a>中，我所介绍的TF-IDF在本质上也是一种BoW模型，不同在于加上了Term Weighting。</p>
 <h2 id="提取图像特征"><a href="#提取图像特征" class="headerlink" title="提取图像特征"></a>提取图像特征</h2><p>机器学习的第一步也是最重要的一步就是提取特征，这关乎到随后一系列工作中数据的质量问题。在BoW处理图像的过程中，我们可以用Filter Bank或是SIFT等方法来提取</p>
@@ -322,16 +322,16 @@
 <p>我们可以用k-means的方法对特征向量进行聚类，用欧氏距离表示cluster和特征点之间的距离，通过多次迭代得到的每个cluster就是词。因此我们在进行k-mean的时候要仔细确定好词的数量，太多的词会导致过拟合而太少的词会出现欠拟合现象。</p>
 <p>完成这一步后，我们就构建完成了一个词库，接下来就要在图像中表现出这些词。</p>
 <p>下图为一些出现的高频“词”</p>
-<p><img src="https://oh1ulkf4j.qnssl.com/14901949601534.jpg" alt></p>
+<p><img src="https://oh1ulkf4j.qnssl.com/14901949601534.jpg" alt=""></p>
 <h2 id="图像中词的直方图分布（Visual-Words）"><a href="#图像中词的直方图分布（Visual-Words）" class="headerlink" title="图像中词的直方图分布（Visual Words）"></a>图像中词的直方图分布（Visual Words）</h2><p>对于图像中的每个点，用欧式距离法判断属于哪个词，从而得到图像中词的一个直方图分布。下图表示的是visual word的信息。</p>
-<p><img src="https://oh1ulkf4j.qnssl.com/14901947887360.jpg" alt></p>
+<p><img src="https://oh1ulkf4j.qnssl.com/14901947887360.jpg" alt=""></p>
 <p>为了不完全抛弃图中pixel的位置，我们还可以采用spacial pyramid matching的方法来保留一部分spacial information（表现在所取的每个patch中）</p>
-<p><img src="https://oh1ulkf4j.qnssl.com/14901945203509.jpg" alt></p>
+<p><img src="https://oh1ulkf4j.qnssl.com/14901945203509.jpg" alt=""></p>
 <p>此外，我们甚至可以将TF-IDF的思想引入其中，得到具体的值，在test的过程中通过内积来做相似性度量。</p>
 <h2 id="KNN进行图像分类（testing）"><a href="#KNN进行图像分类（testing）" class="headerlink" title="KNN进行图像分类（testing）"></a>KNN进行图像分类（testing）</h2><p>将training set中的每个直方图分布视为一个vector，先获取testing set中的一幅图的直方图分布，比较和training set中图的距离，找出最近的k个点中所对应training image的对应分类即是该图的分类结果。</p>
-<p><img src="https://oh1ulkf4j.qnssl.com/14901944615694.jpg" alt></p>
+<p><img src="https://oh1ulkf4j.qnssl.com/14901944615694.jpg" alt=""></p>
 <p>需要注意的一点是，k的取值不能太大，尤其是当某一类中的图片较少时更是如此。</p>
-
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
     </div>
 
     
@@ -358,7 +358,7 @@
       <i class="fa fa-chevron-left"></i> Deep Learning Chapter 2
     </a></div>
       <div class="post-nav-item">
-    <a href="/2017/03/28/浅谈主题模型（一）/" rel="next" title="浅谈主题模型（一） —— 主题模型进化史">
+    <a href="/2017/03/28/%E6%B5%85%E8%B0%88%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B%EF%BC%88%E4%B8%80%EF%BC%89/" rel="next" title="浅谈主题模型（一） —— 主题模型进化史">
       浅谈主题模型（一） —— 主题模型进化史 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -463,10 +463,10 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/Htiango" title="GitHub → https://github.com/Htiango" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/Htiango" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Htiango" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://www.linkedin.com/in/tianyu-hong/" title="Linkedin → https://www.linkedin.com/in/tianyu-hong/" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linkedin</a>
+        <a href="https://www.linkedin.com/in/tianyu-hong/" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;tianyu-hong&#x2F;" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linkedin</a>
       </span>
   </div>
 
@@ -495,10 +495,10 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Tianyu Hong</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
   </div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.1
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.1
   </div>
 
         
@@ -538,9 +538,19 @@
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/muse.js"></script>
-<script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
 
 
 
@@ -549,7 +559,9 @@
 
 
 
-  <script src="/js/local-search.js"></script>
+  
+<script src="/js/local-search.js"></script>
+
 
 
 

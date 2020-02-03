@@ -4,7 +4,7 @@
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.9.0">
+<meta name="generator" content="Hexo 4.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
@@ -47,19 +47,20 @@
 </script>
 
   <meta name="description" content="最近想要系统地学习下deep learning，因此找了Ian Goodfellow写的”Deep Learning”一书来啃，我会将每章所讲内容整理后放在blog上。本篇就简要介绍下deep learning一书的第一章，Introduction。">
-<meta name="keywords" content="deep learning,introduction">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Deep Learning Chapter 1">
 <meta property="og:url" content="http://tianyuh.com/2017/02/22/Deep-learning-Chapter-1/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
 <meta property="og:description" content="最近想要系统地学习下deep learning，因此找了Ian Goodfellow写的”Deep Learning”一书来啃，我会将每章所讲内容整理后放在blog上。本篇就简要介绍下deep learning一书的第一章，Introduction。">
-<meta property="og:locale" content="en">
+<meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://oh1ulkf4j.qnssl.com/Screen%20Shot%202017-02-22%20at%208.46.15%20PM.png">
 <meta property="og:image" content="https://oh1ulkf4j.qnssl.com/Screen%20Shot%202017-02-22%20at%208.52.32%20PM.png">
-<meta property="og:updated_time" content="2020-02-02T06:10:54.414Z">
+<meta property="article:published_time" content="2017-02-23T04:37:30.000Z">
+<meta property="article:modified_time" content="2020-02-02T06:10:54.414Z">
+<meta property="article:author" content="Tianyu Hong">
+<meta property="article:tag" content="deep learning">
+<meta property="article:tag" content="introduction">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Deep Learning Chapter 1">
-<meta name="twitter:description" content="最近想要系统地学习下deep learning，因此找了Ian Goodfellow写的”Deep Learning”一书来啃，我会将每章所讲内容整理后放在blog上。本篇就简要介绍下deep learning一书的第一章，Introduction。">
 <meta name="twitter:image" content="https://oh1ulkf4j.qnssl.com/Screen%20Shot%202017-02-22%20at%208.46.15%20PM.png">
 
 <link rel="canonical" href="http://tianyuh.com/2017/02/22/Deep-learning-Chapter-1/">
@@ -255,7 +256,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/读数笔记/" itemprop="url" rel="index">
+                  <a href="/categories/%E8%AF%BB%E6%95%B0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
                     <span itemprop="name">读数笔记</span>
                   </a>
                 </span>
@@ -295,12 +296,11 @@
       
         <p>最近想要系统地学习下deep learning，因此找了Ian Goodfellow写的”Deep Learning”一书来啃，我会将每章所讲内容整理后放在blog上。本篇就简要介绍下deep learning一书的第一章，Introduction。</p>
 <a id="more"></a>
-
 <h2 id="What-is-Deep-Learning？"><a href="#What-is-Deep-Learning？" class="headerlink" title="What is Deep Learning？"></a>What is Deep Learning？</h2><p>什么是深度学习？虽然这一词早已为大家所熟知，但是这一概念可能大部分人都不胜了解。其实一张简单的韦恩图就可以清晰简洁的表示：</p>
-<p><img src="https://oh1ulkf4j.qnssl.com/Screen%20Shot%202017-02-22%20at%208.46.15%20PM.png" alt></p>
+<p><img src="https://oh1ulkf4j.qnssl.com/Screen%20Shot%202017-02-22%20at%208.46.15%20PM.png" alt=""></p>
 <p>简单地说，深度学习是一种表示学习(representation learning)，也是一种机器学习，可用于许多AI方法。</p>
 <p>那么深度学习又和之前的这些概念有什么区别呢？</p>
-<p><img src="https://oh1ulkf4j.qnssl.com/Screen%20Shot%202017-02-22%20at%208.52.32%20PM.png" alt></p>
+<p><img src="https://oh1ulkf4j.qnssl.com/Screen%20Shot%202017-02-22%20at%208.52.32%20PM.png" alt=""></p>
 <p>从这张图中我们可以看出，对于经典的机器学习方法，我们需要手动设计出特点进行导入来实现目的。而Representation Learning则是能够自己发掘特征，找到并导入来实现结果。</p>
 <p>而对于深度学习而言，特征的找取是分多层多次实现的：先是通过原有的数据进行简单的特征提取，再根据提取的简单特征，进一步提取出更加抽象的特征来，这层递增，最终实现结果。</p>
 <p>以图像识别的例子而言就是这样的：</p>
@@ -312,11 +312,11 @@
 <p>有了上述这三个hidden layer，我们就可以最终判断出图像是哪种物体了。</p>
 <h2 id="Brief-Introduction-about-the-History"><a href="#Brief-Introduction-about-the-History" class="headerlink" title="Brief Introduction about the History"></a>Brief Introduction about the History</h2><p>之前我上过Ng在coursera上的“Machine Learning”课，在课的后半部分简要地带过了一些关于神经网络的知识点。如今想来，二三年前深度学习还大部分时候还是以神经网络这一概念展现在我们面前的。</p>
 <p>的确，深度学习作为一个早已提出的概念，经历过三次发展浪潮，直到最近才以 Deep Learning 这一词示人。</p>
-<p>在Ng课中介绍的神经网络，就是一种从神经科学的角度出发的简单的线性模型。这些模型被设计为使用一组n个输入{x1,…,xn}，并将其与一个输出y关联，这些模型希望学习一组权重{w1,…,wn},输出y=x1 * w1 + … + xn * wn，多层这样的结果就构成了这种早期的神经网络的雏形。一般是用back-propagation的方法来进行参数的训练。这种方法直至今日仍然是训练深度模型的主导方法。</p>
+<p>在Ng课中介绍的神经网络，就是一种从神经科学的角度出发的简单的线性模型。这些模型被设计为使用一组n个输入{x1,…,xn}，并将其与一个输出y关联，这些模型希望学习一组权重{w1,…,wn},输出y=x1 <em> w1 + … + xn </em> wn，多层这样的结果就构成了这种早期的神经网络的雏形。一般是用back-propagation的方法来进行参数的训练。这种方法直至今日仍然是训练深度模型的主导方法。</p>
 <p>由于多层的结构再加上多层之间的信息传递（训练时的正向、反向传播），使得这一模型也被称为神经网络模型。的确神经科学被视为深度学习研究的一个重要灵感来源，但是由于我们没有足够的关于大脑的信息来进行进一步研究指导，其作用逐渐被削弱。现在的大多数神经网络是基于一个成为Rectified linear unit的神经单元模型。</p>
 <p>在80年代，神经网络在认知科学的背景下随着Connectionism或者说parallel distributed processing的出现而引来了又一个发展高潮。通过将大量简单的计算单元连接在一起构成网络从而实现智能的行为，用分布式表示的方法，将多个特征彼此分立开，每个输入都有多个特征表示，每个特征都参与表示多个输入，从而分立进行训练。随着back-propagation的普及，这种方法走向了潮流。</p>
 <p>随着硬件的发展，当年遥不可及的计算代价如今得以了实现，从而引来了第三次的发展。而大量的数据集的出现也使得训练变得更为方便和准确，而模型规模的增大也使得能够实现更多复杂的内容。</p>
-
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
     </div>
 
     
@@ -340,7 +340,7 @@
       <i class="fa fa-chevron-left"></i> Zero padding
     </a></div>
       <div class="post-nav-item">
-    <a href="/2017/02/23/做一只孤独的美食家/" rel="next" title="做一只孤独的美食家">
+    <a href="/2017/02/23/%E5%81%9A%E4%B8%80%E5%8F%AA%E5%AD%A4%E7%8B%AC%E7%9A%84%E7%BE%8E%E9%A3%9F%E5%AE%B6/" rel="next" title="做一只孤独的美食家">
       做一只孤独的美食家 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -445,10 +445,10 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/Htiango" title="GitHub → https://github.com/Htiango" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/Htiango" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Htiango" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://www.linkedin.com/in/tianyu-hong/" title="Linkedin → https://www.linkedin.com/in/tianyu-hong/" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linkedin</a>
+        <a href="https://www.linkedin.com/in/tianyu-hong/" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;tianyu-hong&#x2F;" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linkedin</a>
       </span>
   </div>
 
@@ -477,10 +477,10 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Tianyu Hong</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
   </div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.1
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.1
   </div>
 
         
@@ -520,9 +520,19 @@
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/muse.js"></script>
-<script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
 
 
 
@@ -531,7 +541,9 @@
 
 
 
-  <script src="/js/local-search.js"></script>
+  
+<script src="/js/local-search.js"></script>
+
 
 
 

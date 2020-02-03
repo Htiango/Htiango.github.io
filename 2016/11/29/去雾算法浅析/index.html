@@ -4,7 +4,7 @@
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.9.0">
+<meta name="generator" content="Hexo 4.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
@@ -47,13 +47,12 @@
 </script>
 
   <meta name="description" content="何凯明博士在09年以 “Single Image Haze Removal Using Dark Channel Prior” 一文技惊四座。此文甚至成为09年的CVPR最佳论文。本篇博文将对这种去雾算法进行简要的分析，并通过自己的实现来更好的进行介绍。">
-<meta name="keywords" content="去雾算法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="去雾算法浅析">
-<meta property="og:url" content="http://tianyuh.com/2016/11/29/去雾算法浅析/index.html">
+<meta property="og:url" content="http://tianyuh.com/2016/11/29/%E5%8E%BB%E9%9B%BE%E7%AE%97%E6%B3%95%E6%B5%85%E6%9E%90/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
 <meta property="og:description" content="何凯明博士在09年以 “Single Image Haze Removal Using Dark Channel Prior” 一文技惊四座。此文甚至成为09年的CVPR最佳论文。本篇博文将对这种去雾算法进行简要的分析，并通过自己的实现来更好的进行介绍。">
-<meta property="og:locale" content="en">
+<meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://oh1ulkf4j.qnssl.com/fomula%201.jpg">
 <meta property="og:image" content="https://oh1ulkf4j.qnssl.com/fomula%202.jpg">
 <meta property="og:image" content="https://oh1ulkf4j.qnssl.com/image%201.JPG">
@@ -77,13 +76,14 @@
 <meta property="og:image" content="https://oh1ulkf4j.qnssl.com/J_guild_filter%206.JPG">
 <meta property="og:image" content="https://oh1ulkf4j.qnssl.com/image%207.JPG">
 <meta property="og:image" content="https://oh1ulkf4j.qnssl.com/J_guild_filter%207.JPG">
-<meta property="og:updated_time" content="2020-02-02T06:10:54.472Z">
+<meta property="article:published_time" content="2016-11-30T06:07:46.000Z">
+<meta property="article:modified_time" content="2020-02-02T06:10:54.472Z">
+<meta property="article:author" content="Tianyu Hong">
+<meta property="article:tag" content="去雾算法">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="去雾算法浅析">
-<meta name="twitter:description" content="何凯明博士在09年以 “Single Image Haze Removal Using Dark Channel Prior” 一文技惊四座。此文甚至成为09年的CVPR最佳论文。本篇博文将对这种去雾算法进行简要的分析，并通过自己的实现来更好的进行介绍。">
 <meta name="twitter:image" content="https://oh1ulkf4j.qnssl.com/fomula%201.jpg">
 
-<link rel="canonical" href="http://tianyuh.com/2016/11/29/去雾算法浅析/">
+<link rel="canonical" href="http://tianyuh.com/2016/11/29/%E5%8E%BB%E9%9B%BE%E7%AE%97%E6%B3%95%E6%B5%85%E6%9E%90/">
 
 
 <script id="page-configurations">
@@ -245,7 +245,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
-    <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2016/11/29/去雾算法浅析/">
+    <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2016/11/29/%E5%8E%BB%E9%9B%BE%E7%AE%97%E6%B3%95%E6%B5%85%E6%9E%90/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -304,7 +304,7 @@
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2016/11/29/去雾算法浅析/#disqus_thread" itemprop="discussionUrl">
+    <a title="disqus" href="/2016/11/29/%E5%8E%BB%E9%9B%BE%E7%AE%97%E6%B3%95%E6%B5%85%E6%9E%90/#disqus_thread" itemprop="discussionUrl">
       <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/11/29/去雾算法浅析/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -322,7 +322,6 @@
       
         <p>何凯明博士在09年以 <a href="http://www.jiansun.org/papers/Dehaze_CVPR2009.pdf" target="_blank" rel="noopener">“Single Image Haze Removal Using Dark Channel Prior”</a> 一文技惊四座。此文甚至成为09年的CVPR最佳论文。本篇博文将对这种去雾算法进行简要的分析，并通过自己的实现来更好的进行介绍。</p>
 <a id="more"></a>
-
 <h2 id="算法核心介绍"><a href="#算法核心介绍" class="headerlink" title="算法核心介绍"></a>算法核心介绍</h2><h3 id="Foggy-Image-model"><a href="#Foggy-Image-model" class="headerlink" title="Foggy Image model"></a>Foggy Image model</h3><p>首先，我们需要构建一个雾天图像的模型。公式如下所示，其中I表示雾天图像，J表示没有雾的图像，t表示空气穿透率，A表示纯雾。式子中的x均表示为图像中的像素点。</p>
 <p><img src="https://oh1ulkf4j.qnssl.com/fomula%201.jpg" alt="formula 1"></p>
 <p>上式非常容易理解：我们最终看到的雾天图像是由透过空气传递过来的原始景观图像和一定浓度的雾叠加而成。</p>
@@ -368,7 +367,7 @@
 <p><img src="https://oh1ulkf4j.qnssl.com/image%207.JPG" alt="image 7"><br><img src="https://oh1ulkf4j.qnssl.com/J_guild_filter%207.JPG" alt="image guided 7"></p>
 <p>所以总而言之，去雾算法可以取得一个比较好的效果，不过也有其一定的局限性，要视具体的情况而定。</p>
 <p>想要上手参考的，详见我的<a href="https://github.com/Htiango/cvpr09-defog" target="_blank" rel="noopener">github</a></p>
-
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
     </div>
 
     
@@ -378,7 +377,7 @@
       <footer class="post-footer">
           
           <div class="post-tags">
-              <a href="/tags/去雾算法/" rel="tag"><i class="fa fa-tag"></i> 去雾算法</a>
+              <a href="/tags/%E5%8E%BB%E9%9B%BE%E7%AE%97%E6%B3%95/" rel="tag"><i class="fa fa-tag"></i> 去雾算法</a>
           </div>
 
         
@@ -496,10 +495,10 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/Htiango" title="GitHub → https://github.com/Htiango" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/Htiango" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Htiango" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://www.linkedin.com/in/tianyu-hong/" title="Linkedin → https://www.linkedin.com/in/tianyu-hong/" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linkedin</a>
+        <a href="https://www.linkedin.com/in/tianyu-hong/" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;tianyu-hong&#x2F;" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linkedin</a>
       </span>
   </div>
 
@@ -528,10 +527,10 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Tianyu Hong</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
   </div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.1
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.1
   </div>
 
         
@@ -571,9 +570,19 @@
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/muse.js"></script>
-<script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
 
 
 
@@ -582,7 +591,9 @@
 
 
 
-  <script src="/js/local-search.js"></script>
+  
+<script src="/js/local-search.js"></script>
+
 
 
 
@@ -611,7 +622,7 @@
 </script>
 <script>
   var disqus_config = function() {
-    this.page.url = "http://tianyuh.com/2016/11/29/去雾算法浅析/";
+    this.page.url = "http://tianyuh.com/2016/11/29/%E5%8E%BB%E9%9B%BE%E7%AE%97%E6%B3%95%E6%B5%85%E6%9E%90/";
     this.page.identifier = "2016/11/29/去雾算法浅析/";
     this.page.title = "去雾算法浅析";
     };

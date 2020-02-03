@@ -4,7 +4,7 @@
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.9.0">
+<meta name="generator" content="Hexo 4.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
@@ -47,17 +47,19 @@
 </script>
 
   <meta name="description" content="由于工作需要，最近我尝试了在Windows平台上编译并运行TensorFlow的C++项目。整个过程非常痛苦，因为网上相关的信息实在是少之又少，几乎所有关于C++的编译都是在Linux平台下通过baze实现的。非常感谢这篇tutorial 以及 这篇 tutorial。通过结合上面两篇博文以及TF的官方CMake介绍，我终于成功实现了在Windows平台下对TensorFlow项目的编译和运行。(">
-<meta name="keywords" content="TensorFlow,Windows,配置">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在Windows平台下编译并运行TensorFlow C++项目（支持GPU）">
 <meta property="og:url" content="http://tianyuh.com/2018/09/11/Build-Run-Tensorflow-C-program-on-Windows/index.html">
 <meta property="og:site_name" content="塞外麾下炙">
 <meta property="og:description" content="由于工作需要，最近我尝试了在Windows平台上编译并运行TensorFlow的C++项目。整个过程非常痛苦，因为网上相关的信息实在是少之又少，几乎所有关于C++的编译都是在Linux平台下通过baze实现的。非常感谢这篇tutorial 以及 这篇 tutorial。通过结合上面两篇博文以及TF的官方CMake介绍，我终于成功实现了在Windows平台下对TensorFlow项目的编译和运行。(">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-02-02T06:10:54.413Z">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-09-12T06:48:52.000Z">
+<meta property="article:modified_time" content="2020-02-02T06:10:54.413Z">
+<meta property="article:author" content="Tianyu Hong">
+<meta property="article:tag" content="TensorFlow">
+<meta property="article:tag" content="Windows">
+<meta property="article:tag" content="配置">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在Windows平台下编译并运行TensorFlow C++项目（支持GPU）">
-<meta name="twitter:description" content="由于工作需要，最近我尝试了在Windows平台上编译并运行TensorFlow的C++项目。整个过程非常痛苦，因为网上相关的信息实在是少之又少，几乎所有关于C++的编译都是在Linux平台下通过baze实现的。非常感谢这篇tutorial 以及 这篇 tutorial。通过结合上面两篇博文以及TF的官方CMake介绍，我终于成功实现了在Windows平台下对TensorFlow项目的编译和运行。(">
 
 <link rel="canonical" href="http://tianyuh.com/2018/09/11/Build-Run-Tensorflow-C-program-on-Windows/">
 
@@ -252,7 +254,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/工欲善其事/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%B7%A5%E6%AC%B2%E5%96%84%E5%85%B6%E4%BA%8B/" itemprop="url" rel="index">
                     <span itemprop="name">工欲善其事</span>
                   </a>
                 </span>
@@ -292,8 +294,6 @@
       
         <p>由于工作需要，最近我尝试了在Windows平台上编译并运行TensorFlow的C++项目。整个过程非常痛苦，因为网上相关的信息实在是少之又少，几乎所有关于C++的编译都是在Linux平台下通过baze实现的。非常感谢这篇<a href="https://joe-antognini.github.io/machine-learning/build-windows-tf" target="_blank" rel="noopener">tutorial</a> 以及 这篇 <a href="https://joe-antognini.github.io/machine-learning/windows-tf-project" target="_blank" rel="noopener">tutorial</a>。通过结合上面两篇博文以及TF的官方<a href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/contrib/cmake/README.md" target="_blank" rel="noopener">CMake介绍</a>，我终于成功实现了在Windows平台下对TensorFlow项目的编译和运行。(趁热赶紧回馈社会…</p>
 <a id="more"></a>
-
-
 <h2 id="环境介绍"><a href="#环境介绍" class="headerlink" title="环境介绍"></a>环境介绍</h2><p>应client的要求，我们需要在Windows 7 pro的环境下提供一个基于 TensorFlow 做 Inference 的 DLL，以供他们在VS2015中调用。</p>
 <p>所以，本文介绍的编译及运行的方法仅保证在以下环境下能够成功：</p>
 <ul>
@@ -318,19 +318,13 @@
 <p>为了方便，在具体操作过程中，我将TensorFlow和swig放入了<code>c:\%USERNAME%\bin\</code>文件夹下，以下都将使用该路径</p>
 <h3 id="CMake-生成-Visual-Studio-project-files"><a href="#CMake-生成-Visual-Studio-project-files" class="headerlink" title="CMake 生成 Visual Studio project files"></a>CMake 生成 Visual Studio project files</h3><p>所有即将编译的TensorFlow library都在TensorFlow repository下的<code>cmake</code>目录下。首先我们要在<code>cmake</code>文件夹下创建一个separate的<code>build</code>文件夹。(以下所有命令行操作都是在Command Prompt下进行的)</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C:\...&gt; cd tensorflow\tensorflow\contrib\cmake</span><br><span class="line">C:\...&gt; mkdir build</span><br><span class="line">C:\...&gt; cd build</span><br></pre></td></tr></table></figure>
-
 <p>然后我们使用Command Prompt来运行CMake：（路径根据实际情况可能需要修改）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cmake .. -A x64 -DCMAKE_BUILD_TYPE=Release ^</span><br><span class="line">-DSWIG_EXECUTABLE=C:\Users\%USERNAME%\bin\swig\swigwin-3.0.12\swig.exe ^</span><br><span class="line">-DPYTHON_EXECUTABLE=C:\Users\%USERNAME%\Anaconda3\python.exe ^</span><br><span class="line">-DPYTHON_LIBRARIES=C:\Users\%USERNAME%\Anaconda3\libs\python35.lib</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cmake .. -A x64 -DCMAKE_BUILD_TYPE&#x3D;Release ^</span><br><span class="line">-DSWIG_EXECUTABLE&#x3D;C:\Users\%USERNAME%\bin\swig\swigwin-3.0.12\swig.exe ^</span><br><span class="line">-DPYTHON_EXECUTABLE&#x3D;C:\Users\%USERNAME%\Anaconda3\python.exe ^</span><br><span class="line">-DPYTHON_LIBRARIES&#x3D;C:\Users\%USERNAME%\Anaconda3\libs\python35.lib</span><br></pre></td></tr></table></figure>
 <p>如果你和我一样也是需要一个GPU support的program，需要在加上：（别忘记在前面的命令行后面加上<code>^</code>，cudnn路径根据实际情况调整）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-Dtensorflow_ENABLE_GPU=ON ^</span><br><span class="line">-DCUDNN_HOME=&quot;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v9.0&quot;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-Dtensorflow_ENABLE_GPU&#x3D;ON ^</span><br><span class="line">-DCUDNN_HOME&#x3D;&quot;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v9.0&quot;</span><br></pre></td></tr></table></figure>
 <p>为了节省时间，我们最后避免一些不必要的文件的生成，加入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-Dtensorflow_BUILD_PYTHON_BINDINGS=OFF ^</span><br><span class="line">-Dtensorflow_ENABLE_GRPC_SUPPORT=OFF</span><br></pre></td></tr></table></figure>
-
-<p>最重要的是，如果我们想得到shared library，<strong>一定要加</strong>:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-Dtensorflow_BUILD_SHARED_LIB=ON ^</span><br><span class="line">-DCUDA_HOST_COMPILER=&quot;C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\amd64\cl.exe&quot;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-Dtensorflow_BUILD_PYTHON_BINDINGS&#x3D;OFF ^</span><br><span class="line">-Dtensorflow_ENABLE_GRPC_SUPPORT&#x3D;OFF</span><br></pre></td></tr></table></figure>
+<p>最重要的是，如果我们想得到shared library，<strong>一定要加</strong>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-Dtensorflow_BUILD_SHARED_LIB&#x3D;ON ^</span><br><span class="line">-DCUDA_HOST_COMPILER&#x3D;&quot;C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\amd64\cl.exe&quot;</span><br></pre></td></tr></table></figure></p>
 <p>这样在CMake成功之后，会生成很多Visual Studio project file</p>
 <h3 id="Build-TensorFlow-in-VIsual-Studio"><a href="#Build-TensorFlow-in-VIsual-Studio" class="headerlink" title="Build TensorFlow in VIsual Studio"></a>Build TensorFlow in VIsual Studio</h3><p>点击<code>tensorflow.sln</code>文件，会打开vs工程。很重要的是：一定要在Configuration Manager中（或者在上边栏）选择<strong>64-bit build</strong>以及<strong>Release</strong>。</p>
 <p>然后在 solution 中选择<code>ALL_BUILD</code>进行build，（接下来能做的就只能双手合十祈祷不报错了</p>
@@ -340,12 +334,9 @@
 <p>首先要注意的我们的程序一定要是<strong>x64</strong>下的<strong>Release</strong>！（和编译TensorFlow时对应）</p>
 <p>在构建程序的时候，有一点一定要记住，一定要将下列code写入你的头文件中：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> COMPILER_MSVC</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NOMINMAX</span></span><br></pre></td></tr></table></figure>
-
 <p>否则会报一个 <code>&quot;You must define TF_LIB_GTL_ALIGNED_CHAR_ARRAY for your compiler.&quot;</code>的error</p>
 <p>接来下需要修改下列设置:</p>
-<h3 id="Additional-Include-Directories"><a href="#Additional-Include-Directories" class="headerlink" title="Additional Include Directories"></a>Additional Include Directories</h3><p>在c++程序中，compiler需要所有必要的header files，所以在我们这个基于TensorFlow的程序中，需要额外引入directories以避免compile error：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\%USERNAME%\bin\v1.5.0</span><br><span class="line">C:\Users\%USERNAME%\bin\v1.5.0\tensorflow\contrib\cmake\build</span><br><span class="line">C:\Users\%USERNAME%\bin\v1.5.0\tensorflow\contrib\cmake\build\external\eigen_archive</span><br><span class="line">C:\Users\%USERNAME%\bin\v1.5.0\third_party\eigen3</span><br><span class="line">C:\Users\%USERNAME%\bin\v1.5.0\tensorflow\contrib\cmake\build\protobuf\src\protobuf\src</span><br><span class="line">C:\Users\%USERNAME%\bin\v1.5.0\tensorflow\contrib\cmake\build\nsync\src\nsync\public</span><br></pre></td></tr></table></figure>
-
+<h3 id="Additional-Include-Directories"><a href="#Additional-Include-Directories" class="headerlink" title="Additional Include Directories"></a>Additional Include Directories</h3><p>在c++程序中，compiler需要所有必要的header files，所以在我们这个基于TensorFlow的程序中，需要额外引入directories以避免compile error：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\%USERNAME%\bin\v1.5.0</span><br><span class="line">C:\Users\%USERNAME%\bin\v1.5.0\tensorflow\contrib\cmake\build</span><br><span class="line">C:\Users\%USERNAME%\bin\v1.5.0\tensorflow\contrib\cmake\build\external\eigen_archive</span><br><span class="line">C:\Users\%USERNAME%\bin\v1.5.0\third_party\eigen3</span><br><span class="line">C:\Users\%USERNAME%\bin\v1.5.0\tensorflow\contrib\cmake\build\protobuf\src\protobuf\src</span><br><span class="line">C:\Users\%USERNAME%\bin\v1.5.0\tensorflow\contrib\cmake\build\nsync\src\nsync\public</span><br></pre></td></tr></table></figure></p>
 <h3 id="ADD-tensorflow-lib"><a href="#ADD-tensorflow-lib" class="headerlink" title="ADD tensorflow.lib"></a>ADD tensorflow.lib</h3><p>将路径在<code>tensorflow\contrib\cmake\build\Release</code> 下的 <code>tensorflow.lib</code> 添加到当前项目下，确保不会有compile的linking error。</p>
 <p>根据不同项目，这里可能需要额外的lib文件：我就添加了如下两个static library：</p>
 <ul>
@@ -356,7 +347,7 @@
 <p>(可以用这篇 <a href="https://joe-antognini.github.io/machine-learning/windows-tf-project" target="_blank" rel="noopener">tutorial</a>中的示例代码进行验证)</p>
 <p>Happy Coding!</p>
 <p>（完）</p>
-
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
     </div>
 
     
@@ -368,7 +359,7 @@
           <div class="post-tags">
               <a href="/tags/TensorFlow/" rel="tag"><i class="fa fa-tag"></i> TensorFlow</a>
               <a href="/tags/Windows/" rel="tag"><i class="fa fa-tag"></i> Windows</a>
-              <a href="/tags/配置/" rel="tag"><i class="fa fa-tag"></i> 配置</a>
+              <a href="/tags/%E9%85%8D%E7%BD%AE/" rel="tag"><i class="fa fa-tag"></i> 配置</a>
           </div>
 
         
@@ -381,7 +372,7 @@
       <i class="fa fa-chevron-left"></i> 并查集算法简介
     </a></div>
       <div class="post-nav-item">
-    <a href="/2019/11/11/写在重启blog前/" rel="next" title="写在重启blog前">
+    <a href="/2019/11/11/%E5%86%99%E5%9C%A8%E9%87%8D%E5%90%AFblog%E5%89%8D/" rel="next" title="写在重启blog前">
       写在重启blog前 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -486,10 +477,10 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/Htiango" title="GitHub → https://github.com/Htiango" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/Htiango" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Htiango" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://www.linkedin.com/in/tianyu-hong/" title="Linkedin → https://www.linkedin.com/in/tianyu-hong/" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linkedin</a>
+        <a href="https://www.linkedin.com/in/tianyu-hong/" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;tianyu-hong&#x2F;" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linkedin</a>
       </span>
   </div>
 
@@ -518,10 +509,10 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Tianyu Hong</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
   </div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.1
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.1
   </div>
 
         
@@ -561,9 +552,19 @@
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/muse.js"></script>
-<script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
 
 
 
@@ -572,7 +573,9 @@
 
 
 
-  <script src="/js/local-search.js"></script>
+  
+<script src="/js/local-search.js"></script>
+
 
 
 
