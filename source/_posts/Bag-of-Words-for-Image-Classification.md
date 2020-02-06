@@ -30,7 +30,7 @@ Bag of words model (BoW model) 最早出现在NLP和IR领域。该模型将一�
 
 在邮件过滤中，这种方法有着很好地应用。
 
-在[浅谈主题模型](http://tianyuh.com/2017/03/15/%E6%B5%85%E8%B0%88%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B/)中，我所介绍的TF-IDF在本质上也是一种BoW模型，不同在于加上了Term Weighting。
+在[浅谈主题模型](https://tianyuh.com/2017/03/28/%E6%B5%85%E8%B0%88%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B%EF%BC%88%E4%B8%80%EF%BC%89/)中，我所介绍的TF-IDF在本质上也是一种BoW模型，不同在于加上了Term Weighting。
 
 
 ## 提取图像特征
@@ -55,18 +55,18 @@ SIFT特征虽然也能描述一幅图像，但是每个SIFT矢量都是128维的
 
 下图为一些出现的高频“词”
 
-![](https://oh1ulkf4j.qnssl.com/14901949601534.jpg)
+![](/images/old-resources/14901949601534.jpg)
 
 
 ## 图像中词的直方图分布（Visual Words）
 对于图像中的每个点，用欧式距离法判断属于哪个词，从而得到图像中词的一个直方图分布。下图表示的是visual word的信息。
 
-![](https://oh1ulkf4j.qnssl.com/14901947887360.jpg)
+![](/images/old-resources/14901947887360.jpg)
 
 
 为了不完全抛弃图中pixel的位置，我们还可以采用spacial pyramid matching的方法来保留一部分spacial information（表现在所取的每个patch中）
 
-![](https://oh1ulkf4j.qnssl.com/14901945203509.jpg)
+![](/images/old-resources/14901945203509.jpg)
 
 
 此外，我们甚至可以将TF-IDF的思想引入其中，得到具体的值，在test的过程中通过内积来做相似性度量。
@@ -74,7 +74,7 @@ SIFT特征虽然也能描述一幅图像，但是每个SIFT矢量都是128维的
 ## KNN进行图像分类（testing）
 将training set中的每个直方图分布视为一个vector，先获取testing set中的一幅图的直方图分布，比较和training set中图的距离，找出最近的k个点中所对应training image的对应分类即是该图的分类结果。
 
-![](https://oh1ulkf4j.qnssl.com/14901944615694.jpg)
+![](/images/old-resources/14901944615694.jpg)
 
 
 需要注意的一点是，k的取值不能太大，尤其是当某一类中的图片较少时更是如此。

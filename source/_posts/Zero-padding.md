@@ -25,10 +25,10 @@ CTFT的概念存在于物理世界中，在真正现实中处理信号时是无�
 在实际处理信号的过程中，我们发现：由于时域采样点的个数有限，频域上的频率反映会和实际的有一定差别，如下图所示
 
 无限长的时域函数的傅里叶变换结果：
-![](https://oh1ulkf4j.qnssl.com/Picture1.png) 
+![](/images/old-resources/Picture1.png) 
 
 有限长的时域函数的傅里叶变换结果
-![](https://oh1ulkf4j.qnssl.com/Picture2.png)
+![](/images/old-resources/Picture2.png)
 
 我们发现不仅会出现side lope，还会出现△f。
 
@@ -38,12 +38,12 @@ CTFT的概念存在于物理世界中，在真正现实中处理信号时是无�
 zero padding本质上是通过在不影响结果的情况下，通过增加采样点的个数来实现对插值结果的预测，从而更好地表示变换后的细节。
 #### 时域上的 zero padding
 时域上的zero padding主要是在采样点后增加一定长度的值为0的点。
-![](https://oh1ulkf4j.qnssl.com/1.png) 
+![](/images/old-resources/1.png) 
 
 增加后的结果中，我们可以很明显的看到，△f明显有了减小。
-![](https://oh1ulkf4j.qnssl.com/2.png)
+![](/images/old-resources/2.png)
 
-![](https://oh1ulkf4j.qnssl.com/3.png)
+![](/images/old-resources/3.png)
 
 #### 频域上的 zero padding
 对于频域而言，zero padding之前我们要先了解频域的分布，对于一个频域函数而言，一半的位置是正负值的分水岭，而其表示直流分量的零点则表示在一头一尾处，所以我们在进行zero padding的过程中，就要先将频域函数对半切开，在中间增加为0的点。只有这样才会在不影响原有的频域的分布基础上，增加频域的范围。

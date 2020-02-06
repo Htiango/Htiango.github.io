@@ -22,7 +22,7 @@ Proxy Lab 作为 cmu 18600 以及 15213 这两门课的最后一个lab，其综�
 
 *proxy的大致示意图如下所示*
 
-![流程图](http://oh1ulkf4j.qnssl.com/Screen Shot 2016-12-09 at 10.35.56 PM.png)<br>
+![流程图](/images/old-resources/Screen Shot 2016-12-09 at 10.35.56 PM.png)<br>
 
 
 ## 实验准备
@@ -30,16 +30,16 @@ Proxy Lab 作为 cmu 18600 以及 15213 这两门课的最后一个lab，其综�
 在本次实验中，我们采用的浏览器是Firefox，设置代理的过程如下所示：<br>
 *打开设置中的高级，选择网络，点设置并按照如下设置（若proxy在本地则选择localhost或是127.0.0.1）*
 *需要注意的是，端口一定要和之后运行proxy时的端口一致*
-![代理设置1](http://oh1ulkf4j.qnssl.com/Screen Shot 2016-12-09 at 9.15.20 PM.png)<br>
-![代理设置2](http://oh1ulkf4j.qnssl.com/Screen Shot 2016-12-09 at 9.15.37 PM.png)<br>
+![代理设置1](/images/old-resources/Screen Shot 2016-12-09 at 9.15.20 PM.png)<br>
+![代理设置2](/images/old-resources/Screen Shot 2016-12-09 at 9.15.37 PM.png)<br>
 
 
 ## proxy如何处理request
 
 打开Firefox网页，Mac下alt + cmd + q，Win下按F12进行观察，点击每条可以显示出请求和响应的内容
-![网页1](http://oh1ulkf4j.qnssl.com/Screen Shot 2016-12-09 at 9.10.05 PM.png)<br>
+![网页1](/images/old-resources/Screen Shot 2016-12-09 at 9.10.05 PM.png)<br>
 
-![网页2](http://oh1ulkf4j.qnssl.com/Screen Shot 2016-12-09 at 9.31.06 PM.png)<br>
+![网页2](/images/old-resources/Screen Shot 2016-12-09 at 9.31.06 PM.png)<br>
 
 通过这种方法，我们可以很轻松地看到请求和响应头。
 

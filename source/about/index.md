@@ -9,7 +9,7 @@ type: “about”
 {% spoiler "About me" %}
 **Please say it in GOT tone :)**
 (Here you are visting)
-The software Engineer on Data Infra @ Lyft who can't 'lyft' more than 40 pounds
+The software Engineer building Data Infra @ Lyft who is troubled by hair loss
 The former SWE @ Petuum who built the industrial AI Platform and data pipeline but got no promotion
 The former ML engineer intern @ AliHealth on NLP from 10am to 10pm
 The coding monkey with a Master degree from CMU ECE but a Bachelor degree from ZJU BME who keeps telling people BME is **ENGINEERING!!!**

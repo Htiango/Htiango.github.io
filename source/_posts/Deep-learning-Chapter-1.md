@@ -12,13 +12,13 @@ categories: [读数笔记]
 ## What is Deep Learning？
 什么是深度学习？虽然这一词早已为大家所熟知，但是这一概念可能大部分人都不胜了解。其实一张简单的韦恩图就可以清晰简洁的表示：
 
-![](https://oh1ulkf4j.qnssl.com/Screen%20Shot%202017-02-22%20at%208.46.15%20PM.png)
+![](/images/old-resources/Screen%20Shot%202017-02-22%20at%208.46.15%20PM.png)
 
 简单地说，深度学习是一种表示学习(representation learning)，也是一种机器学习，可用于许多AI方法。
 
 那么深度学习又和之前的这些概念有什么区别呢？
 
-![](https://oh1ulkf4j.qnssl.com/Screen%20Shot%202017-02-22%20at%208.52.32%20PM.png)
+![](/images/old-resources/Screen%20Shot%202017-02-22%20at%208.52.32%20PM.png)
 
 从这张图中我们可以看出，对于经典的机器学习方法，我们需要手动设计出特点进行导入来实现目的。而Representation Learning则是能够自己发掘特征，找到并导入来实现结果。
 

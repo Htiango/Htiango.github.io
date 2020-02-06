@@ -84,7 +84,7 @@ $$
 $$
 上式中Q是A的特征向量组成的正交矩阵，$\Lambda$是对角矩阵。因为Q是正交矩阵，我们可以将A看作是沿方向$\mathbf{v}^{i}$延展$\lambda_i$倍的空间
 
-![Screen Shot 2017-03-14 at 12.54.28 A](https://oh1ulkf4j.qnssl.com/Screen Shot 2017-03-14 at 12.54.28 AM.png)
+![Screen Shot 2017-03-14 at 12.54.28 A](/images/old-resources/Screen Shot 2017-03-14 at 12.54.28 AM.png)
 
 
 
