@@ -53,19 +53,19 @@
 <meta property="og:site_name" content="塞外麾下炙">
 <meta property="og:description" content="承接“浅谈主题模型（三）”中的LDA模型的介绍，本文主要介绍我基于LDA模型的毕设和省创项目——UQA模型。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/model%202.png">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/14908813671256.jpg">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/14908813307811.jpg">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/14908814051430.jpg">
+<meta property="og:image" content="http://tianyuh.com/images/old-resources/model%202.png">
+<meta property="og:image" content="http://tianyuh.com/images/old-resources/14908813671256.jpg">
+<meta property="og:image" content="http://tianyuh.com/images/old-resources/14908813307811.jpg">
+<meta property="og:image" content="http://tianyuh.com/images/old-resources/14908814051430.jpg">
 <meta property="article:published_time" content="2017-03-29T06:07:57.000Z">
-<meta property="article:modified_time" content="2020-02-02T06:10:54.473Z">
+<meta property="article:modified_time" content="2020-02-06T07:53:39.686Z">
 <meta property="article:author" content="Tianyu Hong">
 <meta property="article:tag" content="NLP">
 <meta property="article:tag" content="主题模型">
 <meta property="article:tag" content="贝叶斯">
 <meta property="article:tag" content="LDA">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://oh1ulkf4j.qnssl.com/model%202.png">
+<meta name="twitter:image" content="http://tianyuh.com/images/old-resources/model%202.png">
 
 <link rel="canonical" href="http://tianyuh.com/2017/03/28/%E6%B5%85%E8%B0%88%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B%EF%BC%88%E5%9B%9B%EF%BC%89/">
 
@@ -325,7 +325,7 @@
 <li>θ为文档-主题的多项式分布，ψ为文档-专长的多项式分布，φ为主题/专长-词的联合多项式分布。</li>
 <li>对于某一文档 d 中的词 w，取主题 $z \sim Multi(θ<em>d) $，专长$ x \sim Multi(\psi_d)$ ，生成对应词 $w~Multi(\phi</em>{z,x})$ （联合分布）</li>
 </ol>
-<p><img src="https://oh1ulkf4j.qnssl.com/model 2.png" alt="model 2"></p>
+<p><img src="/images/old-resources/model 2.png" alt="model 2"></p>
 <p>UQA模型中的文档-主题的多项式分布θ，文档-专长的多项式分布ψ，主题/专长-词的联合多项式分布φ都是通过Gibbs Sampling的方法得到，推导过程在论文中有详述。在这里只给出伪代码：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; zero all count variable NWZX, NZM, NXU, NS</span><br><span class="line">&#x2F;&#x2F; Initialize</span><br><span class="line">foreach document m ∈ [1,D] do</span><br><span class="line"> get the author u of the this document m;</span><br><span class="line"> foreach word n ∈ [1, Nm] in document m do</span><br><span class="line">  sample topic index zm,n ~ Mult(1&#x2F;K) for word wm,n;</span><br><span class="line">  sample expertise index xu,e ~ Mult(1&#x2F;X) for word wm,n; </span><br><span class="line">&#x2F;&#x2F; Here m also refers to the author u</span><br><span class="line">increment doc-topic count: NZM[zm,n][m]++;</span><br><span class="line">increment user-expertise count: NXU[xu,e][u]++;</span><br><span class="line">increment [topic,expertise]-word count: NWZX[wm,n][zm,n][xu,e]++;</span><br><span class="line">increment [topic,expertise]-word sum: NS[zm,n][xu,e]++;</span><br><span class="line"> end</span><br><span class="line">end</span><br><span class="line">&#x2F;&#x2F; Gibbs Sampling</span><br><span class="line">while not finished do</span><br><span class="line"> foreach document m ∈ [1,D] do</span><br><span class="line">  get the author u of the this document m;</span><br><span class="line">  foreach word n ∈ [1, Nm] in document m do</span><br><span class="line">   NZM[zm,n][m]--;</span><br><span class="line">   NXU[xu,e][u]--;</span><br><span class="line">   NWZX[wm,n][zm,n][xu,e]--;</span><br><span class="line">   NS[zm,n][xu,e]--;</span><br><span class="line">   Sample topic and expertise index [z’m,n][x’u,e] according to Equ.32</span><br><span class="line">   &#x2F;&#x2F; Because we have minused 1, so in Euq.32 we don’t need to -1</span><br><span class="line">   NZM[z’m,n][m]++;</span><br><span class="line">   NXU[x’u,e][u]++;</span><br><span class="line">   NWZX[wm,n][z’m,n][x’u,e]++;</span><br><span class="line">   NS[z’m,n][x’u,e]++;</span><br><span class="line">  end</span><br><span class="line">        if converged and L sampling iterations since last read out then </span><br><span class="line">            read out parameter set Θ, Φ, Ψ according to Equ.33, 34 and 35 in 2.2.2.3;</span><br><span class="line">        end</span><br><span class="line">    end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
 <p>利用 UQA 模型，我们可以获得文档潜在主题的分布与潜在专家专长分布，并利用这些信息实现对新问题的最佳答案智能推荐以及最佳专家的推荐。</p>
@@ -345,9 +345,9 @@ P(u|d_{new}) \propto P(u) P(d_{new} | u) & = & P(u) \prod_{w \in d_{new}} P(w | 
 \end{eqnarray}</script><p>通过这个公式，我们可以获得训练集中一位专家在该新问题下的匹配概率，通过遍历获取最大匹配概率，可以从训练集答案中获取最匹配的推荐专家。</p>
 <h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><p>以下通过图表简要介绍下项目结果。</p>
 <p>下图是不同词典、不同主题数下，LDA模型得到的推荐答案的正确率：</p>
-<p><img src="https://oh1ulkf4j.qnssl.com/14908813671256.jpg" alt=""></p>
-<p>下图是不同词典、不同主题数、不同专家专长数下，UQA模型得到的推荐答案的正确率：<br><img src="https://oh1ulkf4j.qnssl.com/14908813307811.jpg" alt=""></p>
-<p>下图是不同词典、不同主题数、不同专家专长数下，UQA模型得到的推荐专家的正确率：<br><img src="https://oh1ulkf4j.qnssl.com/14908814051430.jpg" alt=""></p>
+<p><img src="/images/old-resources/14908813671256.jpg" alt=""></p>
+<p>下图是不同词典、不同主题数、不同专家专长数下，UQA模型得到的推荐答案的正确率：<br><img src="/images/old-resources/14908813307811.jpg" alt=""></p>
+<p>下图是不同词典、不同主题数、不同专家专长数下，UQA模型得到的推荐专家的正确率：<br><img src="/images/old-resources/14908814051430.jpg" alt=""></p>
 <p>在下一节我会将项目的reference以及项目代码展示出来。</p>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
     </div>
@@ -473,7 +473,7 @@ P(u|d_{new}) \propto P(u) P(d_{new} | u) & = & P(u) \prod_{w \in d_{new}} P(w | 
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">43</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

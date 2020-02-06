@@ -53,19 +53,19 @@
 <meta property="og:site_name" content="塞外麾下炙">
 <meta property="og:description" content="本文详细介绍在信号处理过程中的zero padding的作用和意义。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/Picture1.png">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/Picture2.png">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/1.png">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/2.png">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/3.png">
+<meta property="og:image" content="http://tianyuh.com/images/old-resources/Picture1.png">
+<meta property="og:image" content="http://tianyuh.com/images/old-resources/Picture2.png">
+<meta property="og:image" content="http://tianyuh.com/images/old-resources/1.png">
+<meta property="og:image" content="http://tianyuh.com/images/old-resources/2.png">
+<meta property="og:image" content="http://tianyuh.com/images/old-resources/3.png">
 <meta property="article:published_time" content="2017-02-22T07:40:36.000Z">
-<meta property="article:modified_time" content="2020-02-02T06:10:54.415Z">
+<meta property="article:modified_time" content="2020-02-06T08:09:34.160Z">
 <meta property="article:author" content="Tianyu Hong">
 <meta property="article:tag" content="傅里叶变换">
 <meta property="article:tag" content="DFT">
 <meta property="article:tag" content="IDFT">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://oh1ulkf4j.qnssl.com/Picture1.png">
+<meta name="twitter:image" content="http://tianyuh.com/images/old-resources/Picture1.png">
 
 <link rel="canonical" href="http://tianyuh.com/2017/02/21/Zero-padding/">
 
@@ -303,14 +303,14 @@
 <h3 id="DTFT"><a href="#DTFT" class="headerlink" title="DTFT"></a>DTFT</h3><p>离散时间傅里叶变换(Discrete time Fourier Transform)，表示的是离散无限长的时间域函数通过傅里叶变换转换到连续无限长的频域函数。<br>同样的DTFT的概念存在于信号处理的理论中，在真实处理信号时是无法得到无限长的离散采样点，必然是有限长的离散采样点。</p>
 <h3 id="DFT"><a href="#DFT" class="headerlink" title="DFT"></a>DFT</h3><p>离散傅里叶变换(Discrete Fourier Transform)，表示的是有限长的离散时间域函数通过傅里叶变换转换到离散有限长的频域函数。<br>这是我们在信号处理时采用的方法。需要注意的是，在运用DFT的时候还要注意香农定理，避免出现混叠</p>
 <h2 id="DFT存在的问题"><a href="#DFT存在的问题" class="headerlink" title="DFT存在的问题"></a>DFT存在的问题</h2><p>在实际处理信号的过程中，我们发现：由于时域采样点的个数有限，频域上的频率反映会和实际的有一定差别，如下图所示</p>
-<p>无限长的时域函数的傅里叶变换结果：<br><img src="https://oh1ulkf4j.qnssl.com/Picture1.png" alt=""> </p>
-<p>有限长的时域函数的傅里叶变换结果<br><img src="https://oh1ulkf4j.qnssl.com/Picture2.png" alt=""></p>
+<p>无限长的时域函数的傅里叶变换结果：<br><img src="/images/old-resources/Picture1.png" alt=""> </p>
+<p>有限长的时域函数的傅里叶变换结果<br><img src="/images/old-resources/Picture2.png" alt=""></p>
 <p>我们发现不仅会出现side lope，还会出现△f。</p>
 <h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>最简单的解决方法就是增加采样点的个数，然后在实际中由于硬件等一系列的原因，我们无法实现增加采样点，这时就可以用zero padding的方法来进行补救。</p>
 <h3 id="zero-padding"><a href="#zero-padding" class="headerlink" title="zero padding"></a>zero padding</h3><p>zero padding本质上是通过在不影响结果的情况下，通过增加采样点的个数来实现对插值结果的预测，从而更好地表示变换后的细节。</p>
-<h4 id="时域上的-zero-padding"><a href="#时域上的-zero-padding" class="headerlink" title="时域上的 zero padding"></a>时域上的 zero padding</h4><p>时域上的zero padding主要是在采样点后增加一定长度的值为0的点。<br><img src="https://oh1ulkf4j.qnssl.com/1.png" alt=""> </p>
-<p>增加后的结果中，我们可以很明显的看到，△f明显有了减小。<br><img src="https://oh1ulkf4j.qnssl.com/2.png" alt=""></p>
-<p><img src="https://oh1ulkf4j.qnssl.com/3.png" alt=""></p>
+<h4 id="时域上的-zero-padding"><a href="#时域上的-zero-padding" class="headerlink" title="时域上的 zero padding"></a>时域上的 zero padding</h4><p>时域上的zero padding主要是在采样点后增加一定长度的值为0的点。<br><img src="/images/old-resources/1.png" alt=""> </p>
+<p>增加后的结果中，我们可以很明显的看到，△f明显有了减小。<br><img src="/images/old-resources/2.png" alt=""></p>
+<p><img src="/images/old-resources/3.png" alt=""></p>
 <h4 id="频域上的-zero-padding"><a href="#频域上的-zero-padding" class="headerlink" title="频域上的 zero padding"></a>频域上的 zero padding</h4><p>对于频域而言，zero padding之前我们要先了解频域的分布，对于一个频域函数而言，一半的位置是正负值的分水岭，而其表示直流分量的零点则表示在一头一尾处，所以我们在进行zero padding的过程中，就要先将频域函数对半切开，在中间增加为0的点。只有这样才会在不影响原有的频域的分布基础上，增加频域的范围。</p>
 <p>我们知道，对于DFT和IDFT而言，频域点的个数和时域点的个数是相同的，所以我们在这样做之后，就相当于拓展了时域的点的个数，在原有两点中间加上了插值点，表现出了细节。</p>
 <h2 id="zero-padding的意义"><a href="#zero-padding的意义" class="headerlink" title="zero padding的意义"></a>zero padding的意义</h2><h3 id="不改变数据"><a href="#不改变数据" class="headerlink" title="不改变数据"></a>不改变数据</h3><p>无论是频域和时域上的zero padding，都不会改变数据本身，仅仅只是改变了数据样本点的密度。</p>
@@ -439,7 +439,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">43</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

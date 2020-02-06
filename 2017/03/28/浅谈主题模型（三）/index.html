@@ -53,17 +53,17 @@
 <meta property="og:site_name" content="塞外麾下炙">
 <meta property="og:description" content="承接“浅谈主题模型（二）”中的LDA的概率知识，本文着重介绍LDA模型。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/model%201.png">
-<meta property="og:image" content="https://oh1ulkf4j.qnssl.com/14908762507727.jpg">
+<meta property="og:image" content="http://tianyuh.com/images/old-resources/model%201.png">
+<meta property="og:image" content="http://tianyuh.com/images/old-resources/14908762507727.jpg">
 <meta property="article:published_time" content="2017-03-29T06:00:27.000Z">
-<meta property="article:modified_time" content="2020-02-02T06:10:54.472Z">
+<meta property="article:modified_time" content="2020-02-06T07:53:39.691Z">
 <meta property="article:author" content="Tianyu Hong">
 <meta property="article:tag" content="NLP">
 <meta property="article:tag" content="主题模型">
 <meta property="article:tag" content="贝叶斯">
 <meta property="article:tag" content="LDA">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://oh1ulkf4j.qnssl.com/model%201.png">
+<meta name="twitter:image" content="http://tianyuh.com/images/old-resources/model%201.png">
 
 <link rel="canonical" href="http://tianyuh.com/2017/03/28/%E6%B5%85%E8%B0%88%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B%EF%BC%88%E4%B8%89%EF%BC%89/">
 
@@ -312,7 +312,7 @@
 <h2 id="LDA-Model"><a href="#LDA-Model" class="headerlink" title="LDA Model"></a>LDA Model</h2><p>LDA模型的本质是一个unigram模型，模型中每个词的生成都与上下文无关。unigram模型中假设文本中的词服从multinomial分布，同时multinomial分布的先验分布为Dirichlet分布。</p>
 <p>LDA 模型作为一个关于语料库的概率发生模型。它的基本思想是文档被表示为基于潜在主题的随机混合，其中每个主题由于基于词的分布不同而与众不同。</p>
 <p>通过下面这张贝叶斯图，我们可以更好地理解LDA模型</p>
-<p><img src="https://oh1ulkf4j.qnssl.com/model 1.png" alt="model 1"></p>
+<p><img src="/images/old-resources/model 1.png" alt="model 1"></p>
 <p>图中的框表示可重复执行的器件。外框表示的是文档，而内框表示对一篇文档内的主题和词的重复选择。</p>
 <p>对于LDA模型，我们有如下定义：</p>
 <ol>
@@ -333,7 +333,7 @@
 <p>Gibbs Sampling 是Markov-Chain Monte Carlo算法的一个特例。这个算法的运行方式是每次选取概率向量的一个维度，给定其他维度的变量值Sample当前维度的值。不断迭代，直到收敛输出待估计的参数。</p>
 <p>换句话说，就是每一维度都是由其他维采样生成的，马氏链的转移只是轮流沿着该维度内的单条坐标轴进行转移，无法沿着单条坐标轴转移的，转移概率都设为0.</p>
 <p>图示如下：</p>
-<p><img src="https://oh1ulkf4j.qnssl.com/14908762507727.jpg" alt=""></p>
+<p><img src="/images/old-resources/14908762507727.jpg" alt=""></p>
 <ol>
 <li>初始时我们随机给文本中的每个单词分配主题$z^{(0)}$，</li>
 <li>然后统计每个主题z下出现term t的数量以及每个文档 m 下出现主题 z 中的词的数量，每一轮计算 $p(z<em>i|\mathbf{Z}</em>{-i}, \mathbf{d}, \mathbf{w})$，即排除当前词的主题分配，根据其他所有词的主题分配估计当前词分配各个主题的概率。</li>
@@ -479,7 +479,7 @@ P(d|d_{new}) \propto P(d) P(d_{new} | d) = P(d) \prod_{w \in d_{new}} \sum_z \ph
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">43</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
