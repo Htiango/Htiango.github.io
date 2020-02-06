@@ -1,66 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>去雾算法浅析</title>
-    <url>/2020/02/01/%E5%8E%BB%E9%9B%BE%E7%AE%97%E6%B3%95%E6%B5%85%E6%9E%90/</url>
-    <content><![CDATA[<p>—-/images/old-resources<br>title: 去雾算法浅析<br>date: 2016-11-29 22:07:46</p>
-<p>tags: [去雾算法]</p>
-<p>categories: </p>
-<ul>
-<li>Machine Learning</li>
-<li>Computer Vision</li>
-</ul>
-<hr>
-<p>何凯明博士在09年以 <a href="http://www.jiansun.org/papers/Dehaze_CVPR2009.pdf" target="_blank" rel="noopener">“Single Image Haze Removal Using Dark Channel Prior”</a> 一文技惊四座。此文甚至成为09年的CVPR最佳论文。本篇博文将对这种去雾算法进行简要的分析，并通过自己的实现来更好的进行介绍。</p>
-<a id="more"></a>
-<h2 id="算法核心介绍"><a href="#算法核心介绍" class="headerlink" title="算法核心介绍"></a>算法核心介绍</h2><h3 id="Foggy-Image-model"><a href="#Foggy-Image-model" class="headerlink" title="Foggy Image model"></a>Foggy Image model</h3><p>首先，我们需要构建一个雾天图像的模型。公式如下所示，其中I表示雾天图像，J表示没有雾的图像，t表示空气穿透率，A表示纯雾。式子中的x均表示为图像中的像素点。</p>
-<p><img src="/images/old-resources/fomula%201.jpg" alt="formula 1"></p>
-<p>上式非常容易理解：我们最终看到的雾天图像是由透过空气传递过来的原始景观图像和一定浓度的雾叠加而成。</p>
-<p>而作为去雾，我们是要依据已有的雾天图像I来得到原始的景观图像J，这就需要利用暗通道原理来求得模型中的空气穿透率t。</p>
-<h3 id="暗通道"><a href="#暗通道" class="headerlink" title="暗通道"></a>暗通道</h3><p>基于观察，何凯明博士提出了这样的假设：自然界中的大部分非天空物体，其rgb三个颜色通道中至少有一个值非常低，其表达式如下所示：</p>
-<p><img src="/images/old-resources/fomula%202.jpg" alt="formula 2"></p>
-<p>其中Ω为x*x的像素方块。</p>
-<p>下图是先取图像中三个通道的最小值构成一张灰度图，然后在做一个一定窗口大小的最小值滤波，最终得到暗通道处理图。</p>
-<p><img src="/images/old-resources/image%201.JPG" alt="image 1"></p>
-<p><img src="/images/old-resources/Min%28R,G,B%29%201.JPG" alt="image grey 1"></p>
-<p><img src="/images/old-resources/After%20filter%201.JPG" alt="image dark channel 1"></p>
-<p>通过处理图片我们可以清晰看出，除了白色的部分（三通道的值都比较大），其余部分的暗通道值很小，近似符合暗通道趋向0的假设。</p>
-<h2 id="去雾模型推导"><a href="#去雾模型推导" class="headerlink" title="去雾模型推导"></a>去雾模型推导</h2><p>对于雾天模型的公式，我们现在做如下处理：</p>
-<p><img src="/images/old-resources/fomula%203.jpg" alt="formula 3"></p>
-<p>为了得到最终的去雾图像，我们需要求得t和A。推导过程如下所示：</p>
-<p><img src="/images/old-resources/fomula%204.jpg" alt="formula 4"></p>
-<p>由于即便在正常的天气中，原始景观传过来的时候也是经过了一定浓度的大气（可以认为是雾）。<br><br>而对于参数A，我们是这样计算的：选取一定区域内亮度最大的值作为A（理论上认为纯雾接近纯白）<br><br>这样就将t和A的值分别求了出来，从而得到去雾后的图像J。</p>
-<p>采用这样的方法得到的图像如下所示：</p>
-<p><img src="/images/old-resources/image%202.JPG" alt="image 2"><br><img src="/images/old-resources/J%202.JPG" alt="image 2 j"></p>
-<p><img src="/images/old-resources/image%203.JPG" alt="image 3"><br><img src="/images/old-resources/J%203.JPG" alt="image 3 j"></p>
-<p>由于在图像处理的过程中都不是基于一个像素而是一个像素集合的方块进行的，所以实际得到的图像中物体边缘会有比较明显的白边的存在，而对于这种现象，何凯明博士先后提出了两种理论予以解决。</p>
-<h2 id="去除伪影"><a href="#去除伪影" class="headerlink" title="去除伪影"></a>去除伪影</h2><h3 id="Soft-Matting-2009"><a href="#Soft-Matting-2009" class="headerlink" title="Soft Matting 2009"></a>Soft Matting 2009</h3><p>该方法较为复杂，且处理较慢，早已不用，本文不做赘述</p>
-<h3 id="Guided-Filter-导向滤波-2011"><a href="#Guided-Filter-导向滤波-2011" class="headerlink" title="Guided Filter 导向滤波 2011"></a>Guided Filter 导向滤波 2011</h3><p>导向滤波先做了一个如下的先验假设：所有邻近的点之间都是线性的，同时任何方程在局部的小段都可以认为是线性的。</p>
-<p><img src="/images/old-resources/fomula%205.jpg" alt="formula 5"></p>
-<p>经过推导可得：</p>
-<p><img src="/images/old-resources/fomula%206.jpg" alt="formula 6"></p>
-<p>其中q为输出图像，I为输入图像，p为滤波图像。i和k都是像素index，a和b是线性参数。在导向滤波中，I可以为任何导向图像</p>
-<p>上述式子的一大优点就是其可以保护边界值。</p>
-<p>通过上述式子我们可知，当像素强度变化不大时，a趋向于0而b等同于窗口的均值强度。等同于做一个均值滤波。</p>
-<p>而当强度变化大时，a趋向于1而b趋向于0。等同于不做滤波，保留边界。</p>
-<p>对之前的两张图片进行导向滤波处理，我们可以得到较好的结果。</p>
-<p><img src="/images/old-resources/J_guild_filter%202.JPG" alt="image guided 2"></p>
-<p><img src="/images/old-resources/J_guild_filter%203.JPG" alt="image guided 3"></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>最后我将展示一些去雾的效果：</p>
-<p>去雾算法在处理非天空的自然物体时效果很好。如图：</p>
-<p><img src="/images/old-resources/image%204.JPG" alt="image 4"><br><img src="/images/old-resources/J_guild_filter%204.JPG" alt="image guided 4"></p>
-<p>同时在处理城市建筑时也有着不俗的表现。如图：</p>
-<p><img src="/images/old-resources/image%205.JPG" alt="image 5"><br><img src="/images/old-resources/J_guild_filter%205.JPG" alt="image guided 5"></p>
-<p>但是同时其也有着一些不足之处</p>
-<p>比如在处理以白色物体为背景的图像时，会出现去雾效果不好以及色彩偏蓝的现象。这主要是因为去雾算法是基于暗通道值趋向为0的先验假设，而白色背景是不符合这种先验假设的，由于不符合物理模型所以才导致出错。如图：</p>
-<p><img src="/images/old-resources/image%206.JPG" alt="image 6"><br><img src="/images/old-resources/J_guild_filter%206.JPG" alt="image guided 6"></p>
-<p>此外当雾太厚的时候，还会出现过曝的情况，这是由于穿透参数t很小，根据之前的推导，我们会得到一个较大的J(x)。这才导致了过曝的现象。如图：</p>
-<p><img src="/images/old-resources/image%207.JPG" alt="image 7"><br><img src="/images/old-resources/J_guild_filter%207.JPG" alt="image guided 7"></p>
-<p>所以总而言之，去雾算法可以取得一个比较好的效果，不过也有其一定的局限性，要视具体的情况而定。</p>
-<p>想要上手参考的，详见我的<a href="https://github.com/Htiango/cvpr09-defog" target="_blank" rel="noopener">github</a></p>
-<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
-  </entry>
-  <entry>
     <title>GraphQL Introduction</title>
     <url>/2019/11/12/GraphQL%E7%AE%80%E4%BB%8B/</url>
     <content><![CDATA[<p>有幸在工作中使用并熟悉了GraphQL，将在本文对其进行简要的介绍，并附上如何构建一个基于Django的GraphQL API 的 tutorial。</p>
@@ -361,19 +301,19 @@
 <p>熬到了组会结束，我立马飞奔回寝室整好行李后直接开赴广州东站，坐上了开往hk的绿皮列车广九线。不得不说广九线入港比从深圳入关方便许多，既不用排很长的队伍，又可以直接在闹市区下站，节省了大把的时间。</p>
 <p>红磡下车，绕着车站没边际地走了一圈，才在百度地图的指引和对面红砖砌成的港理工的参照下找回了方位感。为了更好地体验香港，我们决定开着11路直奔维港的天星小轮码头，在沿途我还特意找了执念许久的第三代肥仔小食店，品尝了大生肠、火鸡肾和大墨鱼，简直美味！独特的口味深受喜欢猎奇的我的喜爱。而这种酒香巷深的既视感也充满了独特的市井气息。</p>
 <p><img src="/images/old-resources/IMG_1567 2.jpg?imageMogr2/rotate/90" alt="IMG_1567 2"></p>
-<p><img src="/images/old-resources/IMG_1598 2.jpg" alt="IMG_1598 2"></p>
+<p><img src="/images/old-resources/IMG_1598 2.jpg?imageMogr2/rotate/90" alt="IMG_1598 2"></p>
 <p>然后又左拐右拐穿过一个又一个小巷，去了池记吃到了美味的蟹黄粥，赶在日落前走到维港坐上了天星小轮，横渡到了中环。然后又以惊人的体力开着11路走了2公里多抵达酒店。这还不算完，放下行李稍作歇息，我和室友又马不停蹄从港大后门绕道上了太平山。</p>
-<p><img src="/images/old-resources/IMG_1569.jpg" alt="IMG_1569"></p>
+<p><img src="/images/old-resources/IMG_1569.jpg?imageMogr2/rotate/90" alt="IMG_1569"></p>
 <p><img src="/images/old-resources/IMG_1578.jpg" alt="IMG_1578"></p>
 <h2 id="夜上太平山"><a href="#夜上太平山" class="headerlink" title="夜上太平山"></a>夜上太平山</h2><p>夜晚的太平山上山小道格外静谧，几乎看不到一个人影，只有不时乱做的风吹打着道路两边的灌木，与昏暗的灯光一起构成了诡异的氛围。想必是之前听到些太平山的奇闻怪事吧，此时此刻我竟有些慌乱，额头有些渗出冷汗。是夜的太平山云雾缭绕，行及山腰就一片朦胧，水气弥漫了。据说站在太平山顶眺望香港城，可以切身感受到什么叫做繁华都市，什么叫做摩登时代。做攻略时我也对不少星光熠熠的美景图垂涎三尺。可惜这一切都随着雾气的弥漫消失殆尽，虽然山顶的大风源源不断地将雾气推向一座座摩天大楼，但是身后的浓雾马上又马不停蹄地接了上来，只有短短的几瞬才能让我拍出几张朦胧之美的夜香港。无奈的我只能和室友调侃到看来是要用去雾算法处理图像了哈哈。或许人生就应该是这样带有遗憾的吧，挺好，给我下次来香港增添一些憧憬吧。</p>
 <p><img src="/images/old-resources/IMG_1626.jpg" alt="IMG_1626"></p>
 <p>不同于印象中的游记写的那样人流众多，此时的山顶不过寥寥几人，或许是10点多的关系，又或许是这不识时务的云雾所致吧。下山的缆车竟然出人意料地不用排队，我们顺顺当当的坐上了下山缆车，又开启了11路走到了兰桂坊，打算替璠哥完成未能逛夜店的遗憾。还未走近我们就听到了阵阵嘈杂的喧哗声，一群群拿着酒杯的外国人堆叠在一个个酒吧的门口，有又唱又跳的，有左拥右抱的，还有激情谈论的，我们深感与此处的格格不入，又实在不忍心就这样弃夜香港于不顾，只好在周招找了一个相对安静点的正放着球赛的酒吧，点了几杯啤酒边看球赛边评头论足。</p>
-<p><img src="/images/old-resources/IMG_1641.jpg" alt="IMG_1641"></p>
+<p><img src="/images/old-resources/IMG_1641.jpg?imageMogr2/rotate/90" alt="IMG_1641"></p>
 <p>或许这种热闹的氛围会传染吧，一对对身着奇装异服的外国人在店门口驻足停留，我忍不住走上前去要求合影，于是就有了这样的囧样</p>
-<p><img src="/images/old-resources/IMG_1642.jpg" alt="IMG_1642"></p>
+<p><img src="/images/old-resources/IMG_1642.jpg?imageMogr2/rotate/90" alt="IMG_1642"></p>
 <p>清吧的酒或许终究没有劲吧来的好喝吧，手中的啤酒越喝越苦，人也越来越困，忙不迭的干完剩余的酒踏上了回宾馆的路。</p>
 <p>如果是这就是我们香港之旅的第一天的话，那可真的是够疯狂的。可是疯狂的事情还没结束呢，才刚刚走出兰桂坊，我就瞅见了翠华那大大的招牌，心想那敢情好啊，送上门的美食哪能不吃？可是嘴上却说太晚了不吃了要忍住。要是我真的是能忍住的动物就好了，走了两三步毅然回头冲入酒店开吃，一碗虾子云吞面一份猪扒包甚慰我心我胃。</p>
-<p><img src="/images/old-resources/IMG_1649.jpg" alt="IMG_1649"><br><img src="/images/old-resources/IMG_1647.jpg" alt="IMG_1647"></p>
+<p><img src="/images/old-resources/IMG_1649.jpg?imageMogr2/rotate/90" alt="IMG_1649"><br><img src="/images/old-resources/IMG_1647.jpg?imageMogr2/rotate/90" alt="IMG_1647"></p>
 <p>酒足饭饱早已离地铁关门时间过去了一个小时，心想反正也不差这点步数了，就又开了好久的11路才回到宾馆，此时早已过了凌晨两点好久了，身心俱疲，不过内心那种见证过夜香港的自豪根本压抑不住。what a day！</p>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
       <categories>
@@ -1202,6 +1142,65 @@ P(x) = \sum_{k=1}^{K} \pi_k N(x;u_k,\Sigma_k)</script><p>其中，$\pi_k$ 是权
       <tags>
         <tag>CSAPP</tag>
         <tag>Lab</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>去雾算法浅析</title>
+    <url>/2016/11/29/%E5%8E%BB%E9%9B%BE%E7%AE%97%E6%B3%95%E6%B5%85%E6%9E%90/</url>
+    <content><![CDATA[<p>何凯明博士在09年以 <a href="http://www.jiansun.org/papers/Dehaze_CVPR2009.pdf" target="_blank" rel="noopener">“Single Image Haze Removal Using Dark Channel Prior”</a> 一文技惊四座。此文甚至成为09年的CVPR最佳论文。本篇博文将对这种去雾算法进行简要的分析，并通过自己的实现来更好的进行介绍。</p>
+<a id="more"></a>
+<h2 id="算法核心介绍"><a href="#算法核心介绍" class="headerlink" title="算法核心介绍"></a>算法核心介绍</h2><h3 id="Foggy-Image-model"><a href="#Foggy-Image-model" class="headerlink" title="Foggy Image model"></a>Foggy Image model</h3><p>首先，我们需要构建一个雾天图像的模型。公式如下所示，其中I表示雾天图像，J表示没有雾的图像，t表示空气穿透率，A表示纯雾。式子中的x均表示为图像中的像素点。</p>
+<p><img src="/images/old-resources/fomula%201.jpg" alt="formula 1"></p>
+<p>上式非常容易理解：我们最终看到的雾天图像是由透过空气传递过来的原始景观图像和一定浓度的雾叠加而成。</p>
+<p>而作为去雾，我们是要依据已有的雾天图像I来得到原始的景观图像J，这就需要利用暗通道原理来求得模型中的空气穿透率t。</p>
+<h3 id="暗通道"><a href="#暗通道" class="headerlink" title="暗通道"></a>暗通道</h3><p>基于观察，何凯明博士提出了这样的假设：自然界中的大部分非天空物体，其rgb三个颜色通道中至少有一个值非常低，其表达式如下所示：</p>
+<p><img src="/images/old-resources/fomula%202.jpg" alt="formula 2"></p>
+<p>其中Ω为x*x的像素方块。</p>
+<p>下图是先取图像中三个通道的最小值构成一张灰度图，然后在做一个一定窗口大小的最小值滤波，最终得到暗通道处理图。</p>
+<p><img src="/images/old-resources/image%201.JPG" alt="image 1"></p>
+<p><img src="/images/old-resources/Min%28R,G,B%29%201.JPG" alt="image grey 1"></p>
+<p><img src="/images/old-resources/After%20filter%201.JPG" alt="image dark channel 1"></p>
+<p>通过处理图片我们可以清晰看出，除了白色的部分（三通道的值都比较大），其余部分的暗通道值很小，近似符合暗通道趋向0的假设。</p>
+<h2 id="去雾模型推导"><a href="#去雾模型推导" class="headerlink" title="去雾模型推导"></a>去雾模型推导</h2><p>对于雾天模型的公式，我们现在做如下处理：</p>
+<p><img src="/images/old-resources/fomula%203.jpg" alt="formula 3"></p>
+<p>为了得到最终的去雾图像，我们需要求得t和A。推导过程如下所示：</p>
+<p><img src="/images/old-resources/fomula%204.jpg" alt="formula 4"></p>
+<p>由于即便在正常的天气中，原始景观传过来的时候也是经过了一定浓度的大气（可以认为是雾）。<br><br>而对于参数A，我们是这样计算的：选取一定区域内亮度最大的值作为A（理论上认为纯雾接近纯白）<br><br>这样就将t和A的值分别求了出来，从而得到去雾后的图像J。</p>
+<p>采用这样的方法得到的图像如下所示：</p>
+<p><img src="/images/old-resources/image%202.JPG" alt="image 2"><br><img src="/images/old-resources/J%202.JPG" alt="image 2 j"></p>
+<p><img src="/images/old-resources/image%203.JPG" alt="image 3"><br><img src="/images/old-resources/J%203.JPG" alt="image 3 j"></p>
+<p>由于在图像处理的过程中都不是基于一个像素而是一个像素集合的方块进行的，所以实际得到的图像中物体边缘会有比较明显的白边的存在，而对于这种现象，何凯明博士先后提出了两种理论予以解决。</p>
+<h2 id="去除伪影"><a href="#去除伪影" class="headerlink" title="去除伪影"></a>去除伪影</h2><h3 id="Soft-Matting-2009"><a href="#Soft-Matting-2009" class="headerlink" title="Soft Matting 2009"></a>Soft Matting 2009</h3><p>该方法较为复杂，且处理较慢，早已不用，本文不做赘述</p>
+<h3 id="Guided-Filter-导向滤波-2011"><a href="#Guided-Filter-导向滤波-2011" class="headerlink" title="Guided Filter 导向滤波 2011"></a>Guided Filter 导向滤波 2011</h3><p>导向滤波先做了一个如下的先验假设：所有邻近的点之间都是线性的，同时任何方程在局部的小段都可以认为是线性的。</p>
+<p><img src="/images/old-resources/fomula%205.jpg" alt="formula 5"></p>
+<p>经过推导可得：</p>
+<p><img src="/images/old-resources/fomula%206.jpg" alt="formula 6"></p>
+<p>其中q为输出图像，I为输入图像，p为滤波图像。i和k都是像素index，a和b是线性参数。在导向滤波中，I可以为任何导向图像</p>
+<p>上述式子的一大优点就是其可以保护边界值。</p>
+<p>通过上述式子我们可知，当像素强度变化不大时，a趋向于0而b等同于窗口的均值强度。等同于做一个均值滤波。</p>
+<p>而当强度变化大时，a趋向于1而b趋向于0。等同于不做滤波，保留边界。</p>
+<p>对之前的两张图片进行导向滤波处理，我们可以得到较好的结果。</p>
+<p><img src="/images/old-resources/J_guild_filter%202.JPG" alt="image guided 2"></p>
+<p><img src="/images/old-resources/J_guild_filter%203.JPG" alt="image guided 3"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>最后我将展示一些去雾的效果：</p>
+<p>去雾算法在处理非天空的自然物体时效果很好。如图：</p>
+<p><img src="/images/old-resources/image%204.JPG" alt="image 4"><br><img src="/images/old-resources/J_guild_filter%204.JPG" alt="image guided 4"></p>
+<p>同时在处理城市建筑时也有着不俗的表现。如图：</p>
+<p><img src="/images/old-resources/image%205.JPG" alt="image 5"><br><img src="/images/old-resources/J_guild_filter%205.JPG" alt="image guided 5"></p>
+<p>但是同时其也有着一些不足之处</p>
+<p>比如在处理以白色物体为背景的图像时，会出现去雾效果不好以及色彩偏蓝的现象。这主要是因为去雾算法是基于暗通道值趋向为0的先验假设，而白色背景是不符合这种先验假设的，由于不符合物理模型所以才导致出错。如图：</p>
+<p><img src="/images/old-resources/image%206.JPG" alt="image 6"><br><img src="/images/old-resources/J_guild_filter%206.JPG" alt="image guided 6"></p>
+<p>此外当雾太厚的时候，还会出现过曝的情况，这是由于穿透参数t很小，根据之前的推导，我们会得到一个较大的J(x)。这才导致了过曝的现象。如图：</p>
+<p><img src="/images/old-resources/image%207.JPG" alt="image 7"><br><img src="/images/old-resources/J_guild_filter%207.JPG" alt="image guided 7"></p>
+<p>所以总而言之，去雾算法可以取得一个比较好的效果，不过也有其一定的局限性，要视具体的情况而定。</p>
+<p>想要上手参考的，详见我的<a href="https://github.com/Htiango/cvpr09-defog" target="_blank" rel="noopener">github</a></p>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      <categories>
+        <category>Machine Learning</category>
+        <category>Computer Vision</category>
+      </categories>
+      <tags>
+        <tag>去雾算法</tag>
       </tags>
   </entry>
   <entry>
