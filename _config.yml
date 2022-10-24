@@ -145,5 +145,4 @@ deploy:
   # repository: https://github.com/Htiango/Htiango.github.io.git
   repository:
     github: git@github.com:Htiango/Htiango.github.io.git
-    coding: git@git.coding.net:htiango/htiango.git
   branch: master
