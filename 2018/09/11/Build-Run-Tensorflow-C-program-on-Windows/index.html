@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/favicon/safari-pinned-tab.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://tianyuh.com').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.7.1',
+    exturl: false,
+    sidebar: {"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":true,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="由于工作需要，最近我尝试了在Windows平台上编译并运行TensorFlow的C++项目。整个过程非常痛苦，因为网上相关的信息实在是少之又少，几乎所有关于C++的编译都是在Linux平台下通过baze实现的。非常感谢这篇tutorial 以及 这篇 tutorial。通过结合上面两篇博文以及TF的官方CMake介绍，我终于成功实现了在Windows平台下对TensorFlow项目的编译和运行。(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在Windows平台下编译并运行TensorFlow C++项目（支持GPU）">
+<meta property="og:url" content="http://tianyuh.com/2018/09/11/Build-Run-Tensorflow-C-program-on-Windows/index.html">
+<meta property="og:site_name" content="塞外麾下炙">
+<meta property="og:description" content="由于工作需要，最近我尝试了在Windows平台上编译并运行TensorFlow的C++项目。整个过程非常痛苦，因为网上相关的信息实在是少之又少，几乎所有关于C++的编译都是在Linux平台下通过baze实现的。非常感谢这篇tutorial 以及 这篇 tutorial。通过结合上面两篇博文以及TF的官方CMake介绍，我终于成功实现了在Windows平台下对TensorFlow项目的编译和运行。(">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-09-12T06:48:52.000Z">
+<meta property="article:modified_time" content="2022-10-24T00:22:41.735Z">
+<meta property="article:author" content="Tianyu Hong">
+<meta property="article:tag" content="TensorFlow">
+<meta property="article:tag" content="Windows">
+<meta property="article:tag" content="配置">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://tianyuh.com/2018/09/11/Build-Run-Tensorflow-C-program-on-Windows/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>在Windows平台下编译并运行TensorFlow C++项目（支持GPU） | 塞外麾下炙</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-88787389-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-88787389-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">塞外麾下炙</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2018/09/11/Build-Run-Tensorflow-C-program-on-Windows/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Tianyu Hong">
+      <meta itemprop="description" content="Why so serious!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="塞外麾下炙">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          在Windows平台下编译并运行TensorFlow C++项目（支持GPU）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-09-11 23:48:52" itemprop="dateCreated datePublished" datetime="2018-09-11T23:48:52-07:00">2018-09-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E6%AC%B2%E5%96%84%E5%85%B6%E4%BA%8B/" itemprop="url" rel="index">
+                    <span itemprop="name">工欲善其事</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2018/09/11/Build-Run-Tensorflow-C-program-on-Windows/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/09/11/Build-Run-Tensorflow-C-program-on-Windows/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>由于工作需要，最近我尝试了在Windows平台上编译并运行TensorFlow的C++项目。整个过程非常痛苦，因为网上相关的信息实在是少之又少，几乎所有关于C++的编译都是在Linux平台下通过baze实现的。非常感谢这篇<a target="_blank" rel="noopener" href="https://joe-antognini.github.io/machine-learning/build-windows-tf">tutorial</a> 以及 这篇 <a target="_blank" rel="noopener" href="https://joe-antognini.github.io/machine-learning/windows-tf-project">tutorial</a>。通过结合上面两篇博文以及TF的官方<a target="_blank" rel="noopener" href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/contrib/cmake/README.md">CMake介绍</a>，我终于成功实现了在Windows平台下对TensorFlow项目的编译和运行。(趁热赶紧回馈社会…</p>
+<span id="more"></span>
+<h2 id="环境介绍"><a href="#环境介绍" class="headerlink" title="环境介绍"></a>环境介绍</h2><p>应client的要求，我们需要在Windows 7 pro的环境下提供一个基于 TensorFlow 做 Inference 的 DLL，以供他们在VS2015中调用。</p>
+<p>所以，本文介绍的编译及运行的方法仅保证在以下环境下能够成功：</p>
+<ul>
+<li>OS Platform: Windows 7 Pro</li>
+<li>Tensorflow 1.5</li>
+<li>Visual Studio 2015</li>
+</ul>
+<h2 id="Build-TensorFlow"><a href="#Build-TensorFlow" class="headerlink" title="Build TensorFlow"></a>Build TensorFlow</h2><p>如果你有过bazel build的经验，你应该知道：要想构建C++项目，首先需要build TensorFlow。这里我们将用 vs-2015 来完成编译。</p>
+<h3 id="Pre-requirement"><a href="#Pre-requirement" class="headerlink" title="Pre-requirement"></a>Pre-requirement</h3><p>首先，我们需要完成一些先期工作，确保以下已存在于Windows中：</p>
+<ul>
+<li>tensorflow 1.5. <ul>
+<li>git clone <a target="_blank" rel="noopener" href="https://github.com/tensorflow/tensorflow.git">https://github.com/tensorflow/tensorflow.git</a> v1.5.0</li>
+<li>cd v1.5.0</li>
+<li>git checkout tags/v1.5.0</li>
+</ul>
+</li>
+<li>CMake</li>
+<li>SWIG (3.0.12)</li>
+<li>python3.5</li>
+<li>Visual Studio 2015</li>
+</ul>
+<p>为了方便，在具体操作过程中，我将TensorFlow和swig放入了<code>c:\%USERNAME%\bin\</code>文件夹下，以下都将使用该路径</p>
+<h3 id="CMake-生成-Visual-Studio-project-files"><a href="#CMake-生成-Visual-Studio-project-files" class="headerlink" title="CMake 生成 Visual Studio project files"></a>CMake 生成 Visual Studio project files</h3><p>所有即将编译的TensorFlow library都在TensorFlow repository下的<code>cmake</code>目录下。首先我们要在<code>cmake</code>文件夹下创建一个separate的<code>build</code>文件夹。(以下所有命令行操作都是在Command Prompt下进行的)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C:\...&gt; cd tensorflow\tensorflow\contrib\cmake</span><br><span class="line">C:\...&gt; mkdir build</span><br><span class="line">C:\...&gt; cd build</span><br></pre></td></tr></table></figure>
+<p>然后我们使用Command Prompt来运行CMake：（路径根据实际情况可能需要修改）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cmake .. -A x64 -DCMAKE_BUILD_TYPE=Release ^</span><br><span class="line">-DSWIG_EXECUTABLE=C:\Users\%USERNAME%\bin\swig\swigwin-3.0.12\swig.exe ^</span><br><span class="line">-DPYTHON_EXECUTABLE=C:\Users\%USERNAME%\Anaconda3\python.exe ^</span><br><span class="line">-DPYTHON_LIBRARIES=C:\Users\%USERNAME%\Anaconda3\libs\python35.lib</span><br></pre></td></tr></table></figure>
+<p>如果你和我一样也是需要一个GPU support的program，需要在加上：（别忘记在前面的命令行后面加上<code>^</code>，cudnn路径根据实际情况调整）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-Dtensorflow_ENABLE_GPU=ON ^</span><br><span class="line">-DCUDNN_HOME=&quot;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v9.0&quot;</span><br></pre></td></tr></table></figure>
+<p>为了节省时间，我们最后避免一些不必要的文件的生成，加入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-Dtensorflow_BUILD_PYTHON_BINDINGS=OFF ^</span><br><span class="line">-Dtensorflow_ENABLE_GRPC_SUPPORT=OFF</span><br></pre></td></tr></table></figure>
+<p>最重要的是，如果我们想得到shared library，<strong>一定要加</strong>:<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-Dtensorflow_BUILD_SHARED_LIB=ON ^</span><br><span class="line">-DCUDA_HOST_COMPILER=&quot;C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\amd64\cl.exe&quot;</span><br></pre></td></tr></table></figure></p>
+<p>这样在CMake成功之后，会生成很多Visual Studio project file</p>
+<h3 id="Build-TensorFlow-in-VIsual-Studio"><a href="#Build-TensorFlow-in-VIsual-Studio" class="headerlink" title="Build TensorFlow in VIsual Studio"></a>Build TensorFlow in VIsual Studio</h3><p>点击<code>tensorflow.sln</code>文件，会打开vs工程。很重要的是：一定要在Configuration Manager中（或者在上边栏）选择<strong>64-bit build</strong>以及<strong>Release</strong>。</p>
+<p>然后在 solution 中选择<code>ALL_BUILD</code>进行build，（接下来能做的就只能双手合十祈祷不报错了</p>
+<p>这一步一般要花费2-3小时左右（视机器而定），一定要保证有至少12GB的内存，不然会在编译一小时左右报一个 <code>out of space</code> 的 error</p>
+<p>如果一切顺利，那么在编译成功后我们得到一系列的library，其中最重要的是在路径 <code>tensorflow\contrib\cmake\build\Release</code> 下的 <code>tensorflow.dll</code> 和 <code>tensorflow.lib</code></p>
+<h2 id="Build-Projects-Depending-on-TensorFlow"><a href="#Build-Projects-Depending-on-TensorFlow" class="headerlink" title="Build Projects Depending on TensorFlow"></a>Build Projects Depending on TensorFlow</h2><p>在成功编译得到 <code>tensorflow.dll</code> 和 <code>tensorflow.lib</code> 后，我们就可以构建基于TensorFlow的程序了！</p>
+<p>首先要注意的我们的程序一定要是<strong>x64</strong>下的<strong>Release</strong>！（和编译TensorFlow时对应）</p>
+<p>在构建程序的时候，有一点一定要记住，一定要将下列code写入你的头文件中：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> COMPILER_MSVC</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> NOMINMAX</span></span><br></pre></td></tr></table></figure>
+<p>否则会报一个 <code>&quot;You must define TF_LIB_GTL_ALIGNED_CHAR_ARRAY for your compiler.&quot;</code>的error</p>
+<p>接来下需要修改下列设置:</p>
+<h3 id="Additional-Include-Directories"><a href="#Additional-Include-Directories" class="headerlink" title="Additional Include Directories"></a>Additional Include Directories</h3><p>在c++程序中，compiler需要所有必要的header files，所以在我们这个基于TensorFlow的程序中，需要额外引入directories以避免compile error：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\%USERNAME%\bin\v1.5.0</span><br><span class="line">C:\Users\%USERNAME%\bin\v1.5.0\tensorflow\contrib\cmake\build</span><br><span class="line">C:\Users\%USERNAME%\bin\v1.5.0\tensorflow\contrib\cmake\build\external\eigen_archive</span><br><span class="line">C:\Users\%USERNAME%\bin\v1.5.0\third_party\eigen3</span><br><span class="line">C:\Users\%USERNAME%\bin\v1.5.0\tensorflow\contrib\cmake\build\protobuf\src\protobuf\src</span><br><span class="line">C:\Users\%USERNAME%\bin\v1.5.0\tensorflow\contrib\cmake\build\nsync\src\nsync\public</span><br></pre></td></tr></table></figure></p>
+<h3 id="ADD-tensorflow-lib"><a href="#ADD-tensorflow-lib" class="headerlink" title="ADD tensorflow.lib"></a>ADD tensorflow.lib</h3><p>将路径在<code>tensorflow\contrib\cmake\build\Release</code> 下的 <code>tensorflow.lib</code> 添加到当前项目下，确保不会有compile的linking error。</p>
+<p>根据不同项目，这里可能需要额外的lib文件：我就添加了如下两个static library：</p>
+<ul>
+<li><code>tf_protos_cc.lib</code> in <code>tensorflow\contrib\cmake\build\Release</code> </li>
+<li><code>libprotobuf.lib</code> in <code>tensorflow\contrib\cmake\build\protobuf\src\protobuf\Release</code></li>
+</ul>
+<h3 id="ADD-tensorflow-dll"><a href="#ADD-tensorflow-dll" class="headerlink" title="ADD tensorflow.dll"></a>ADD tensorflow.dll</h3><p>follow 上述步骤后，我们就可以成功编译项目了。但是先别高兴太早，好没结束呢，现在run生成的exe文件会直接报错显示缺失<code>tensorflow.dll</code>文件，这时就需要我们将路径在<code>tensorflow\contrib\cmake\build\Release</code> 的<code>tensorflow.dll</code>文件复制到和exe文件所在的文件夹中，即可成功运行</p>
+<p>(可以用这篇 <a target="_blank" rel="noopener" href="https://joe-antognini.github.io/machine-learning/windows-tf-project">tutorial</a>中的示例代码进行验证)</p>
+<p>Happy Coding!</p>
+<p>（完）</p>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/TensorFlow/" rel="tag"><i class="fa fa-tag"></i> TensorFlow</a>
+              <a href="/tags/Windows/" rel="tag"><i class="fa fa-tag"></i> Windows</a>
+              <a href="/tags/%E9%85%8D%E7%BD%AE/" rel="tag"><i class="fa fa-tag"></i> 配置</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/09/09/Union-Find/" rel="prev" title="并查集算法简介">
+      <i class="fa fa-chevron-left"></i> 并查集算法简介
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/11/11/%E5%86%99%E5%9C%A8%E9%87%8D%E5%90%AFblog%E5%89%8D/" rel="next" title="写在重启blog前">
+      写在重启blog前 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">环境介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Build-TensorFlow"><span class="nav-number">2.</span> <span class="nav-text">Build TensorFlow</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Pre-requirement"><span class="nav-number">2.1.</span> <span class="nav-text">Pre-requirement</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CMake-%E7%94%9F%E6%88%90-Visual-Studio-project-files"><span class="nav-number">2.2.</span> <span class="nav-text">CMake 生成 Visual Studio project files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Build-TensorFlow-in-VIsual-Studio"><span class="nav-number">2.3.</span> <span class="nav-text">Build TensorFlow in VIsual Studio</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Build-Projects-Depending-on-TensorFlow"><span class="nav-number">3.</span> <span class="nav-text">Build Projects Depending on TensorFlow</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Additional-Include-Directories"><span class="nav-number">3.1.</span> <span class="nav-text">Additional Include Directories</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ADD-tensorflow-lib"><span class="nav-number">3.2.</span> <span class="nav-text">ADD tensorflow.lib</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ADD-tensorflow-dll"><span class="nav-number">3.3.</span> <span class="nav-text">ADD tensorflow.dll</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Tianyu Hong"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Tianyu Hong</p>
+  <div class="site-description" itemprop="description">Why so serious!</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Htiango" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Htiango" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/tianyu-hong/" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;tianyu-hong&#x2F;" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linkedin</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tianyu Hong</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v6.3.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.1
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://tianyuh.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://tianyuh.com/2018/09/11/Build-Run-Tensorflow-C-program-on-Windows/";
+    this.page.identifier = "2018/09/11/Build-Run-Tensorflow-C-program-on-Windows/";
+    this.page.title = "在Windows平台下编译并运行TensorFlow C++项目（支持GPU）";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://tianyuh.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/favicon/safari-pinned-tab.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://tianyuh.com').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.7.1',
+    exturl: false,
+    sidebar: {"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":true,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="开篇让我们将地球的时钟拨到远古世纪，蜿蜒的河流边正孕育着文明的曙光，一队队移民正取下行装，准备在历史的长河中书写壮丽的篇章。一座座简陋的城市如雨后春笋般拔地而起，勾勒着美好的希望。手持木棒的勇士正开疆拓土，怀揣着一统天下的梦想。 上述这些画面描述的就是文明系列游戏的开场。一把文明游戏就仿佛是人类文明盛衰兴亡的缩影，带给我的感触绝非是一般游戏可比拟的。一句话，文明系列，不仅仅是游戏。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Head First Civilization V">
+<meta property="og:url" content="http://tianyuh.com/2017/01/09/Civilization-V/index.html">
+<meta property="og:site_name" content="塞外麾下炙">
+<meta property="og:description" content="开篇让我们将地球的时钟拨到远古世纪，蜿蜒的河流边正孕育着文明的曙光，一队队移民正取下行装，准备在历史的长河中书写壮丽的篇章。一座座简陋的城市如雨后春笋般拔地而起，勾勒着美好的希望。手持木棒的勇士正开疆拓土，怀揣着一统天下的梦想。 上述这些画面描述的就是文明系列游戏的开场。一把文明游戏就仿佛是人类文明盛衰兴亡的缩影，带给我的感触绝非是一般游戏可比拟的。一句话，文明系列，不仅仅是游戏。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-01-10T00:01:38.000Z">
+<meta property="article:modified_time" content="2022-10-24T00:22:41.735Z">
+<meta property="article:author" content="Tianyu Hong">
+<meta property="article:tag" content="Games">
+<meta property="article:tag" content="Civilization">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://tianyuh.com/2017/01/09/Civilization-V/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Head First Civilization V | 塞外麾下炙</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-88787389-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-88787389-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">塞外麾下炙</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/01/09/Civilization-V/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Tianyu Hong">
+      <meta itemprop="description" content="Why so serious!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="塞外麾下炙">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Head First Civilization V
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-01-09 16:01:38" itemprop="dateCreated datePublished" datetime="2017-01-09T16:01:38-08:00">2017-01-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E7%AC%94/" itemprop="url" rel="index">
+                    <span itemprop="name">随笔</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2017/01/09/Civilization-V/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/01/09/Civilization-V/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h2><p>让我们将地球的时钟拨到远古世纪，蜿蜒的河流边正孕育着文明的曙光，一队队移民正取下行装，准备在历史的长河中书写壮丽的篇章。一座座简陋的城市如雨后春笋般拔地而起，勾勒着美好的希望。手持木棒的勇士正开疆拓土，怀揣着一统天下的梦想。</p>
+<p>上述这些画面描述的就是文明系列游戏的开场。一把文明游戏就仿佛是人类文明盛衰兴亡的缩影，带给我的感触绝非是一般游戏可比拟的。一句话，文明系列，不仅仅是游戏。</p>
+<span id="more"></span>
+<p>如果说有什么游戏值得我整整一天宅在电脑前废寝忘食，那一定是席大大的文明系列。而在6代bug不断，4代画质感人的今日，5代的美丽新世界显得格外诱人，在一个又一个“next turn”的指引下，一切都如白驹过隙，一晃而逝。（友情提示，没有闹钟的，没有自制力的，请远离文明系列）</p>
+<h2 id="宏观看文明"><a href="#宏观看文明" class="headerlink" title="宏观看文明"></a>宏观看文明</h2><p>虽然不像P社四萌那样有着极高的历史还原度，但是在宏观层面上对人类文明的量化和物化我从未见过如文明这般卓越的。它将人类文明的核心量化为科技和文化，而各个国家的实力物化为一个个城市以及单位，彼此之间相互影响，构成了整个复杂交错的文明世界，也让玩家看到了数千年来人类文明发展的缩影，闲暇之余颇有感触。</p>
+<h3 id="科技与文化"><a href="#科技与文化" class="headerlink" title="科技与文化"></a>科技与文化</h3><p>在Civilization这系列游戏中，人类文明时刻被文化和科技点数推进着前行。随着科技的飞速发展，科技树茁壮成长着，一个个闻所未闻的建筑和单位出现在了城市的建设列表中，等待着一国之主的召唤。它们将进一步促进科技和文化的发展。而随着文化的积累，一项项政策被从上锁的黑箱拿上了台面，如同现在的城市规划和国家方针一样，指引着帝国步入黄金时代，迈入胜利的殿堂。</p>
+<p>的确，人类的文明从来都是一个厚积而薄发的过程，没有前期挖石头的技术，哪来之后的石油、煤矿等的大发现？没有律法的出现，哪来的意识形态的选择？纵使给远古时代的人民一百个爱因斯坦，也注定不会有相对论和量子力学的丁点萌芽。这也是为什么，在游戏中，政策的选择局限于时代，科技的研发取决于之前的积累。</p>
+<h3 id="城市与单位"><a href="#城市与单位" class="headerlink" title="城市与单位"></a>城市与单位</h3><p>玩家通过建造城市设施和调整市民工作来实现一个城市在粮食、产能、金钱、文化和信仰等方面的平衡，使之为帝国的发展贡献力量。每每在进入城市界面时，我的脑海中浮现的不是一个个单调的数字或是乏味的图标，而是一个个活生生的市民为了生计在城市之郊辛勤工作，为城市的产能和产粮做出微不足道的贡献。这样的生化当然难言快乐，尤其是当城市人口急剧膨胀之际，辛勤劳作了一天的市民不得不蜷曲在狭小的住处休息，这也是为什么在游戏中人口和城市数量的增长会带来大幅的不快乐。于国家而言，哪里有城市，哪里就有剥削，除非危及自身统治，人民的快乐不足为道，这又何尝不是现实生活的一个缩影呢？通过产出奢侈品和建设娱乐设施，市民们的快乐可以得到大幅提升，似乎被剥削的不快早已被抛之脑后，看来娱乐至死的年代由来已久啊。</p>
+<p>如果说用一句话总结文明系列的精髓，那就是国家的利益高于一切。在游戏界面中，渺渺众生不过是一串串简单的数字，一队队忠义无双的士兵，一个个任劳任怨的劳工。他们在玩家的带领下，为着最终的胜利默默奉献着自己。游戏中，为了保住珍贵的笑脸，我们往往不惜将攻占的城市付之一炬，看着城市的人口一回合一回合地下降，直至城池变为废墟。为了省下足够的金钱，我们往往会将多余的单位就地处决，看着他们化作一道光永远消逝在历史的长河中。为了抢在AI之前造出奇观，我们往往会强制让市民忍饥挨饿，没日没夜地为产能贡献力量。沉浸在游戏中的我们又怎会意识到呢，这些不就是曾经的“嘉定三屠”，“扬州十日”，“长平之战”后的白起杀降，布尔什维克在战后依然实施的“战时共产主义”？</p>
+<p>唯一带点个人色彩的也就是在城市中产出的伟人了，他们有着与真实历史中某位名人相同的名字，而在游戏中他们的命运也不外乎是为了一项奇观、一项科技、一个作品或是一场战役，鞠躬尽瘁死而后已。可即便如此，他们还是一个个义无反顾地诞生于城市，为了帝国的繁荣昌盛前赴后继。真可谓是“苟利国家生死以，岂因祸福避趋之”。</p>
+<h3 id="国家和城邦"><a href="#国家和城邦" class="headerlink" title="国家和城邦"></a>国家和城邦</h3><p>文明系列游戏经久不息的一个原因，就在于多样的文明种类。玩家可以从二三十个文明中挑选一个进行游戏，而这二三十个文明也都各具特色。好玩的一点在于，游戏选取这些文明中的一位著名统治者，将其作为游戏中该文明的领袖。所以在游戏界面中，我们得以看这样的场景，骑在马上的拿破仑不屑地评论着我羸弱的士兵，白宫中的华盛顿义正言辞地进行抗议，雍容华贵的武则天不怒自威地否决了我的交易。正是这些文明领袖们将我们更好地带入了游戏中，将复杂难表的国家关系用领袖们的喜怒哀乐鲜活地呈现给了玩家。</p>
+<p>在文明游戏中，国家关系是一个很重要的部分。两国间的良好关系是进行合作研究以及现金交易的前提。同时两国间的贸易也必须在非战争状态的条件下才能进行。这不就是现实的一个缩影吗？</p>
+<p>除了国家之外，在游戏中玩家还会碰到许多城邦，也就是现实中的“小国”。在第一次遇到时它们会给你一些钱，我总是开玩笑地说这是供奉给大国的礼金，摆出低调的姿态祈求乱世中的苟存。刚玩的时候我总是对这些城邦不屑一顾，对这些蝼蚁一直提出的烦人任务不理不睬。看着它们一个个成为了其他国家的盟友，想着这些小国送给你们也没什么用处，就这样一直开开心心地在家种田。一转眼国际形势骤变，昔日笑脸相迎的对手最终兵戎详见，我惊讶地发现那些城邦也都紧跟着它们主子的步伐，争先恐后地对我宣战。我当时第一个想到的不是打开存档，而是“这不就是北约？”。玩得越多，我越觉得城邦好处大大的，盟友会给你兵，给你文化，给你粮食，给你资源，给你信仰，还能给你快乐！而如果觉得完成城邦任务太麻烦，大可以拿钱砸，一堆堆金子砸在城邦的脸上，玩家就能享受到如同城邦爸爸一般的待遇，给吃给喝还能帮打架。</p>
+<p>可以说文明中对国家和城邦的设定很好地诠释出了大国与小国间的外交政策与外交姿态。</p>
+<h3 id="胜利种类"><a href="#胜利种类" class="headerlink" title="胜利种类"></a>胜利种类</h3><p>在Civilization V这款游戏中，总共有5种胜利的方式，而这5种方式也给玩家以不同的感悟。</p>
+<h4 id="外交胜利"><a href="#外交胜利" class="headerlink" title="外交胜利"></a>外交胜利</h4><p>有人说，联合国建立的意义是为了让全世界更好地按照大国意志来运转，而事实也确有几分相似。诸如伊拉克战争、古巴禁运等事件就是大国通过对联合国的控制来实现对小国的支配，从而更好地实现自身利益。在文明游戏中也是亦然，一旦世界议会选出了世界领袖，那么也就意味着该国有着将自己的意志以世界议会中某一议题的形式强加于他国的能力，也就实现了外交上的胜利。</p>
+<h4 id="征服胜利"><a href="#征服胜利" class="headerlink" title="征服胜利"></a>征服胜利</h4><p>文明V这款游戏也被称为野蛮V，不打仗怎么赢天下。一个无论科技和文化都远远落后的文明要想赢得游戏，只有用武力打破现有的状态。一旦取得了所有文明的首都，就取得了征服胜利。</p>
+<p>作为一名爱好和平的种田流玩家，从个人理念出发我是十分不喜欢玩征服胜利的，一个原因自然是因为操纵“百万大军”攻城下寨是一件极其繁琐的事。还有一个很重要的原因是我在游戏过程中探索出来的：在飞船起飞前的一回合，我抱着玩一玩的心态将我的“小男孩一号”原子弹投向了身边的埃及，瞬间一座人口30+的主城血条只剩下了一半左右，周边的单位也是死伤惨重，城市中隐约还有人群大喊哭泣的声音，虽然知道这不过是游戏一场，但是内心总感觉有些堵。当然啦，打仗是一定要打的，不过我更喜欢逼得对面割地赔款，然后我在安安心心发战争财。</p>
+<h4 id="科技胜利"><a href="#科技胜利" class="headerlink" title="科技胜利"></a>科技胜利</h4><p>从仰望星空开始的不仅仅有哲学，还有科学！将人类文明传播到更为浩瀚的宇宙一直是科学家们的梦想，也支撑着他们燃烧自己，成就科学的跃进。当飞船起飞的一刹那，人类文明的种子已播撒在银河系中，承载着无数人的梦想驶向远方。这也是我最喜欢的胜利模式！</p>
+<h4 id="文化胜利"><a href="#文化胜利" class="headerlink" title="文化胜利"></a>文化胜利</h4><p>当玩家的文化支配了其他文明，当那里的人民都穿着我们的衣服，说着我们的语言的时候，我们还能说这是别的国家吗？文化胜利的本质就是通过本国文化对他国潜移默化的影响，通过人民的融合实现国家的兼并。实现难度着实不小（一般都是打出来的。。。）</p>
+<h4 id="时间胜利"><a href="#时间胜利" class="headerlink" title="时间胜利"></a>时间胜利</h4><p>（一般都关闭时间胜利）满满都是吐槽。。。在世界末日前的那一刻，上帝说，拯救那个分数最高的文明吧，于是就有了时间胜利。。。（2050年分数最高的玩家获胜）</p>
+<h2 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h2><p>开了程序猿的脑洞写下了这篇civilization的Head First，文明带给我的不仅仅是绝佳的游戏体验，还让我有了很多思考，打算有时间出一篇Thinking in Civilization。</p>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Games/" rel="tag"><i class="fa fa-tag"></i> Games</a>
+              <a href="/tags/Civilization/" rel="tag"><i class="fa fa-tag"></i> Civilization</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2016/12/10/concurrent-programming/" rel="prev" title="Concurrent Programming">
+      <i class="fa fa-chevron-left"></i> Concurrent Programming
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/01/18/%E3%80%8A%E5%B7%A8%E4%BA%BA%E7%9A%84%E9%99%A8%E8%90%BD%E3%80%8B/" rel="next" title="巨人的陨落">
+      巨人的陨落 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E7%AF%87"><span class="nav-number">1.</span> <span class="nav-text">开篇</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%8F%E8%A7%82%E7%9C%8B%E6%96%87%E6%98%8E"><span class="nav-number">2.</span> <span class="nav-text">宏观看文明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%91%E6%8A%80%E4%B8%8E%E6%96%87%E5%8C%96"><span class="nav-number">2.1.</span> <span class="nav-text">科技与文化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%8E%E5%B8%82%E4%B8%8E%E5%8D%95%E4%BD%8D"><span class="nav-number">2.2.</span> <span class="nav-text">城市与单位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BD%E5%AE%B6%E5%92%8C%E5%9F%8E%E9%82%A6"><span class="nav-number">2.3.</span> <span class="nav-text">国家和城邦</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%83%9C%E5%88%A9%E7%A7%8D%E7%B1%BB"><span class="nav-number">2.4.</span> <span class="nav-text">胜利种类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%96%E4%BA%A4%E8%83%9C%E5%88%A9"><span class="nav-number">2.4.1.</span> <span class="nav-text">外交胜利</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BE%81%E6%9C%8D%E8%83%9C%E5%88%A9"><span class="nav-number">2.4.2.</span> <span class="nav-text">征服胜利</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A7%91%E6%8A%80%E8%83%9C%E5%88%A9"><span class="nav-number">2.4.3.</span> <span class="nav-text">科技胜利</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E5%8C%96%E8%83%9C%E5%88%A9"><span class="nav-number">2.4.4.</span> <span class="nav-text">文化胜利</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E8%83%9C%E5%88%A9"><span class="nav-number">2.4.5.</span> <span class="nav-text">时间胜利</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E5%B0%BE"><span class="nav-number">3.</span> <span class="nav-text">结尾</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Tianyu Hong"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Tianyu Hong</p>
+  <div class="site-description" itemprop="description">Why so serious!</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Htiango" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Htiango" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/tianyu-hong/" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;tianyu-hong&#x2F;" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linkedin</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tianyu Hong</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v6.3.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.1
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://tianyuh.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://tianyuh.com/2017/01/09/Civilization-V/";
+    this.page.identifier = "2017/01/09/Civilization-V/";
+    this.page.title = "Head First Civilization V";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://tianyuh.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>

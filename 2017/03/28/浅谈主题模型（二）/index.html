@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/favicon/safari-pinned-tab.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://tianyuh.com').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.7.1',
+    exturl: false,
+    sidebar: {"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":true,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="承接“浅谈主题模型（一）”中的主题模型的历史，本文着重介绍LDA模型的相关概率知识，为接下来介绍LDA模型打下基础。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈主题模型（二）—— 相关概率知识">
+<meta property="og:url" content="http://tianyuh.com/2017/03/28/%E6%B5%85%E8%B0%88%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
+<meta property="og:site_name" content="塞外麾下炙">
+<meta property="og:description" content="承接“浅谈主题模型（一）”中的主题模型的历史，本文着重介绍LDA模型的相关概率知识，为接下来介绍LDA模型打下基础。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-03-29T05:41:01.000Z">
+<meta property="article:modified_time" content="2022-10-24T00:22:41.738Z">
+<meta property="article:author" content="Tianyu Hong">
+<meta property="article:tag" content="NLP">
+<meta property="article:tag" content="LDA">
+<meta property="article:tag" content="主题模型">
+<meta property="article:tag" content="贝叶斯">
+<meta property="article:tag" content="统计">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://tianyuh.com/2017/03/28/%E6%B5%85%E8%B0%88%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B%EF%BC%88%E4%BA%8C%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>浅谈主题模型（二）—— 相关概率知识 | 塞外麾下炙</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-88787389-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-88787389-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">塞外麾下炙</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/03/28/%E6%B5%85%E8%B0%88%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B%EF%BC%88%E4%BA%8C%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Tianyu Hong">
+      <meta itemprop="description" content="Why so serious!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="塞外麾下炙">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          浅谈主题模型（二）—— 相关概率知识
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-03-28 22:41:01" itemprop="dateCreated datePublished" datetime="2017-03-28T22:41:01-07:00">2017-03-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/NLP/Topic-Model/" itemprop="url" rel="index">
+                    <span itemprop="name">Topic Model</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2017/03/28/%E6%B5%85%E8%B0%88%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B%EF%BC%88%E4%BA%8C%EF%BC%89/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/03/28/浅谈主题模型（二）/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>承接“浅谈主题模型（一）”中的主题模型的历史，本文着重介绍LDA模型的相关概率知识，为接下来介绍LDA模型打下基础。<br><span id="more"></span></p>
+<p>在LDA模型中，涉及到相当多的数学尤其是概率统计方面的知识，在具体介绍LDA模型之前，首先对这些概率知识进行一个总结归纳。</p>
+<p>在LDA模型框架下，我们认为文本是一系列服从一定概率分布的词项的样本集合：每个文档中词的Topic分布服从Multinomial分布，其先验选取共轭先验即Dirichlet分布；每个Topic下词的分布服从Multinomial分布，其先验也同样选取共轭先验即Dirichlet分布。</p>
+<p>接下来主要介绍Dirichlet分布以及其中涉及到的Gamma函数的相关知识。</p>
+<h2 id="Gamma-函数"><a href="#Gamma-函数" class="headerlink" title="Gamma 函数"></a>Gamma 函数</h2><p>Gamma函数：</p>
+<script type="math/tex; mode=display">
+\Gamma(x) = \int_{0}^{\infty}{t^{x-1} e^{-t} dt}</script><p>通过分部积分的方法，可以推导出这个函数有着如下的递归性质：</p>
+<script type="math/tex; mode=display">
+\Gamma(x + 1) = x \Gamma(x)</script><p>可以证明得到，$\Gamma(x)$函数可以当成是阶乘在实数集上的延拓，具有如下性质：</p>
+<script type="math/tex; mode=display">
+\Gamma(n) = (n - 1)!</script><p>下面简要地介绍下gamma函数的一些应用</p>
+<h3 id="求函数的分数阶导数"><a href="#求函数的分数阶导数" class="headerlink" title="求函数的分数阶导数"></a>求函数的分数阶导数</h3><p>Gamma 函数可以用于求分数阶导数：</p>
+<p>对于 $x^n$ 的各阶导数：</p>
+<p>first derivative： $n x^{n - 1}$</p>
+<p>second derivative： $n (n - 1) x^{n - 2}$</p>
+<p>···</p>
+<p>k-th derivative： $ \frac{n!}{(n - k)!} x^{n - k}$</p>
+<p>由于k阶导数可以用阶乘表示，于是我们用Gamma函数表达为：</p>
+<script type="math/tex; mode=display">
+\frac{\Gamma(n + 1)}{\Gamma(n - k + 1)} x^{n - k}</script><p>k可以表示为分数，即可求得分数阶导数。</p>
+<h3 id="Bohr-Mullerup-定理"><a href="#Bohr-Mullerup-定理" class="headerlink" title="Bohr-Mullerup 定理"></a>Bohr-Mullerup 定理</h3><p>若$f: (0,\infty) \rightarrow (0,\infty)$ 且满足：</p>
+<ol>
+<li>$f(1) = 1$</li>
+<li>$f(x + 1) = xf(x)$</li>
+<li>$\log {f(x)}$ 是凸函数</li>
+</ol>
+<p>那么$f(x) = \Gamma(x)$</p>
+<h3 id="Digamma-函数"><a href="#Digamma-函数" class="headerlink" title="Digamma 函数"></a>Digamma 函数</h3><script type="math/tex; mode=display">
+\Psi(x) = \frac{d \log{\Gamma(x)}}{dx}</script><p>Digamma函数在涉及求Dirichlet分布相关的参数的极大似然估计时，往往要用到。</p>
+<p>Digamma函数具有以下性质：</p>
+<script type="math/tex; mode=display">
+\Psi(x + 1) = \Psi(x) + \frac{1}{x}</script><h3 id="Gamma-分布"><a href="#Gamma-分布" class="headerlink" title="Gamma 分布"></a>Gamma 分布</h3><p>对gamma函数的定义做一个变形：</p>
+<script type="math/tex; mode=display">
+\int _0^{\infty} \frac{x^{\alpha - 1} e^{-x}}{\Gamma(\alpha)}dx = 1</script><p>将积分部分视为概率密度，得到Gamma分布密度函数</p>
+<script type="math/tex; mode=display">
+Gamma(x|\alpha) = \frac{x^{\alpha - 1} e^{-x}}{\Gamma(\alpha)}</script><p>$x = \beta t$得到一个一般形式：</p>
+<script type="math/tex; mode=display">
+Gamma(t|\alpha, \beta) = \frac{\beta^{\alpha}t^{\alpha - 1} e^{-\beta x}}{\Gamma(\alpha)}</script><p>在实际应用中， 指数分布和$\chi^2$分布都是特殊的Gamma分布</p>
+<h2 id="Dirichlet-分布"><a href="#Dirichlet-分布" class="headerlink" title="Dirichlet 分布"></a>Dirichlet 分布</h2><p>如果说要用一句话来简要介绍Dirichlet分布的话，那就是分布之上的分布。下面从Beta分布来引入对Dirichlet分布的介绍。</p>
+<h3 id="Beta-分布"><a href="#Beta-分布" class="headerlink" title="Beta 分布"></a>Beta 分布</h3><p>用一个比较实际的情况来解释beta分布：</p>
+<ol>
+<li>$X_1,X_2,…,X_n \sim Uniform(0,1)$</li>
+<li>把这n个随机变量排序，$X_{(k)}$的分布式Beta分布</li>
+</ol>
+<p>如何确定？</p>
+<p>通过计算$X_{k}$落在一个区间$[x, x + \Delta x]$的概率，其中$[0,x)$有 k-1 个数， $(x,1]$有n-k 个数</p>
+<script type="math/tex; mode=display">
+\begin{eqnarray} \nonumber
+P(E) & = & \prod_{i = 1}^{n} P(X_i) \\ \nonumber
+& = & x^{k-1} (1 - x - \Delta x)^{n - k} \Delta x \\
+& = & x^{k - 1}(1 - x)^{n - k}\Delta x + o(\Delta x) \nonumber
+\end{eqnarray}</script><script type="math/tex; mode=display">
+\begin{eqnarray} \nonumber
+P(x \leq X_{k} \leq x + \Delta x) & = & n \begin{pmatrix}n - 1 \\ k -1 \end{pmatrix} P(E) + o(\Delta x) \\ \nonumber
+& = & n \begin{pmatrix}n - 1 \\ k -1 \end{pmatrix} x^{k - 1} (1-x)^{n - k}\Delta x + o(\Delta x) \nonumber 
+\end{eqnarray}</script><p>$X_{k}$的概率密度函数为</p>
+<script type="math/tex; mode=display">
+\begin{eqnarray} \nonumber
+f(x) & = & \lim_{\Delta x \rightarrow 0}\frac{P(x \leq X_{k} \leq x + \Delta x)}{\Delta x} \\ \nonumber
+& = & n \begin{pmatrix}n - 1 \\ k -1 \end{pmatrix} x^{k - 1} (1-x)^{n - k}\\
+& = & \frac{n !}{(k-1)!(n-k)!} x^{k - 1} (1-x)^{n - k} \nonumber
+\end{eqnarray}</script><p>利用gamma函数，可以表示为</p>
+<script type="math/tex; mode=display">
+f(x) =\frac{\Gamma(n+1)}{\Gamma(k)\Gamma(n-k+1)} x^{k - 1} (1-x)^{n - k}</script><p>取$\alpha = k$, $\beta = n - k + 1$</p>
+<script type="math/tex; mode=display">
+f(x) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha) \Gamma(\beta )} x^{\alpha - 1}(1- x)^{\beta - 1}</script><p>即是beta分布。</p>
+<h3 id="Beta-Binomial-共轭"><a href="#Beta-Binomial-共轭" class="headerlink" title="Beta-Binomial 共轭"></a>Beta-Binomial 共轭</h3><p>用一个比较实际的情况来解释Beta-Binomial共轭：</p>
+<ol>
+<li>$X<em>1,X_2,…,X_n \sim Uniform(0,1)$ ，排序后对应顺序统计量$X</em>{(1)}, X<em>{(2)}, … ， X</em>{(n)} $我们要猜测 $p = X_{(k)}$</li>
+<li>$Y_1, Y_2, …, Y_m \sim Uniform(0,1), Y_i$中有$m_1$个比p小，$m_2$个比p大</li>
+<li>问$P(p|Y_1, Y2, …, Y_m)$ 的分布是什么。</li>
+</ol>
+<p>根据beta分布，上面情况中的 1 可以推导出 p 的分布为Beta分布 $f(p) = Beta(p|k, n - k + 1)$，也称为p的先验分布</p>
+<p>根据上述中的 2， 相当于是做了m次伯努利实验，所以 $ m_1 $服从二项分布</p>
+<p>在给定了来自数据提供的 $(m_1 ,  m_2)$知识后，p的后验分布变为 $f(p|m_1, m_2) = Beta(p|k+m_1, n - k + 1 + m_2)$</p>
+<p>根据贝叶斯参数估计的基本过程：</p>
+<script type="math/tex; mode=display">
+先验分布 + 数据知识 = 后验分布</script><p>以上贝叶斯分析的简单直观的表述就是</p>
+<script type="math/tex; mode=display">
+Beta(p|k, n - k + 1) + BinomCount(m_1, m_2) = Beta(p|k+m_1, n - k + 1 + m_2)</script><p>所以Beta-Binomial共轭式为：</p>
+<script type="math/tex; mode=display">
+Beta(p|\alpha, \beta) + BinomCount(m_1,m_2) = Beta(p|\alpha + m_1, \beta + m_2)</script><p>此处共轭的意思就是数据符合二项分布的时候，参数的先验分布和后验分布都能保持Beta分布的形式。</p>
+<h3 id="Dirichlet-Multinomial-共轭"><a href="#Dirichlet-Multinomial-共轭" class="headerlink" title="Dirichlet - Multinomial 共轭"></a>Dirichlet - Multinomial 共轭</h3><p>首先我们需要先了解下什么是Dirichlet分布</p>
+<p>用一个比较实际的情况来解释Dirichlet分布：</p>
+<ol>
+<li>$X_1,X_2,…,X_n \sim Uniform(0,1)$ </li>
+<li>排序后对应顺序统计量$X<em>{(1)}, X</em>{(2)}, … ， X_{(n)} $</li>
+<li>问$(X<em>{(k_1)}, X</em>{(k_1 + k_2)})$ 的联合分布是什么。</li>
+</ol>
+<p>通过类似Beta分布的推导，我们可以得到联合分布为：</p>
+<script type="math/tex; mode=display">
+\begin{eqnarray} \nonumber
+f(x_1,x_2,x_3) & = & \frac{n!}{(k_1 - 1)!(k_2 - 1)!(n - k_1 - k_2)!}x_1^{k_1 - 1}x_2^{k_2 - 1}x_3^{n - k_1 - k_2}  \\ \nonumber
+& = & \frac{\Gamma (n + 1)}{\Gamma (k_1)\Gamma (k_2)\Gamma (n - k_1 - k_2 + 1)}x_1^{k_1 - 1}x_2^{k_2 - 1}x_3^{n - k_1 - k_2} \\  \nonumber
+\end{eqnarray}</script><p>该分布就是3维形式的Dirichlet分布，令$\alpha<em>1 = k_1, \alpha_2 = k_2, \alpha_3 = n - k</em>! - k_2 + 1$，概率密度可以写成：</p>
+<script type="math/tex; mode=display">
+f(x_1,x_2,x_3) = \frac{\Gamma (\alpha_1 + \alpha_2 + \alpha_3)}{\Gamma (\alpha_1)\Gamma (\alpha_2)\Gamma (\alpha_3)}x_1^{\alpha_1 - 1}x_2^{\alpha_2 - 1}x_3^{\alpha_3 - 1}</script><p>Dirichlet分布，其参数是两个标量：维数K和参数向量各维均值$\alpha = \frac{\sum \alpha_l}{K}$ 其分布律的一般形式为：</p>
+<script type="math/tex; mode=display">
+p(p^{\rightarrow} | \alpha, K) = Dir(p^{\rightarrow} | \alpha, K) = \frac{\Gamma(K \alpha)}{\Gamma(\alpha)^K} \prod_{k = 1}^K p_k^{\alpha - 1} = \frac{1}{\Delta_k(\alpha)} \prod_{k = 1}^K p_k^{\alpha - 1}</script><script type="math/tex; mode=display">
+\Delta_k(\alpha) = \frac{\Gamma(\alpha)^K}{\Gamma(K\alpha)}</script><p>那么什么是Dirichlet - Multinomial 共轭呢？</p>
+<p>用一个比较实际的情况来解释Dirichlet - Multinomial 共轭：</p>
+<ol>
+<li>$X<em>1,X_2,…,X_n \sim Uniform(0,1)$ ， 排序后对应顺序统计量$X</em>{(1)}, X<em>{(2)}, … ， X</em>{(n)} $</li>
+<li>令$p<em>1 = X</em>{(k<em>1)}$， $p_2 = X</em>{(k_1 + k_2 )}$， $p_3 = 1 - p_1 - p_2 $， 我们要猜测 $p^{\rightarrow} = (p_1, p_2, p_3 )$</li>
+<li>$Y_1, Y_2, …, Y_m \sim Uniform(0,1), Y_i$中落到[$0, p_1 $), [$p_1 , p_2 $), [$p_2 , 1$) 三个区间的个数分别为 $m_1, m_2, m_3, m = m_1 + m_2 + m_3$</li>
+<li>问后验分布$P(p^{\rightarrow} | Y_1, Y_2, … , Y_m)$ 的分布是什么。</li>
+</ol>
+<p>以上贝叶斯分析的简单直观的表述就是</p>
+<script type="math/tex; mode=display">
+Dir(p^{\rightarrow} | k^{\rightarrow}) + MultCount(m^{\rightarrow }) = Dir(p^{\rightarrow} | k^{\rightarrow} + m^{\rightarrow})</script><p>描述的就是Dirichlet - Multinomial 共轭</p>
+<p>下一节将开始介绍LDA模型</p>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/NLP/" rel="tag"><i class="fa fa-tag"></i> NLP</a>
+              <a href="/tags/LDA/" rel="tag"><i class="fa fa-tag"></i> LDA</a>
+              <a href="/tags/%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B/" rel="tag"><i class="fa fa-tag"></i> 主题模型</a>
+              <a href="/tags/%E8%B4%9D%E5%8F%B6%E6%96%AF/" rel="tag"><i class="fa fa-tag"></i> 贝叶斯</a>
+              <a href="/tags/%E7%BB%9F%E8%AE%A1/" rel="tag"><i class="fa fa-tag"></i> 统计</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/03/28/%E6%B5%85%E8%B0%88%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B%EF%BC%88%E4%B8%80%EF%BC%89/" rel="prev" title="浅谈主题模型（一） —— 主题模型进化史">
+      <i class="fa fa-chevron-left"></i> 浅谈主题模型（一） —— 主题模型进化史
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/03/28/%E6%B5%85%E8%B0%88%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B%EF%BC%88%E4%B8%89%EF%BC%89/" rel="next" title="浅谈主题模型（三）—— LDA模型简介">
+      浅谈主题模型（三）—— LDA模型简介 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Gamma-%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">Gamma 函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B1%82%E5%87%BD%E6%95%B0%E7%9A%84%E5%88%86%E6%95%B0%E9%98%B6%E5%AF%BC%E6%95%B0"><span class="nav-number">1.1.</span> <span class="nav-text">求函数的分数阶导数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bohr-Mullerup-%E5%AE%9A%E7%90%86"><span class="nav-number">1.2.</span> <span class="nav-text">Bohr-Mullerup 定理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Digamma-%E5%87%BD%E6%95%B0"><span class="nav-number">1.3.</span> <span class="nav-text">Digamma 函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gamma-%E5%88%86%E5%B8%83"><span class="nav-number">1.4.</span> <span class="nav-text">Gamma 分布</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dirichlet-%E5%88%86%E5%B8%83"><span class="nav-number">2.</span> <span class="nav-text">Dirichlet 分布</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Beta-%E5%88%86%E5%B8%83"><span class="nav-number">2.1.</span> <span class="nav-text">Beta 分布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Beta-Binomial-%E5%85%B1%E8%BD%AD"><span class="nav-number">2.2.</span> <span class="nav-text">Beta-Binomial 共轭</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dirichlet-Multinomial-%E5%85%B1%E8%BD%AD"><span class="nav-number">2.3.</span> <span class="nav-text">Dirichlet - Multinomial 共轭</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Tianyu Hong"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Tianyu Hong</p>
+  <div class="site-description" itemprop="description">Why so serious!</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Htiango" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Htiango" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/tianyu-hong/" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;tianyu-hong&#x2F;" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linkedin</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tianyu Hong</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v6.3.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.1
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://tianyuh.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://tianyuh.com/2017/03/28/%E6%B5%85%E8%B0%88%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B%EF%BC%88%E4%BA%8C%EF%BC%89/";
+    this.page.identifier = "2017/03/28/浅谈主题模型（二）/";
+    this.page.title = "浅谈主题模型（二）—— 相关概率知识";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://tianyuh.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>

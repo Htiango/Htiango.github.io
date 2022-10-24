@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/favicon/safari-pinned-tab.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://tianyuh.com').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.7.1',
+    exturl: false,
+    sidebar: {"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":true,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="最近了解到了一种很有意思的关于图像分类的算法，用bag of words的思想来对图像进行处理，很巧妙地将原本是图像处理的问题变换成了自然语言处理的问题。本文将简要对这种方法进行介绍。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bag of Words for Image Classification">
+<meta property="og:url" content="http://tianyuh.com/2017/03/22/Bag-of-Words-for-Image-Classification/index.html">
+<meta property="og:site_name" content="塞外麾下炙">
+<meta property="og:description" content="最近了解到了一种很有意思的关于图像分类的算法，用bag of words的思想来对图像进行处理，很巧妙地将原本是图像处理的问题变换成了自然语言处理的问题。本文将简要对这种方法进行介绍。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://tianyuh.com/images/old-resources/14901949601534.jpg">
+<meta property="og:image" content="http://tianyuh.com/images/old-resources/14901947887360.jpg">
+<meta property="og:image" content="http://tianyuh.com/images/old-resources/14901945203509.jpg">
+<meta property="og:image" content="http://tianyuh.com/images/old-resources/14901944615694.jpg">
+<meta property="article:published_time" content="2017-03-23T03:07:38.000Z">
+<meta property="article:modified_time" content="2022-10-24T00:22:41.734Z">
+<meta property="article:author" content="Tianyu Hong">
+<meta property="article:tag" content="image processing">
+<meta property="article:tag" content="BoW">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="classification">
+<meta property="article:tag" content="NLP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://tianyuh.com/images/old-resources/14901949601534.jpg">
+
+<link rel="canonical" href="http://tianyuh.com/2017/03/22/Bag-of-Words-for-Image-Classification/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Bag of Words for Image Classification | 塞外麾下炙</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-88787389-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-88787389-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">塞外麾下炙</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/03/22/Bag-of-Words-for-Image-Classification/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Tianyu Hong">
+      <meta itemprop="description" content="Why so serious!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="塞外麾下炙">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Bag of Words for Image Classification
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-03-22 20:07:38" itemprop="dateCreated datePublished" datetime="2017-03-22T20:07:38-07:00">2017-03-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/Computer-Vision/" itemprop="url" rel="index">
+                    <span itemprop="name">Computer Vision</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2017/03/22/Bag-of-Words-for-Image-Classification/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/03/22/Bag-of-Words-for-Image-Classification/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>最近了解到了一种很有意思的关于图像分类的算法，用bag of words的思想来对图像进行处理，很巧妙地将原本是图像处理的问题变换成了自然语言处理的问题。本文将简要对这种方法进行介绍。<br><span id="more"></span></p>
+<h2 id="Bag-of-Words-BoW-词袋模型原理"><a href="#Bag-of-Words-BoW-词袋模型原理" class="headerlink" title="Bag of Words (BoW) 词袋模型原理"></a>Bag of Words (BoW) 词袋模型原理</h2><p>Bag of words model (BoW model) 最早出现在NLP和IR领域。该模型将一段文字视为一系列无序的单词，忽略掉文本的语法和语序。近年来，BoW模型被广泛应用于计算机视觉中。与应用于文本的BoW类比，图像的特征被当作单词。</p>
+<p>在BoW中，我们统计的是一个词在一份文档中出现的次数，比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(1) John likes to watch movies. Mary likes movies too.</span><br><span class="line">(2) John also likes to watch football games.</span><br></pre></td></tr></table></figure>
+<p>中有10个不同的词，分别可以被构建为一个如下的向量：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(1) [1, 2, 1, 1, 2, 0, 0, 0, 1, 1] </span><br><span class="line">(2) [1, 1, 1, 1, 0, 1, 1, 1, 0, 0] </span><br></pre></td></tr></table></figure>
+<p>在邮件过滤中，这种方法有着很好地应用。</p>
+<p>在<a href="https://tianyuh.com/2017/03/28/%E6%B5%85%E8%B0%88%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B%EF%BC%88%E4%B8%80%EF%BC%89/">浅谈主题模型</a>中，我所介绍的TF-IDF在本质上也是一种BoW模型，不同在于加上了Term Weighting。</p>
+<h2 id="提取图像特征"><a href="#提取图像特征" class="headerlink" title="提取图像特征"></a>提取图像特征</h2><p>机器学习的第一步也是最重要的一步就是提取特征，这关乎到随后一系列工作中数据的质量问题。在BoW处理图像的过程中，我们可以用Filter Bank或是SIFT等方法来提取</p>
+<h3 id="Filter-Bank"><a href="#Filter-Bank" class="headerlink" title="Filter Bank"></a>Filter Bank</h3><p>用不同的滤波器对图像进行滤波，得到一系列滤波处理后的图片，随机选取一些pixel，组成一列，然后将所有滤波后的图片一起组成一个矩阵。矩阵中每个元素的值是rgb三值。以此构成的矩阵中的每一行是一个特征向量。</p>
+<p>本文下述的相关操作都是基于filter bank的方法来做的。</p>
+<h3 id="SIFT"><a href="#SIFT" class="headerlink" title="SIFT"></a>SIFT</h3><p>SIFT特征虽然也能描述一幅图像，但是每个SIFT矢量都是128维的，而且一幅图像通常都包含成百上千个SIFT矢量，在进行相似度计算时，这个计算量是非常大的，通行的做法是用聚类算法对这些矢量数据进行聚类，然后用聚类中的一个簇代表BoW中的一个视觉词，将同一幅图像的SIFT矢量映射到视觉词序列生成码本，这样每一幅图像只用一个码本矢量来描述，这样计算相似度时效率就大大提高了。</p>
+<p>在BoW中我们对每一幅图像提取SIFT特征（每一幅图像提取多少个SIFT特征不定）。每一个SIFT特征用一个128维的描述子矢量表示。每一个SIFT特征即为特征向量。</p>
+<h2 id="构建词库"><a href="#构建词库" class="headerlink" title="构建词库"></a>构建词库</h2><p>创建完特征向量后，我们需要将特征向量和词对应起来（map to words）。</p>
+<p>我们可以用k-means的方法对特征向量进行聚类，用欧氏距离表示cluster和特征点之间的距离，通过多次迭代得到的每个cluster就是词。因此我们在进行k-mean的时候要仔细确定好词的数量，太多的词会导致过拟合而太少的词会出现欠拟合现象。</p>
+<p>完成这一步后，我们就构建完成了一个词库，接下来就要在图像中表现出这些词。</p>
+<p>下图为一些出现的高频“词”</p>
+<p><img src="/images/old-resources/14901949601534.jpg" alt=""></p>
+<h2 id="图像中词的直方图分布（Visual-Words）"><a href="#图像中词的直方图分布（Visual-Words）" class="headerlink" title="图像中词的直方图分布（Visual Words）"></a>图像中词的直方图分布（Visual Words）</h2><p>对于图像中的每个点，用欧式距离法判断属于哪个词，从而得到图像中词的一个直方图分布。下图表示的是visual word的信息。</p>
+<p><img src="/images/old-resources/14901947887360.jpg" alt=""></p>
+<p>为了不完全抛弃图中pixel的位置，我们还可以采用spacial pyramid matching的方法来保留一部分spacial information（表现在所取的每个patch中）</p>
+<p><img src="/images/old-resources/14901945203509.jpg" alt=""></p>
+<p>此外，我们甚至可以将TF-IDF的思想引入其中，得到具体的值，在test的过程中通过内积来做相似性度量。</p>
+<h2 id="KNN进行图像分类（testing）"><a href="#KNN进行图像分类（testing）" class="headerlink" title="KNN进行图像分类（testing）"></a>KNN进行图像分类（testing）</h2><p>将training set中的每个直方图分布视为一个vector，先获取testing set中的一幅图的直方图分布，比较和training set中图的距离，找出最近的k个点中所对应training image的对应分类即是该图的分类结果。</p>
+<p><img src="/images/old-resources/14901944615694.jpg" alt=""></p>
+<p>需要注意的一点是，k的取值不能太大，尤其是当某一类中的图片较少时更是如此。</p>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/image-processing/" rel="tag"><i class="fa fa-tag"></i> image processing</a>
+              <a href="/tags/BoW/" rel="tag"><i class="fa fa-tag"></i> BoW</a>
+              <a href="/tags/algorithm/" rel="tag"><i class="fa fa-tag"></i> algorithm</a>
+              <a href="/tags/classification/" rel="tag"><i class="fa fa-tag"></i> classification</a>
+              <a href="/tags/NLP/" rel="tag"><i class="fa fa-tag"></i> NLP</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/03/09/Deep-Learning-Chapter-2/" rel="prev" title="Deep Learning Chapter 2">
+      <i class="fa fa-chevron-left"></i> Deep Learning Chapter 2
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/03/28/%E6%B5%85%E8%B0%88%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B%EF%BC%88%E4%B8%80%EF%BC%89/" rel="next" title="浅谈主题模型（一） —— 主题模型进化史">
+      浅谈主题模型（一） —— 主题模型进化史 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Bag-of-Words-BoW-%E8%AF%8D%E8%A2%8B%E6%A8%A1%E5%9E%8B%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">Bag of Words (BoW) 词袋模型原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E5%8F%96%E5%9B%BE%E5%83%8F%E7%89%B9%E5%BE%81"><span class="nav-number">2.</span> <span class="nav-text">提取图像特征</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Filter-Bank"><span class="nav-number">2.1.</span> <span class="nav-text">Filter Bank</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SIFT"><span class="nav-number">2.2.</span> <span class="nav-text">SIFT</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E8%AF%8D%E5%BA%93"><span class="nav-number">3.</span> <span class="nav-text">构建词库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F%E4%B8%AD%E8%AF%8D%E7%9A%84%E7%9B%B4%E6%96%B9%E5%9B%BE%E5%88%86%E5%B8%83%EF%BC%88Visual-Words%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">图像中词的直方图分布（Visual Words）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#KNN%E8%BF%9B%E8%A1%8C%E5%9B%BE%E5%83%8F%E5%88%86%E7%B1%BB%EF%BC%88testing%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">KNN进行图像分类（testing）</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Tianyu Hong"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Tianyu Hong</p>
+  <div class="site-description" itemprop="description">Why so serious!</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Htiango" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Htiango" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/tianyu-hong/" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;tianyu-hong&#x2F;" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linkedin</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tianyu Hong</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v6.3.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.1
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://tianyuh.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://tianyuh.com/2017/03/22/Bag-of-Words-for-Image-Classification/";
+    this.page.identifier = "2017/03/22/Bag-of-Words-for-Image-Classification/";
+    this.page.title = "Bag of Words for Image Classification";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://tianyuh.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>

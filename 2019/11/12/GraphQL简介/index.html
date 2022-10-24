@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/favicon/safari-pinned-tab.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://tianyuh.com').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.7.1',
+    exturl: false,
+    sidebar: {"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":true,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="有幸在工作中使用并熟悉了GraphQL，将在本文对其进行简要的介绍，并附上如何构建一个基于Django的GraphQL API 的 tutorial。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GraphQL Introduction">
+<meta property="og:url" content="http://tianyuh.com/2019/11/12/GraphQL%E7%AE%80%E4%BB%8B/index.html">
+<meta property="og:site_name" content="塞外麾下炙">
+<meta property="og:description" content="有幸在工作中使用并熟悉了GraphQL，将在本文对其进行简要的介绍，并附上如何构建一个基于Django的GraphQL API 的 tutorial。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-11-13T06:51:41.000Z">
+<meta property="article:modified_time" content="2022-10-24T00:22:41.736Z">
+<meta property="article:author" content="Tianyu Hong">
+<meta property="article:tag" content="GraphQL">
+<meta property="article:tag" content="Django">
+<meta property="article:tag" content="backend">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://tianyuh.com/2019/11/12/GraphQL%E7%AE%80%E4%BB%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>GraphQL Introduction | 塞外麾下炙</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-88787389-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-88787389-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">塞外麾下炙</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2019/11/12/GraphQL%E7%AE%80%E4%BB%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Tianyu Hong">
+      <meta itemprop="description" content="Why so serious!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="塞外麾下炙">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          GraphQL Introduction
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-11-12 22:51:41" itemprop="dateCreated datePublished" datetime="2019-11-12T22:51:41-08:00">2019-11-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CS-Knowledge/" itemprop="url" rel="index">
+                    <span itemprop="name">CS Knowledge</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2019/11/12/GraphQL%E7%AE%80%E4%BB%8B/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/11/12/GraphQL简介/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>有幸在工作中使用并熟悉了GraphQL，将在本文对其进行简要的介绍，并附上如何构建一个基于Django的GraphQL API 的 tutorial。</p>
+<span id="more"></span>
+<p>后端程序猿们都知道REST，这种API的定义方式一直广为流行。不过想必熟悉REST的朋友也知道，在REST下，每个接口对应着一个URL。随着接口的增多，URL的命名和维护的成本也逐步升高，而对文档的维护成本也很高。</p>
+<p>熟悉Django的朋友想必也曾经历过维护REST API的痛苦，尤其是看着<code>urls.py</code>文件越来越长，文档更新速度永远赶不上需求的变动。</p>
+<p>今年年初的时候，有幸全权负责一个internal website的后端部分，在和前端定义接口的时候，我们决定采用GraphQL而非REST。在整个项目进行的过程中，我深刻感受到了GraphQL带来的便利。当时也整理了不少相关的知识点(in English OF COURSE!)，懒得做翻译的我决定就直接把当时的笔记贴过来，希望能够有所帮助！</p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>REST APIs requires loading from multiple URLs, while GraphQL APIs can get all the data your app needs in a single request.</p>
+<p>There are multiple server libraries for GraphQL. And I mainly use the <code>Graphene</code>. And <code>graphene-django</code> is also a very good library binding with Django. </p>
+<p>Though I haven’t tried its client libraries, but GraphQL does provide a bunch of client libraries. (It’s also very easy to implement since only involves HTTP requests)</p>
+<p>By reading through the <a target="_blank" rel="noopener" href="https://graphql.org/learn/">official documentation</a>, you should be able to know about GraphQL. </p>
+<h2 id="How-to-query-a-GraphQL-server"><a href="#How-to-query-a-GraphQL-server" class="headerlink" title="How to query a GraphQL server"></a>How to query a GraphQL server</h2><p>When querying, GraphQL asks for specific fields on objects. We can also pass arguments to fields to get more specific field results. In GraphQL, every field and nested object can get its own set of arguments, making GraphQL a complete replacement for making multiple API fetches.</p>
+<p>Since the result object fields may not include the arguments we pass, you can’t directly query for the same field with different arguments. So it lets you rename the result (aliase). </p>
+<p>If we requires a fileds multiple times, we can use GraphQL’s reusable units called fragments. (construct sets of fields and we can include them in queries wherever we want)</p>
+<p>GraphQL queries always end at scalar values.</p>
+<p>Each field on each type is backed by a function called the resolver which is provided by the GraphQL server developer. </p>
+<p>A resolver function receives four arguments:</p>
+<ol>
+<li><strong>obj</strong>: The previous object, which for a field on the root Query type is often not used.</li>
+<li><strong>args</strong>: The arguments provided to the field in the GraphQL query.</li>
+<li><strong>context</strong>: A value which is provided to every resolver and holds important contextual information like the currently logged in user, or access to a database.</li>
+<li><strong>info</strong>: A value which holds field-specific information relevant to the current query as well as the schema details, also refer to type GraphQLResolveInfo for more details</li>
+</ol>
+<p>Resolve function can be asynchronous and needs to be aware of <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>. </p>
+<p>Different fields can be resolved concurrently.</p>
+<h2 id="How-to-mutate-server-side-data"><a href="#How-to-mutate-server-side-data" class="headerlink" title="How to mutate server-side data"></a>How to mutate server-side data</h2><p>By convention, any operation involving writes should be sent via mutation. </p>
+<p>While query fields are executed in parallel, mutation fields run in series, one after the other.</p>
+<p>GraphQL also supports interfaces. An Interface is an abstract type that includes a certain set of fields that a type must include to implement the interface.</p>
+<h2 id="How-to-build-GraphQL-APIs-using-Django"><a href="#How-to-build-GraphQL-APIs-using-Django" class="headerlink" title="How to build GraphQL APIs using Django"></a>How to build GraphQL APIs using Django</h2><p>In Python, we use <code>Graphene</code> as the library to implement GraphQL APIs. But when I implemented my Django based GraphQL APIs, I choose the <code>Graphene-Django</code> library. It is built upon <code>Graphene</code> and has some Django related features. The goal of it is to connect models from Django ORM to graphene object types.</p>
+<p>In order to have GraphQL APIs in Django, we have to:</p>
+<h3 id="Put-following-in-project-settings"><a href="#Put-following-in-project-settings" class="headerlink" title="Put following in project settings:"></a>Put following in project settings:</h3><pre><code><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = [</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment"># This will also make the `graphql_schema` management command available</span></span><br><span class="line">    <span class="string">&#x27;graphene_django&#x27;</span>,</span><br><span class="line">    ...</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+</code></pre><h3 id="Put-following-in-project-url"><a href="#Put-following-in-project-url" class="headerlink" title="Put following in project url:"></a>Put following in project url:</h3><pre><code><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">urlpatterns = [</span><br><span class="line">    url(<span class="string">r&#x27;^admin/&#x27;</span>, admin.site.urls),</span><br><span class="line">    ...</span><br><span class="line">    url(<span class="string">r&#x27;^graphql$&#x27;</span>, GraphQLView.as_view(graphiql=<span class="literal">True</span>, schema=schema&#125;)),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+</code></pre><h3 id="Define-a-global-schema-combining-all-apps-schema-in-project-schema-py"><a href="#Define-a-global-schema-combining-all-apps-schema-in-project-schema-py" class="headerlink" title="Define a global schema (combining all apps schema) in project.schema.py:"></a>Define a global schema (combining all apps schema) in <code>project.schema.py</code>:</h3><pre><code><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Query</span>(app1.schema.Query,</span><br><span class="line">            app2.schema.Query,</span><br><span class="line">            ...,</span><br><span class="line">            graphene.ObjectType):</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Mutation</span>(app1.schema.Mutation, </span><br><span class="line">               app2.schema.Mutation,</span><br><span class="line">               ...,</span><br><span class="line">               graphene.ObjectType):</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">schema = graphene.Schema(query=Query, mutation=Mutation)</span><br></pre></td></tr></table></figure>
+</code></pre><h3 id="Define-each-Query-Mutation-in-each-relative-app"><a href="#Define-each-Query-Mutation-in-each-relative-app" class="headerlink" title="Define each Query/Mutation in each relative app."></a>Define each Query/Mutation in each relative app.</h3><p>This is for the modularization purpose</p>
+<h2 id="GraphQL-good-and-bad"><a href="#GraphQL-good-and-bad" class="headerlink" title="GraphQL good and bad"></a>GraphQL good and bad</h2><p>Compared with REST, GraphQL does has a bunch of advantages. But it also has some short-comes.</p>
+<h3 id="The-good"><a href="#The-good" class="headerlink" title="The good:"></a>The good:</h3><ul>
+<li>Client can get exact what they need and receive data in expected formats. </li>
+<li>Users can know what data is available since GraphQL service defines a set of types which completely describe the set of possible data you can query on that service</li>
+<li>Can fetch all required data with one single request. </li>
+<li>…</li>
+</ul>
+<h3 id="The-bad"><a href="#The-bad" class="headerlink" title="The bad:"></a>The bad:</h3><ul>
+<li>Caching control. Caching is built into in the HTTP specification which RESTful APIs are able to leverage. But in GraphQL since there is only one endpoint, it’s complex to control caching. </li>
+<li>Complex to do error handle since queries always return a HTTP status code of 200</li>
+<li>More engineer work. Developers has to define a GraphQL schema</li>
+</ul>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/GraphQL/" rel="tag"><i class="fa fa-tag"></i> GraphQL</a>
+              <a href="/tags/Django/" rel="tag"><i class="fa fa-tag"></i> Django</a>
+              <a href="/tags/backend/" rel="tag"><i class="fa fa-tag"></i> backend</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/11/11/%E5%86%99%E5%9C%A8%E9%87%8D%E5%90%AFblog%E5%89%8D/" rel="prev" title="写在重启blog前">
+      <i class="fa fa-chevron-left"></i> 写在重启blog前
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/07/%E4%BD%A0%E7%9A%84%E6%9C%8B%E5%8F%8B%E5%9C%88%E5%8E%BB%E5%93%AA%E9%87%8C%E4%BA%86/" rel="next" title="你的朋友圈去哪里了">
+      你的朋友圈去哪里了 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Summary"><span class="nav-number">1.</span> <span class="nav-text">Summary</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-query-a-GraphQL-server"><span class="nav-number">2.</span> <span class="nav-text">How to query a GraphQL server</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-mutate-server-side-data"><span class="nav-number">3.</span> <span class="nav-text">How to mutate server-side data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-build-GraphQL-APIs-using-Django"><span class="nav-number">4.</span> <span class="nav-text">How to build GraphQL APIs using Django</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Put-following-in-project-settings"><span class="nav-number">4.1.</span> <span class="nav-text">Put following in project settings:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Put-following-in-project-url"><span class="nav-number">4.2.</span> <span class="nav-text">Put following in project url:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Define-a-global-schema-combining-all-apps-schema-in-project-schema-py"><span class="nav-number">4.3.</span> <span class="nav-text">Define a global schema (combining all apps schema) in project.schema.py:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Define-each-Query-Mutation-in-each-relative-app"><span class="nav-number">4.4.</span> <span class="nav-text">Define each Query&#x2F;Mutation in each relative app.</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GraphQL-good-and-bad"><span class="nav-number">5.</span> <span class="nav-text">GraphQL good and bad</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#The-good"><span class="nav-number">5.1.</span> <span class="nav-text">The good:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-bad"><span class="nav-number">5.2.</span> <span class="nav-text">The bad:</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Tianyu Hong"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Tianyu Hong</p>
+  <div class="site-description" itemprop="description">Why so serious!</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Htiango" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Htiango" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/tianyu-hong/" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;tianyu-hong&#x2F;" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linkedin</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tianyu Hong</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v6.3.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.1
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://tianyuh.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://tianyuh.com/2019/11/12/GraphQL%E7%AE%80%E4%BB%8B/";
+    this.page.identifier = "2019/11/12/GraphQL简介/";
+    this.page.title = "GraphQL Introduction";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://tianyuh.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>

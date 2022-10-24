@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/favicon/safari-pinned-tab.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://tianyuh.com').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.7.1',
+    exturl: false,
+    sidebar: {"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":true,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="本科阶段，我用NLP的方法处理从网上健康社区爬取下来的问答数据，通过主题模型的构建实现了对患者提问的答案以及专家的智能化匹配过程。本文及以后的一系列“浅谈主题模型”主要谈谈主题模型的历史，着重介绍下LDA模型，同时也对自己曾经的项目做一个总结概括。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈主题模型（一） —— 主题模型进化史">
+<meta property="og:url" content="http://tianyuh.com/2017/03/28/%E6%B5%85%E8%B0%88%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
+<meta property="og:site_name" content="塞外麾下炙">
+<meta property="og:description" content="本科阶段，我用NLP的方法处理从网上健康社区爬取下来的问答数据，通过主题模型的构建实现了对患者提问的答案以及专家的智能化匹配过程。本文及以后的一系列“浅谈主题模型”主要谈谈主题模型的历史，着重介绍下LDA模型，同时也对自己曾经的项目做一个总结概括。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://tianyuh.com/images/old-resources/14902797703583.jpg">
+<meta property="og:image" content="http://tianyuh.com/images/old-resources/14902799008348.jpg">
+<meta property="og:image" content="http://tianyuh.com/images/old-resources/14902803695129.jpg">
+<meta property="article:published_time" content="2017-03-29T03:27:24.000Z">
+<meta property="article:modified_time" content="2022-10-24T00:22:41.738Z">
+<meta property="article:author" content="Tianyu Hong">
+<meta property="article:tag" content="NLP">
+<meta property="article:tag" content="主题模型">
+<meta property="article:tag" content="贝叶斯">
+<meta property="article:tag" content="统计">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://tianyuh.com/images/old-resources/14902797703583.jpg">
+
+<link rel="canonical" href="http://tianyuh.com/2017/03/28/%E6%B5%85%E8%B0%88%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>浅谈主题模型（一） —— 主题模型进化史 | 塞外麾下炙</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-88787389-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-88787389-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">塞外麾下炙</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/03/28/%E6%B5%85%E8%B0%88%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Tianyu Hong">
+      <meta itemprop="description" content="Why so serious!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="塞外麾下炙">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          浅谈主题模型（一） —— 主题模型进化史
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-03-28 20:27:24" itemprop="dateCreated datePublished" datetime="2017-03-28T20:27:24-07:00">2017-03-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/NLP/Topic-Model/" itemprop="url" rel="index">
+                    <span itemprop="name">Topic Model</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2017/03/28/%E6%B5%85%E8%B0%88%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B%EF%BC%88%E4%B8%80%EF%BC%89/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/03/28/浅谈主题模型（一）/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>本科阶段，我用NLP的方法处理从网上健康社区爬取下来的问答数据，通过主题模型的构建实现了对患者提问的答案以及专家的智能化匹配过程。本文及以后的一系列“浅谈主题模型”主要谈谈主题模型的历史，着重介绍下LDA模型，同时也对自己曾经的项目做一个总结概括。<br><span id="more"></span></p>
+<p>在自然语言处理中，一个非常重要的步骤就是word embedding，即将词转为向量的过程。而主题模型在本质上也是一种将词转为向量的方法。本块主要介绍主题模型的发展历程并分析各个模型的优劣之处。</p>
+<h2 id="TF-IDF"><a href="#TF-IDF" class="headerlink" title="TF-IDF"></a>TF-IDF</h2><p>早在上世纪 80 年代，研究者们常常使用 TF-IDF 法来进行文档的检索和信息的提取。</p>
+<p>在 TF-IDF 方法中，先选择一个基于词或者词组的基本词汇，然后对于语料库中的每个文档，分别统计其中每个单词的出现次数。经过合适的正则化后，再将词的频率计数和反向文档频率计数相比较，得到一个词数乘以文档数的向量 X。向量的每个行中都包含着语料库中每个文档的 TF-IDF 值。</p>
+<p>IF 和 IDF 的概念见下：</p>
+<script type="math/tex; mode=display">
+tf_{i,j}=\frac {n_{i,j}}{\sum_k n_{k,j}}</script><p>其中$if_{i,j}$是该词在文件$d_j$中出现的次数，分母表示文件$d_j$中所有字词的出现次数之和。</p>
+<script type="math/tex; mode=display">
+idf_i =\log \frac {|D|}{|\{j:t_i \in d_j\}|}</script><p>|D|是语料库中的文件总数<br>$|{j:t_i \in d_j}|$ 表示包含词语 $t_i$ 的文件数目。如果词语不在语料库中，为了避免分母为零的情况，一般会加上1.</p>
+<script type="math/tex; mode=display">
+tfidf_{i,j} = tf_{i,j} \times idf_{i,j}</script><p>对于某一特定文件中的高频词语，如果含有该词语的文档在整个文件集中是低频的，则我们可以得到一个较大的TF-IDF的值。因此，TF-IDF倾向于过滤去常见的词语，保留重要的词语。</p>
+<p>但是整个TF-IDF算法是建立在一个假设之上的：一个单词出现的文本频数越小，它区别不同类别文本的能力就越大。这个假设很多时候是不正确的，尤其是在引入IDF的过程中，单纯地认为文本频率小的单词就越重要，文本频率大的单词就越无用，显然这并不是完全正确的。其也不能有效地反映单词的重要程度和特征词的分布情况，因此精度有限。</p>
+<h2 id="LSA-隐形语言分析"><a href="#LSA-隐形语言分析" class="headerlink" title="LSA 隐形语言分析"></a>LSA 隐形语言分析</h2><p>如果说TF-IDF算法体现的是文档中词出现的频率的情况，那么LSA则更进了一步，其目的是为了从文本中发现隐含的topic。</p>
+<p>在文档的空间向量模型中，文档被表示成由特征词出现概率组成的多维向量，这种方法可以通过对不同词赋予不同的权重，应用于文本检索、分类以及聚类等问题中。然而这种空间向量模型没有能力处理一词多义以及一义多词这类问题。同义词也分别被表示成独立的一维，计算向量的余弦相似度时会低估用户期望的相似度，而某个词项有多个词义时，始终对应同一维度，因此计算的结果会高估用户期望的相似度。</p>
+<p>而LSA的方法就减轻了类似的问题。LSA使用矩阵的奇异值分解来确定一个在 TF-IDF 特征空间中的线性子空间，实现大幅压缩以及对同义和一词多义等基本语言概念的捕捉。</p>
+<p>通过SVD分解，我们可以构造一个原始向量矩阵的一个低秩逼近矩阵，具体的做法是将词项文档矩阵做SVD分解：</p>
+<script type="math/tex; mode=display">
+C = U\Sigma V^T</script><p>其中C是以词为行，文档为列的矩阵，设一共有t行d列,  矩阵的元素为词项的TF-IDF值。然后把 $\Sigma$ 的r个对角元素的前k个保留（最大的k个保留）, 后面最小的r-k个奇异值置0, 得到 $\Sigma_k$ ；最后计算一个近似的分解矩阵</p>
+<script type="math/tex; mode=display">
+C_k = U\Sigma_kV^T</script><p>$C_k$ 在最小二乘意义下是C的最佳逼近。由于 $\Sigma_k$ 最多包含k个非零元素，所以 $C_k$ 的秩不超过k。通过在SVD分解近似，我们将原始的向量转化成一个低维隐含语义空间，起到了特征降维的作用。每个奇异值对应的是每个“语义”维度的权重，将不太重要的权重置为0，只保留最重要的维度信息，去掉一些信息 “nosie”，因而可以得到文档的一种更优表示形式。</p>
+<p><img src="/images/old-resources/14902797703583.jpg" alt=""></p>
+<p><img src="/images/old-resources/14902799008348.jpg" alt=""></p>
+<p>上图是原始矩阵的SVD分解，下图是只保留权重最大2维，将原始矩阵降到2维后的情况。</p>
+<h2 id="pLSA-潜在语义索引概率模型"><a href="#pLSA-潜在语义索引概率模型" class="headerlink" title="pLSA 潜在语义索引概率模型"></a>pLSA 潜在语义索引概率模型</h2><p>尽管基于SVD的LSA取得了一定的成功，但是其缺乏严谨的数理统计基础，而且SVD分解非常耗时。Hofmann在SIGIR’99上提出了基于概率统计的PLSA模型，并且用EM算法学习模型参数。PLSA的概率图模型如下</p>
+<p><img src="/images/old-resources/14902803695129.jpg" alt=""></p>
+<p>其中D代表文档，Z代表隐含类别或者主题，W为观察到的单词，$P(d_i)$表示单词出现在文档的概率，$P(z_k|d_i) $表示文档$d_i$中出现主题$z_k$下的单词的概率，$P(w_j|z_k)$给定主题$z_k$出现单词$w_j$的概率。并且每个主题在所有词项上服从Multinomial分布，每个文档在所有主题上服从Multinomial 分布。整个文档的生成过程是这样的：<br>(1) 以$P(d_i)$的概率选中文档$d_i$；<br>(2) 以$P(z_k|d_i)$的概率选中主题$z_k$；<br>(3) 以$P(w_j|z_k)$的概率产生一个单词$w_j$。<br>我们可以观察到的数据就是$(d_i, w_j)$对，而$z_k$是隐含变量。$(d_i, w_j)$的联合分布为:</p>
+<script type="math/tex; mode=display">
+P(d_i,w_j) = P(d_i)P(w_j|d_i), P(w_j|d_i) = \sum_{k = 1}^{K}P(w_j|z_k)P(z_k|d_i)</script><p>而$P(z_k|d_i)$和 $P(w_j|z_k)$分别对应了两组Multinomial分布，我们需要估计这两组分布的参数，一般是用EM算法来估算出pLSA的参数。关于EM算法可以详见<a href="http://tianyuh.com/2017/03/08/%E4%BB%8EEM%E7%AE%97%E6%B3%95%E5%88%B0GMM%E6%A8%A1%E5%9E%8B/">从EM算法到GMM模型</a>一文。在此不做推导证明，只列出最终答案：</p>
+<script type="math/tex; mode=display">
+P(w_j|z_k) = \frac{\sum_{i = 1}^{N}n(d_i,w_j)P(z_k|d_i,wj)}{\sum_{m = 1}^{M}{\sum_{i = 1}^{N}n(d_i,w_j)P(z_k|d_i,w_m)}}</script><script type="math/tex; mode=display">
+P(z_k|d_i) = \frac{\sum_{j = 1}^{M}n(d_i,w_j)P(z_k|d_i,wj)}{n(d_i)}</script><p>如此不断在E-step和M-step中迭代，直到满足终止条件。（具体的参考过程可以详见这篇<a target="_blank" rel="noopener" href="http://blog.csdn.net/yangliuy/article/details/8330640">博文</a>）</p>
+<p>pLSA将文档中的每个词建模为一个来自混合模型的样本。这个混合模型中的成分是可以被看作“主题”的多项式随机变量。因此每个词都是由单一一个主题产生的，文档中不同的词语可以由不同的主题产生的。每篇文档可以表示为各种主题按照一定比例的混合，成为主题集下的分布。尽管 Hofmann 的成果对于主题概率模型是具有启发性的，但是在 pLSA 模型中，Hofman 仅仅将文档——主题、主题——词的分布视为参数而非随机变量。这使得模型中的参数数目和语料库呈线性关系，最终会导致由于语料库的增大导致过拟合，此外其也缺乏对训练集以外的文档的理论支持。</p>
+<h2 id="LDA-Latent-Dirichlet-Allocation"><a href="#LDA-Latent-Dirichlet-Allocation" class="headerlink" title="LDA (Latent Dirichlet Allocation)"></a>LDA (Latent Dirichlet Allocation)</h2><p>David Blei在2003年提出了LDA（Latent Dirichlet Allocation）的概念，对pLSA模型进行了贝叶斯拓展，利用一种层级贝叶斯模型构建了LDA模型，通过把模型的参数看作随机变量，引入控制参数的参数，实现模型概率化，避免同pLSA那样随着语料库的增大而出现过拟合现象。</p>
+<p>下下节中会对LDA进行简要的介绍。</p>
+<p>自从LDA的概念提出以来，主题模型已经在诸多文本挖掘的领域取得了令人瞩目的成果。主题概率模型不同于以往的空间向量模型（以TF-IDF为例）和语言模型（n-gram 等），它通过主题在词上的概率分布将主题引入文档中，再将文档视为主题的概率分布，从而分析出文档内潜在的主题。主题概率模型的优越性不仅仅体现在其能够分析出文档中的潜在主题，更在于通过主题概率模型，我们能够显著地降低文档特征的维度。相比较于TFIDF中词→文档，主题概率模型通过词→主题→文档将词与文档隔离开，由于主题个数远远小于词数，实现降维的过程。这种显著的降维可以使得针对大数据的分析操作有了实践基础，拥有了更低的训练模型成本。同时更低的维度也将数据自身的噪声影响降得更低，使得训练的结果更加优秀。</p>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/NLP/" rel="tag"><i class="fa fa-tag"></i> NLP</a>
+              <a href="/tags/%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B/" rel="tag"><i class="fa fa-tag"></i> 主题模型</a>
+              <a href="/tags/%E8%B4%9D%E5%8F%B6%E6%96%AF/" rel="tag"><i class="fa fa-tag"></i> 贝叶斯</a>
+              <a href="/tags/%E7%BB%9F%E8%AE%A1/" rel="tag"><i class="fa fa-tag"></i> 统计</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/03/22/Bag-of-Words-for-Image-Classification/" rel="prev" title="Bag of Words for Image Classification">
+      <i class="fa fa-chevron-left"></i> Bag of Words for Image Classification
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/03/28/%E6%B5%85%E8%B0%88%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="next" title="浅谈主题模型（二）—— 相关概率知识">
+      浅谈主题模型（二）—— 相关概率知识 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#TF-IDF"><span class="nav-number">1.</span> <span class="nav-text">TF-IDF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSA-%E9%9A%90%E5%BD%A2%E8%AF%AD%E8%A8%80%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">LSA 隐形语言分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pLSA-%E6%BD%9C%E5%9C%A8%E8%AF%AD%E4%B9%89%E7%B4%A2%E5%BC%95%E6%A6%82%E7%8E%87%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">pLSA 潜在语义索引概率模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LDA-Latent-Dirichlet-Allocation"><span class="nav-number">4.</span> <span class="nav-text">LDA (Latent Dirichlet Allocation)</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Tianyu Hong"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Tianyu Hong</p>
+  <div class="site-description" itemprop="description">Why so serious!</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Htiango" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Htiango" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/tianyu-hong/" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;tianyu-hong&#x2F;" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linkedin</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tianyu Hong</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v6.3.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.1
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://tianyuh.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://tianyuh.com/2017/03/28/%E6%B5%85%E8%B0%88%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B%EF%BC%88%E4%B8%80%EF%BC%89/";
+    this.page.identifier = "2017/03/28/浅谈主题模型（一）/";
+    this.page.title = "浅谈主题模型（一） —— 主题模型进化史";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://tianyuh.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>

@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/favicon/safari-pinned-tab.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://tianyuh.com').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.7.1',
+    exturl: false,
+    sidebar: {"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":true,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="承接“浅谈主题模型（二）”中的LDA的概率知识，本文着重介绍LDA模型。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈主题模型（三）—— LDA模型简介">
+<meta property="og:url" content="http://tianyuh.com/2017/03/28/%E6%B5%85%E8%B0%88%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B%EF%BC%88%E4%B8%89%EF%BC%89/index.html">
+<meta property="og:site_name" content="塞外麾下炙">
+<meta property="og:description" content="承接“浅谈主题模型（二）”中的LDA的概率知识，本文着重介绍LDA模型。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://tianyuh.com/images/old-resources/model%201.png">
+<meta property="og:image" content="http://tianyuh.com/images/old-resources/14908762507727.jpg">
+<meta property="article:published_time" content="2017-03-29T06:00:27.000Z">
+<meta property="article:modified_time" content="2022-10-24T00:22:41.738Z">
+<meta property="article:author" content="Tianyu Hong">
+<meta property="article:tag" content="NLP">
+<meta property="article:tag" content="LDA">
+<meta property="article:tag" content="主题模型">
+<meta property="article:tag" content="贝叶斯">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://tianyuh.com/images/old-resources/model%201.png">
+
+<link rel="canonical" href="http://tianyuh.com/2017/03/28/%E6%B5%85%E8%B0%88%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B%EF%BC%88%E4%B8%89%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>浅谈主题模型（三）—— LDA模型简介 | 塞外麾下炙</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-88787389-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-88787389-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">塞外麾下炙</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2017/03/28/%E6%B5%85%E8%B0%88%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B%EF%BC%88%E4%B8%89%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Tianyu Hong">
+      <meta itemprop="description" content="Why so serious!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="塞外麾下炙">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          浅谈主题模型（三）—— LDA模型简介
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-03-28 23:00:27" itemprop="dateCreated datePublished" datetime="2017-03-28T23:00:27-07:00">2017-03-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/NLP/Topic-Model/" itemprop="url" rel="index">
+                    <span itemprop="name">Topic Model</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2017/03/28/%E6%B5%85%E8%B0%88%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B%EF%BC%88%E4%B8%89%EF%BC%89/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/03/28/浅谈主题模型（三）/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>承接“浅谈主题模型（二）”中的LDA的概率知识，本文着重介绍LDA模型。<br><span id="more"></span></p>
+<h2 id="LDA-Model"><a href="#LDA-Model" class="headerlink" title="LDA Model"></a>LDA Model</h2><p>LDA模型的本质是一个unigram模型，模型中每个词的生成都与上下文无关。unigram模型中假设文本中的词服从multinomial分布，同时multinomial分布的先验分布为Dirichlet分布。</p>
+<p>LDA 模型作为一个关于语料库的概率发生模型。它的基本思想是文档被表示为基于潜在主题的随机混合，其中每个主题由于基于词的分布不同而与众不同。</p>
+<p>通过下面这张贝叶斯图，我们可以更好地理解LDA模型</p>
+<p><img src="/images/old-resources/model 1.png" alt="model 1"></p>
+<p>图中的框表示可重复执行的器件。外框表示的是文档，而内框表示对一篇文档内的主题和词的重复选择。</p>
+<p>对于LDA模型，我们有如下定义：</p>
+<ol>
+<li>词语是离散数据中的基本单元，我们将其定义为{1, …, V}词库中的一员。我们通过这些基本单元的向量来表示词，在这些向量中，都只有一个元素为 1，其余都是 0。因此，我们采用上标字符来表示向量中的元素，词库中的第 v 个词语表示为一个长度为 V的向量w，向量中$w_v = 1，w_u = 0$，其中u ≠ v。</li>
+<li>文档是一序列N个词，表示为$w = (w_1, w_2, …, w_N)$，其中$w_N$是这一序列中的第N个词</li>
+<li>语料库是一个M个文档的集合，表示为$D = {\mathbf{w_1}, \mathbf{w_2}, …, \mathbf{w_M}}$</li>
+<li>z表示为主题，主题数为K</li>
+</ol>
+<p>LDA为语料库D中的每个文档w假定以下生成过程</p>
+<ol>
+<li>$\alpha , \beta$ 分布为Dirichlet分布的先验参数，$\theta \sim Dir(\alpha), \phi \sim Dir(\beta)$</li>
+<li>$\theta$为文档-主题的大学生分布，$\phi$为主题-词的多项式分布，其中的主题数为K</li>
+<li>对于某一文档d中的一个词w，取主题$z \sim Multi(\theta_d)$， 生成对应词$w \sim Multi(\phi_z)$</li>
+</ol>
+<p>在构建模型的过程中，采用的是 Gibbs 采样的方法，通过一直迭代到收敛训练出最终的文档-主题分布θ、主题-词分布φ。</p>
+<p>利用 LDA 模型，我们可以获得文档潜在主题的分布，并利用朴素贝叶斯分类器用这些信息实现对相同文档的匹配等。</p>
+<h2 id="Gibbs-Sampling"><a href="#Gibbs-Sampling" class="headerlink" title="Gibbs Sampling"></a>Gibbs Sampling</h2><p>由于LDA中的主题z，文档-主题分布θ、主题-词分布φ都是未知的隐含变量，是需要根据观察到的文档集合中的词来学习估计的，所以不能通过最大似然估计的方法来确定主题分布，我们一般采用Gibbs Sampling的方法通过迭代得到文档-主题分布θ、主题-词分布φ。</p>
+<p>Gibbs Sampling 是Markov-Chain Monte Carlo算法的一个特例。这个算法的运行方式是每次选取概率向量的一个维度，给定其他维度的变量值Sample当前维度的值。不断迭代，直到收敛输出待估计的参数。</p>
+<p>换句话说，就是每一维度都是由其他维采样生成的，马氏链的转移只是轮流沿着该维度内的单条坐标轴进行转移，无法沿着单条坐标轴转移的，转移概率都设为0.</p>
+<p>图示如下：</p>
+<p><img src="/images/old-resources/14908762507727.jpg" alt=""></p>
+<ol>
+<li>初始时我们随机给文本中的每个单词分配主题$z^{(0)}$，</li>
+<li>然后统计每个主题z下出现term t的数量以及每个文档 m 下出现主题 z 中的词的数量，每一轮计算 $p(z<em>i|\mathbf{Z}</em>{-i}, \mathbf{d}, \mathbf{w})$，即排除当前词的主题分配，根据其他所有词的主题分配估计当前词分配各个主题的概率。</li>
+<li>当得到当前词属于所有主题z的概率分布后，根据这个概率分布为该词sample一个新的主题$z^{(1)}$。</li>
+<li>然后用同样的方法不断更新下一个词的主题，直到发现每个文档下Topic分布$\mathbf{\theta_m}$和每个Topic下词的分布$\mathbf{\phi_k}$收敛，算法停止，输出待估计的参数$\mathbf{\theta_m}$和$\mathbf{\phi_k}$。</li>
+<li>最终每个单词的主题也$z<em>{m,n}$同时得出。实际应用中会设置最大迭代次数。每一次计算$p(z_i|\mathbf{Z}</em>{-i}, \mathbf{d}, \mathbf{w})$的公式称为Gibbs updating rule。</li>
+</ol>
+<p>关于LDA模型通过Gibbs Sampling训练得到参数的具体数学公式推导，可以详见<a target="_blank" rel="noopener" href="https://pdfs.semanticscholar.org/a166/d65a5d5a2905b038288e59c4fd98864c6f44.pdf">Distributed Gibbs Sampling of Latent Topic Models: The Gritty Details</a></p>
+<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><p>训练得到LDA模型后，我们能够用这个模型做什么呢？在这里我简要介绍两种。</p>
+<h3 id="计算文档的topic语义分布"><a href="#计算文档的topic语义分布" class="headerlink" title="计算文档的topic语义分布"></a>计算文档的topic语义分布</h3><p>我们认定，对于一个新的文档$d<em>{new}$，之前训练阶段得到的主题-词分布φ是不变的，可以通过这样的方法得到该文档中的文档-主题分布$\theta</em>{new}$</p>
+<ol>
+<li>对文档中的每个词随机赋予一个topic z</li>
+<li>按照Gibbs Sampling的公司，对每个词重新采样它的topic</li>
+<li>重复上述过程直到收敛</li>
+<li>统计文档中的topic分布，得到该文档中的文档-主题分布$\theta_{new}$</li>
+</ol>
+<h3 id="文档匹配"><a href="#文档匹配" class="headerlink" title="文档匹配"></a>文档匹配</h3><p>我们可以用朴素贝叶斯分类器为新输入的文档找到与之前文档中最匹配的。</p>
+<p>公式如下：</p>
+<script type="math/tex; mode=display">
+P(d|d_{new}) \propto P(d) P(d_{new} | d) = P(d) \prod_{w \in d_{new}} \sum_z \phi_{w|z} \theta_{z|d}</script><p>这里z表示topic。用这个贝叶斯公式，我们通过遍历所有的训练集，找到匹配概率最大的文档就是语义最相似的文档。</p>
+<p>下一节我会简要介绍下我基于LDA模型的毕设和省创项目</p>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/NLP/" rel="tag"><i class="fa fa-tag"></i> NLP</a>
+              <a href="/tags/LDA/" rel="tag"><i class="fa fa-tag"></i> LDA</a>
+              <a href="/tags/%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B/" rel="tag"><i class="fa fa-tag"></i> 主题模型</a>
+              <a href="/tags/%E8%B4%9D%E5%8F%B6%E6%96%AF/" rel="tag"><i class="fa fa-tag"></i> 贝叶斯</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/03/28/%E6%B5%85%E8%B0%88%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="prev" title="浅谈主题模型（二）—— 相关概率知识">
+      <i class="fa fa-chevron-left"></i> 浅谈主题模型（二）—— 相关概率知识
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/03/28/%E6%B5%85%E8%B0%88%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B%EF%BC%88%E5%9B%9B%EF%BC%89/" rel="next" title="浅谈主题模型（四）—— 项目简介">
+      浅谈主题模型（四）—— 项目简介 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#LDA-Model"><span class="nav-number">1.</span> <span class="nav-text">LDA Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gibbs-Sampling"><span class="nav-number">2.</span> <span class="nav-text">Gibbs Sampling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%96%87%E6%A1%A3%E7%9A%84topic%E8%AF%AD%E4%B9%89%E5%88%86%E5%B8%83"><span class="nav-number">3.1.</span> <span class="nav-text">计算文档的topic语义分布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E6%A1%A3%E5%8C%B9%E9%85%8D"><span class="nav-number">3.2.</span> <span class="nav-text">文档匹配</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Tianyu Hong"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Tianyu Hong</p>
+  <div class="site-description" itemprop="description">Why so serious!</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Htiango" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Htiango" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/tianyu-hong/" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;tianyu-hong&#x2F;" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linkedin</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tianyu Hong</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v6.3.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.1
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://tianyuh.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://tianyuh.com/2017/03/28/%E6%B5%85%E8%B0%88%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B%EF%BC%88%E4%B8%89%EF%BC%89/";
+    this.page.identifier = "2017/03/28/浅谈主题模型（三）/";
+    this.page.title = "浅谈主题模型（三）—— LDA模型简介";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://tianyuh.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>

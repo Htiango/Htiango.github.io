@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/favicon/safari-pinned-tab.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://tianyuh.com').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.7.1',
+    exturl: false,
+    sidebar: {"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":true,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="Proxy Lab 作为 cmu 18600 以及 15213 这两门课的最后一个lab，其综合性非常强。既需要掌握好 web programming 以及 concurrent programming 的相关知识，还需要结合之前涉及的 shell 和 cache 的相关操作。本文将详细介绍 proxy lab 的解题思路。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="proxy-lab">
+<meta property="og:url" content="http://tianyuh.com/2016/12/09/proxy-lab/index.html">
+<meta property="og:site_name" content="塞外麾下炙">
+<meta property="og:description" content="Proxy Lab 作为 cmu 18600 以及 15213 这两门课的最后一个lab，其综合性非常强。既需要掌握好 web programming 以及 concurrent programming 的相关知识，还需要结合之前涉及的 shell 和 cache 的相关操作。本文将详细介绍 proxy lab 的解题思路。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://tianyuh.com/images/old-resources/Screen%20Shot%202016-12-09%20at%2010.35.56%20PM.png">
+<meta property="og:image" content="http://tianyuh.com/images/old-resources/Screen%20Shot%202016-12-09%20at%209.15.20%20PM.png">
+<meta property="og:image" content="http://tianyuh.com/images/old-resources/Screen%20Shot%202016-12-09%20at%209.15.37%20PM.png">
+<meta property="og:image" content="http://tianyuh.com/images/old-resources/Screen%20Shot%202016-12-09%20at%209.10.05%20PM.png">
+<meta property="og:image" content="http://tianyuh.com/images/old-resources/Screen%20Shot%202016-12-09%20at%209.31.06%20PM.png">
+<meta property="article:published_time" content="2016-12-10T06:29:47.000Z">
+<meta property="article:modified_time" content="2022-10-24T00:22:41.736Z">
+<meta property="article:author" content="Tianyu Hong">
+<meta property="article:tag" content="CSAPP">
+<meta property="article:tag" content="Lab">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://tianyuh.com/images/old-resources/Screen%20Shot%202016-12-09%20at%2010.35.56%20PM.png">
+
+<link rel="canonical" href="http://tianyuh.com/2016/12/09/proxy-lab/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>proxy-lab | 塞外麾下炙</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-88787389-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-88787389-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">塞外麾下炙</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://tianyuh.com/2016/12/09/proxy-lab/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Tianyu Hong">
+      <meta itemprop="description" content="Why so serious!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="塞外麾下炙">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          proxy-lab
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-12-09 22:29:47" itemprop="dateCreated datePublished" datetime="2016-12-09T22:29:47-08:00">2016-12-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CS-Knowledge/" itemprop="url" rel="index">
+                    <span itemprop="name">CS Knowledge</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2016/12/09/proxy-lab/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/12/09/proxy-lab/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Proxy Lab 作为 cmu 18600 以及 15213 这两门课的最后一个lab，其综合性非常强。既需要掌握好 web programming 以及 concurrent programming 的相关知识，还需要结合之前涉及的 shell 和 cache 的相关操作。<br><br>本文将详细介绍 proxy lab 的解题思路。</p>
+<span id="more"></span>
+<h2 id="什么是proxy"><a href="#什么是proxy" class="headerlink" title="什么是proxy"></a>什么是proxy</h2><p>首先，我们需要知道什么是<strong>proxy</strong>？<br><br>当我们平时打开浏览器的时候，输入一个URL，浏览器会向服务器发送相应的请求，服务器在接收到请求后会将相应的response发回给浏览器，如此循环往复从而加载完网页中的全部内容。<br><br>此时所有的请求和响应之间的交流全是发生在 client (浏览器)和 server (服务器)之间的。而有时我们会在client和server之间添加代理，来进行相关的处理，这个代理就是实验要求我们完成的proxy。<br></p>
+<p><em>proxy的大致示意图如下所示</em></p>
+<p><img src="/images/old-resources/Screen Shot 2016-12-09 at 10.35.56 PM.png" alt="流程图"><br></p>
+<h2 id="实验准备"><a href="#实验准备" class="headerlink" title="实验准备"></a>实验准备</h2><p>在本次实验中，我们采用的浏览器是Firefox，设置代理的过程如下所示：<br><br><em>打开设置中的高级，选择网络，点设置并按照如下设置（若proxy在本地则选择localhost或是127.0.0.1）</em><br><em>需要注意的是，端口一定要和之后运行proxy时的端口一致</em><br><img src="/images/old-resources/Screen Shot 2016-12-09 at 9.15.20 PM.png" alt="代理设置1"><br><br><img src="/images/old-resources/Screen Shot 2016-12-09 at 9.15.37 PM.png" alt="代理设置2"><br></p>
+<h2 id="proxy如何处理request"><a href="#proxy如何处理request" class="headerlink" title="proxy如何处理request"></a>proxy如何处理request</h2><p>打开Firefox网页，Mac下alt + cmd + q，Win下按F12进行观察，点击每条可以显示出请求和响应的内容<br><img src="/images/old-resources/Screen Shot 2016-12-09 at 9.10.05 PM.png" alt="网页1"><br></p>
+<p><img src="/images/old-resources/Screen Shot 2016-12-09 at 9.31.06 PM.png" alt="网页2"><br></p>
+<p>通过这种方法，我们可以很轻松地看到请求和响应头。</p>
+<p>而作为一个proxy，所需要做的事情主要有这么几件：<br></p>
+<ol>
+<li>从请求中获取请求的方法，请求网址的hostname，path以及port（没有的话为80）<em>(有多种方法解析，我采用的是正则表达式)</em> <br>  需要注意的是，本实验中不支持非get的方法，同时也不支持任何以HTTPS开头的网页请求。本实验中以501错误返回这类请求。<br> </li>
+<li>改变请求头中的一些内容（比如User-Agent，connection改为close）<br></li>
+<li>添加 Proxy-Connection: close，来确定请求响应的交换是否结束</li>
+<li>改变原先请求中的version。<em>（从 HTTP/1.1 到HTTP/1.0）</em> <br></li>
+</ol>
+<p>对网页端发送请求进行修改之后，发送给服务器，再将response返回给网页端，如此循环往复直到网页内容加载完毕</p>
+<h2 id="处理多线程操作"><a href="#处理多线程操作" class="headerlink" title="处理多线程操作"></a>处理多线程操作</h2><p>在完成上述内容之后，我们就实现了一个逐条处理网页端请求的proxy。但是在现实中这样的效率极其低下。所以对于我们的proxy还需要使其支持多线程操作。<br><br>其所涉及的函数如下所示<br></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">pthread_create</span><span class="params">(<span class="type">pthread_t</span> *thread, <span class="type">const</span> <span class="type">pthread_attr_t</span> *attr, <span class="type">void</span> *(*start_routine) (<span class="type">void</span> *), <span class="type">void</span> *arg)</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">pthread_detach</span><span class="params">(<span class="type">pthread_t</span> thread)</span>;</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+<p>其中pthread_create函数用于打开一个新的线程，通过调用start_routine这个函数，而其中的arg是start_routine函数的参数。<br><br>特别要注意的是，arg一定要事先进行malloc，为每个线程ID分配一个独立的块，并将指向这个块的指针传给start_routine。不然线程会出现竞争问题导致错误。同时在结束线程时一定要释放这些块来避免memory leak<em>（我就是在这里跪了很久的。。。）</em></p>
+<p>而第二个函数是用于在线程中防止线程被其他线程回收或杀死。</p>
+<p>在第一步中加入上述函数，基本上就能够实现proxy的多线程操作的部分。</p>
+<h2 id="存储网页内容"><a href="#存储网页内容" class="headerlink" title="存储网页内容"></a>存储网页内容</h2><p>以上的proxy已经基本完成了代理的要求。不过当我们重复请求某一个网址的时候，它还是要重新加载一遍，这就有点低效了。如果我们能够把之前网页端获取的响应存下来呢？这样当我们重复加载的时候就无需连接到服务器了。<br><br>所以，我们还要让我们的proxy能够存储网页的内容。<br>在本次实验中，我用一个类似于队列的双向链表来表示存储的cache。proxy在每次处理完网页端发来的请求后，先遍历整个链表，看是否有相同的request存在cache中，如果有就直接获取对应的response。没有的话就现将请求发动到server，将server返回的response写入到cache中。<br><br>在具体的操作中，我采用的是FIFO，每次都将新的request/response加在链表的头。一旦cache存储已满，就从尾部pop。<br><br>需要注意的是，一旦找到匹配的request之后，我们还需要将对应的node移到链表的头指针处。这样才符合FIFO。<br></p>
+<p>上述就是我对与proxy lab的总结，希望大家都能做出一个完美的proxy！！</p>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/CSAPP/" rel="tag"><i class="fa fa-tag"></i> CSAPP</a>
+              <a href="/tags/Lab/" rel="tag"><i class="fa fa-tag"></i> Lab</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2016/11/29/%E5%8E%BB%E9%9B%BE%E7%AE%97%E6%B3%95%E6%B5%85%E6%9E%90/" rel="prev" title="去雾算法浅析">
+      <i class="fa fa-chevron-left"></i> 去雾算法浅析
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2016/12/10/concurrent-programming/" rel="next" title="Concurrent Programming">
+      Concurrent Programming <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFproxy"><span class="nav-number">1.</span> <span class="nav-text">什么是proxy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E5%87%86%E5%A4%87"><span class="nav-number">2.</span> <span class="nav-text">实验准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#proxy%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86request"><span class="nav-number">3.</span> <span class="nav-text">proxy如何处理request</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%93%8D%E4%BD%9C"><span class="nav-number">4.</span> <span class="nav-text">处理多线程操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E7%BD%91%E9%A1%B5%E5%86%85%E5%AE%B9"><span class="nav-number">5.</span> <span class="nav-text">存储网页内容</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Tianyu Hong"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Tianyu Hong</p>
+  <div class="site-description" itemprop="description">Why so serious!</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Htiango" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Htiango" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/tianyu-hong/" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;tianyu-hong&#x2F;" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linkedin</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tianyu Hong</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v6.3.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.1
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://tianyuh.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://tianyuh.com/2016/12/09/proxy-lab/";
+    this.page.identifier = "2016/12/09/proxy-lab/";
+    this.page.title = "proxy-lab";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://tianyuh.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>
